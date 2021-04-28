@@ -12,6 +12,7 @@ interface DefaultEleConfigType extends DefaultSphereConfigType {
 }
 export default class AtomModelConfig {
   static baseAtomRadius: Number = 1; //原子半径的基数
+  static shininess: Number = 100; //反光材质亮度
   static defaultSphere: DefaultSphereConfigType = {
     widthSegments: 32,
     heightSegments: 32,
