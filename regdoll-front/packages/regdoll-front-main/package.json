@@ -1,5 +1,5 @@
 {
-  "name": "regdoll-front",
+  "name": "regdoll-front-main",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
