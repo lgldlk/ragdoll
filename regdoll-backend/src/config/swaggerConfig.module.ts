@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import swaggerConfig from './swagger.config';
 import * as Joi from '@hapi/joi';
-import { getDirAllFileNameArr } from '../../utils/configHelper';
+import { getDirAllFileNameArr } from '../utils/configHelper';
 import serveConfig from './serveConfig';
 
 @Module({
