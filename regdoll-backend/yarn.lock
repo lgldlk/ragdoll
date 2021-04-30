@@ -342,10 +342,38 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
+"@hapi/address@^4.0.1":
+  version "4.1.0"
+  resolved "https://registry.npm.taobao.org/@hapi/address/download/@hapi/address-4.1.0.tgz#d60c5c0d930e77456fdcde2598e77302e2955e1d"
+  integrity sha1-1gxcDZMOd0Vv3N4lmOdzAuKVXh0=
+  dependencies:
+    "@hapi/hoek" "^9.0.0"
+
+"@hapi/formula@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.npm.taobao.org/@hapi/formula/download/@hapi/formula-2.0.0.tgz#edade0619ed58c8e4f164f233cda70211e787128"
+  integrity sha1-7a3gYZ7VjI5PFk8jPNpwIR54cSg=
+
 "@hapi/hoek@^9.0.0":
   version "9.2.0"
   resolved "https://registry.npm.taobao.org/@hapi/hoek/download/@hapi/hoek-9.2.0.tgz?cache=0&sync_timestamp=1618694423634&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40hapi%2Fhoek%2Fdownload%2F%40hapi%2Fhoek-9.2.0.tgz#f3933a44e365864f4dad5db94158106d511e8131"
   integrity sha1-85M6RONlhk9NrV25QVgQbVEegTE=
+
+"@hapi/joi@^17.1.1":
+  version "17.1.1"
+  resolved "https://registry.npm.taobao.org/@hapi/joi/download/@hapi/joi-17.1.1.tgz#9cc8d7e2c2213d1e46708c6260184b447c661350"
+  integrity sha1-nMjX4sIhPR5GcIxiYBhLRHxmE1A=
+  dependencies:
+    "@hapi/address" "^4.0.1"
+    "@hapi/formula" "^2.0.0"
+    "@hapi/hoek" "^9.0.0"
+    "@hapi/pinpoint" "^2.0.0"
+    "@hapi/topo" "^5.0.0"
+
+"@hapi/pinpoint@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.npm.taobao.org/@hapi/pinpoint/download/@hapi/pinpoint-2.0.0.tgz#805b40d4dbec04fc116a73089494e00f073de8df"
+  integrity sha1-gFtA1NvsBPwRanMIlJTgDwc96N8=
 
 "@hapi/topo@^5.0.0":
   version "5.0.0"
@@ -667,23 +695,6 @@
   dependencies:
     "@angular-devkit/core" "11.2.6"
     "@angular-devkit/schematics" "11.2.6"
-
-"@sideway/address@^4.1.0":
-  version "4.1.1"
-  resolved "https://registry.npm.taobao.org/@sideway/address/download/@sideway/address-4.1.1.tgz#9e321e74310963fdf8eebfbee09c7bd69972de4d"
-  integrity sha1-njIedDEJY/347r++4Jx71ply3k0=
-  dependencies:
-    "@hapi/hoek" "^9.0.0"
-
-"@sideway/formula@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.npm.taobao.org/@sideway/formula/download/@sideway/formula-3.0.0.tgz#fe158aee32e6bd5de85044be615bc08478a0a13c"
-  integrity sha1-/hWK7jLmvV3oUES+YVvAhHigoTw=
-
-"@sideway/pinpoint@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.npm.taobao.org/@sideway/pinpoint/download/@sideway/pinpoint-2.0.0.tgz#cff8ffadc372ad29fd3f78277aeb29e632cc70df"
-  integrity sha1-z/j/rcNyrSn9P3gneusp5jLMcN8=
 
 "@sinonjs/commons@^1.7.0":
   version "1.8.3"
@@ -3038,6 +3049,11 @@ has@^1.0.3:
   dependencies:
     function-bind "^1.1.1"
 
+helmet@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.npm.taobao.org/helmet/download/helmet-4.5.0.tgz#da5a75d30cbd9f60628e9463a85dc7725806c2ea"
+  integrity sha1-2lp10wy9n2BijpRjqF3HclgGwuo=
+
 highlight.js@^10.7.1:
   version "10.7.2"
   resolved "https://registry.nlark.com/highlight.js/download/highlight.js-10.7.2.tgz#89319b861edc66c48854ed1e6da21ea89f847360"
@@ -3865,17 +3881,6 @@ jest@^25.1.0:
     "@jest/core" "^25.5.4"
     import-local "^3.0.2"
     jest-cli "^25.5.4"
-
-joi@^17.4.0:
-  version "17.4.0"
-  resolved "https://registry.npm.taobao.org/joi/download/joi-17.4.0.tgz?cache=0&sync_timestamp=1612746585293&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fjoi%2Fdownload%2Fjoi-17.4.0.tgz#b5c2277c8519e016316e49ababd41a1908d9ef20"
-  integrity sha1-tcInfIUZ4BYxbkmrq9QaGQjZ7yA=
-  dependencies:
-    "@hapi/hoek" "^9.0.0"
-    "@hapi/topo" "^5.0.0"
-    "@sideway/address" "^4.1.0"
-    "@sideway/formula" "^3.0.0"
-    "@sideway/pinpoint" "^2.0.0"
 
 js-tokens@^4.0.0:
   version "4.0.0"
