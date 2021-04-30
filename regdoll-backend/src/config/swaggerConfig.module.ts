@@ -3,14 +3,15 @@ import { ConfigModule } from '@nestjs/config';
 import swaggerConfig from './swagger.config';
 import * as Joi from '@hapi/joi';
 import { getDirAllFileNameArr } from '../utils/configHelper';
-import serveConfig from './serveConfig';
+import serveConfig from './serve.config';
+import jwtConfig from './jwt.config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: [...getDirAllFileNameArr()],
       encoding: 'utf-8',
-      load: [swaggerConfig, serveConfig],
+      load: [swaggerConfig, serveConfig, jwtConfig],
       isGlobal: true,
       expandVariables: true,
       ignoreEnvVars: true,
@@ -21,9 +22,21 @@ import serveConfig from './serveConfig';
         SWAGGER_UI_TITLE_DESC: Joi.string().default(
           '本文档包含布偶的接口及类型说明~~',
         ),
+
         SWAGGER_API_VERSION: Joi.string().default('1.0'),
+
+        SQL_TYPE: Joi.string().default('mysql'),
+        SQL_HOST_DEV: Joi.string(),
+        SQL_HOST_PRO: Joi.string(),
+        SQL_PORT_DEV: Joi.string(),
+        SQL_PORT_PRO: Joi.string(),
+        SQL_NAME: Joi.string().default('regdoll'),
+        SQL_USERNAME: Joi.string().default('root'),
+        SQL_PASSWORD: Joi.string().default(''),
+        SQL_SYNCHRONIZE: Joi.boolean().default(true),
+        JWT_SECRET_KEY: Joi.string(),
         NODE_ENV: Joi.string()
-          .valid('dev', 'production', 'test', 'provision')
+          .valid('dev', 'pro', 'test')
           .default('dev'),
       }),
       validationOptions: {
