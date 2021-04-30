@@ -6,7 +6,7 @@ import { EnvSwaggerOptions } from './config/swagger.config';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 import { ServeOptions } from './config/serveConfig';
-
+import * as csurf from 'csurf';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     cors: true,
@@ -15,6 +15,9 @@ async function bootstrap() {
   const swaggerOptions = configService.get<EnvSwaggerOptions>(
     'EnvSwaggerOptions',
   );
+  // 防止跨站请求伪造
+  // 设置 csrf 保存 csrfToken
+  app.use(csurf());
   // 访问频率限制
   app.use(
     rateLimit({
