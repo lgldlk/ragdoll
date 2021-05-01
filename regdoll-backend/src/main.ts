@@ -5,7 +5,7 @@ import * as helmet from 'helmet';
 import { EnvSwaggerOptions } from './config/swagger.config';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
-import { ServeOptions } from './config/serveConfig';
+import { ServeOptions } from './config/serve.config';
 import * as csurf from 'csurf';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -15,9 +15,12 @@ async function bootstrap() {
   const swaggerOptions = configService.get<EnvSwaggerOptions>(
     'EnvSwaggerOptions',
   );
+  const serveOptions = configService.get<ServeOptions>('serveOptions');
+  // 设置所有 api 访问前缀
+  app.setGlobalPrefix(serveOptions.apiPrefix);
   // 防止跨站请求伪造
   // 设置 csrf 保存 csrfToken
-  app.use(csurf());
+  // app.use(csurf());
   // 访问频率限制
   app.use(
     rateLimit({
@@ -27,7 +30,7 @@ async function bootstrap() {
   );
   // web 漏洞
   app.use(helmet());
-  const serveOptions = configService.get<ServeOptions>('serveOptions');
+
   const options = new DocumentBuilder()
     .setTitle(swaggerOptions.title)
     .setDescription(swaggerOptions.desc)
@@ -37,5 +40,8 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup(swaggerOptions.setupUrl, app, document);
   await app.listen(serveOptions.port);
+  console.log(
+    `swaggerOpen in localhost:${serveOptions.port}/${swaggerOptions.setupUrl}`,
+  );
 }
 bootstrap();

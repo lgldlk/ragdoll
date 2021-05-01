@@ -24,7 +24,7 @@ import jwtConfig from './jwt.config';
         ),
 
         SWAGGER_API_VERSION: Joi.string().default('1.0'),
-
+        API_PREFIX: Joi.string().default('api'),
         SQL_TYPE: Joi.string().default('mysql'),
         SQL_HOST_DEV: Joi.string(),
         SQL_HOST_PRO: Joi.string(),

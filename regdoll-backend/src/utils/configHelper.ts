@@ -1,9 +1,5 @@
-// get-dir-all-file-name-arr.ts
 import * as fs from 'fs';
 import * as path from 'path';
-
-// 默认存放env文件的文件夹路径
-const directory = path.resolve(process.cwd(), 'src/config/env');
 
 type optionsType = {
   dirPath?: string;
@@ -11,7 +7,9 @@ type optionsType = {
 };
 
 export function getDirAllFileNameArr(options?: optionsType): string[] {
-  const params = { dirPath: directory, prefix: 'src/config/env/', ...options };
+  // 默认存放env文件的文件夹路径
+  const directory = path.resolve(process.cwd(), 'src/config');
+  const params = { dirPath: directory, prefix: 'src/config/', ...options };
   const results = [];
   try {
     for (const dirContent of fs.readdirSync(params.dirPath)) {
