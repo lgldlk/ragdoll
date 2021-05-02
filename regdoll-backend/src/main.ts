@@ -1,3 +1,4 @@
+import { DtoValidationPipe } from './pipe/DtoValidation.pipe';
 import { NestFactory } from '@nestjs/core';
 import * as rateLimit from 'express-rate-limit';
 import { AppModule } from './app.module';
@@ -7,6 +8,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 import { ServeOptions } from './config/serve.config';
 import * as csurf from 'csurf';
+import { Logger, ValidationPipe } from '@nestjs/common';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     cors: true,
@@ -25,11 +27,13 @@ async function bootstrap() {
   app.use(
     rateLimit({
       windowMs: 15 * 60 * 1000, // 15分钟
-      max: 1000, // 限制15分钟内最多只能访问1000次
+      max: 1000, // 限制15分钟内最多只能访问1000次0
     }),
   );
   // web 漏洞
   app.use(helmet());
+
+  app.useGlobalPipes(new DtoValidationPipe());
 
   const options = new DocumentBuilder()
     .setTitle(swaggerOptions.title)
@@ -40,8 +44,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup(swaggerOptions.setupUrl, app, document);
   await app.listen(serveOptions.port);
-  console.log(
-    `swaggerOpen in localhost:${serveOptions.port}/${swaggerOptions.setupUrl}`,
-  );
+
+  Logger.log(`http://localhost:${serveOptions.port}`, '服务启动成功');
 }
 bootstrap();
