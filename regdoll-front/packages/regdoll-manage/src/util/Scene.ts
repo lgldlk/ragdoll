@@ -23,11 +23,15 @@ export default class Scene {
     private refreshSelf: Boolean,
     private lights: Array<THREE.Light>,
     private controls: THREE.EventDispatcher,
-  ) {}
+  ) {
+    this.scene = new THREE.Scene();
+    this.camera = new THREE.Camera();
+    this.objects = [];
+  }
   initScene() {
     this.scene = new THREE.Scene();
   }
-  render(renderTime) {
+  render(renderTime: number) {
     this.objects.forEach((item) => {
       if (item.renderEvent) {
         item.renderEvent(renderTime * SceneConfig.timeBase);
