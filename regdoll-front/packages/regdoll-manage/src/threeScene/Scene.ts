@@ -6,8 +6,9 @@ export interface SceneObject3D extends THREE.Object3D {
 
 export default class Scene {
   scene: THREE.Scene;
-  camera: THREE.Camera;
+  camera: THREE.PerspectiveCamera;
   objects: Array<SceneObject3D>;
+  renderer!: THREE.WebGLRenderer;
   /**
    *Creates an instance of Scene.
    * @param {Boolean} showAxes//是否展示坐标轴
@@ -18,15 +19,22 @@ export default class Scene {
    * @memberof Scene
    */
   constructor(
+    private renderDom: HTMLElement,
     private showAxes: Boolean,
-    private backgroundColor: THREE.Color,
     private refreshSelf: Boolean,
-    private lights: Array<THREE.Light>,
-    private controls: THREE.EventDispatcher,
+    private lights?: Array<THREE.Light>,
+    private controls?: THREE.EventDispatcher,
+    private backgroundColor?: THREE.Color,
   ) {
     this.scene = new THREE.Scene();
-    this.camera = new THREE.Camera();
+    this.camera = new THREE.PerspectiveCamera();
     this.objects = [];
+    window.addEventListener('resize', this.onWindowResize);
+    this.initRenderer();
+  }
+  initRenderer() {
+    this.renderer = new THREE.WebGLRenderer({ antialias: true });
+    this.renderer.setPixelRatio(window.devicePixelRatio);
   }
   initScene() {
     this.scene = new THREE.Scene();
@@ -38,5 +46,13 @@ export default class Scene {
       }
     });
     this.refreshSelf && requestAnimationFrame(this.render);
+  }
+  onWindowResize() {
+    this.camera.aspect = window.innerWidth / window.innerHeight;
+    this.camera.updateProjectionMatrix();
+
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
+
+    requestAnimationFrame(this.render);
   }
 }
