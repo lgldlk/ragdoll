@@ -1,0 +1,11 @@
+.parts {
+    @apply w-full;
+    @apply bg-white;
+    @apply flex;
+    .part {
+        @apply border;
+        @apply border-black;
+        @apply shadow-lg;
+        @apply overflow-hidden;
+    }
+}
