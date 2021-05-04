@@ -1,3 +1,5 @@
+import { defineConfig } from 'vite';
+
 const path = require('path');
 module.exports = {
     cssPreprocessOptions: {
