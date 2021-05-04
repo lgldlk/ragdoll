@@ -14,7 +14,7 @@
     "emitDecoratorMetadata": true,
     "types": [
       "webpack-env",
-      "jest"
+      "node"
     ],
     "paths": {
       "@/*": [
@@ -34,9 +34,15 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx",
-    "src/assets/script/area.ts"
   ],
   "exclude": [
-    "node_modules"
+    "config",
+    "public",
+    "node_modules",
+    "build",
+    "dist",
+    "scripts",
+    "acceptance-tests",
+    "webpack",
   ]
 }

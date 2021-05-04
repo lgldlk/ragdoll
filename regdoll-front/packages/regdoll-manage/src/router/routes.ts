@@ -1,5 +1,4 @@
 import { RouteRecordRaw } from 'vue-router';
-import editPage from '../pages/EditPage.vue';
 import { ComponentOptionsBase } from 'vue';
 
 const routes: RouteRecordRaw[] = [
@@ -7,7 +6,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/editPage',
     name: 'editPage',
-    component: editPage as any,
+    component: () => import('/@/pages/EditPage/EditPage.vue'),
   },
 ];
 export default routes;
