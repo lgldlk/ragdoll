@@ -8,3 +8,6 @@
 import { defineComponent } from 'vue';
 export default defineComponent({});
 </script>
+<style lang="sass">
+@import './index.scss'
+</style>
