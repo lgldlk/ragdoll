@@ -1,3 +1,4 @@
 .rightMenu {
     @include menuBackgroundColor;
+    @apply border-l-2;
 }

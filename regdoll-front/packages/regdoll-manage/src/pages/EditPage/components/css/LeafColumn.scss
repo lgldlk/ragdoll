@@ -1,3 +1,4 @@
 .leafMenu {
     @include menuBackgroundColor;
+    @apply border-r-2;
 }

@@ -1,11 +1,25 @@
 .parts {
     @apply w-full;
-    @apply bg-white;
     @apply flex;
+    @apply flex-wrap;
     .part {
+        @apply bg-white;
         @apply border;
         @apply border-black;
         @apply shadow-lg;
         @apply overflow-hidden;
+        @apply cursor-pointer;
+        @apply p-4;
+        @apply box-border;
+        @apply text-center;
+        @apply pointer-events-none;
+        @apply text-lg;
+        @apply select-none;
+        @apply text-gray-800;
+        @apply font-semibold;
+        @apply rounded-xl;
+        @apply text-gray-700;
+        width: 45%;
+        margin: 2.5%;
     }
 }
