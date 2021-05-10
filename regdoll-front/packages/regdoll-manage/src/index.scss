@@ -7,6 +7,14 @@ body {
     margin: 0;
 }
 
+.icon {
+    width: 60%;
+}
+
 @mixin menuBackgroundColor {
-    @apply bg-gray-500;
+    @apply bg-green-500;
+    @apply box-border;
+    @apply border-solid;
+    @apply border-0;
+    @apply border-gray-600;
 }
