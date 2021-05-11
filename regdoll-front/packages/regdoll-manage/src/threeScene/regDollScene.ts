@@ -3,16 +3,14 @@
  * @Author: lgldlk
  * @Date: 2021-05-02 21:54:10
  * @Editors: lgldlk
- * @LastEditTime: 2021-05-10 21:21:26
+ * @LastEditTime: 2021-05-11 21:43:35
  */
 import * as THREE from 'three';
 import SceneConfig from '../config/SceneConfig';
 import { OrbitControls } from '/@/assets/js/OrbitControls.js';
 import { nextTick } from 'vue';
-import { getGridHelper } from './regDollHelper';
-export interface RegDollSceneObject3D extends THREE.Object3D {
-  renderEvent: Function; //每次场景调用的函数
-}
+import { getDefaultAmbientLight, getDefaultSpotLight, getGridHelper } from './regDollHelper';
+import { RegDollSceneObject3D } from './RegDollSceneObject3D';
 
 export class regDollScene {
   scene!: THREE.Scene;
@@ -24,7 +22,8 @@ export class regDollScene {
   renderHeight!: number;
   gridHelp!: THREE.GridHelper;
   controls!: OrbitControls;
-
+  defaultSpotLight!: THREE.SpotLight;
+  defaultAmbientLight!: THREE.AmbientLight;
   /**
    *Creates an instance of Scene.
    * @param {Boolean} showAxes//是否展示坐标轴
@@ -40,7 +39,6 @@ export class regDollScene {
     private showAxes: Boolean,
     private refreshSelf: Boolean,
     private showGirdHelper: Boolean,
-    private lights?: Array<THREE.Light>,
     private backgroundColor?: THREE.Color,
   ) {
     this.objectArr = [];
@@ -70,16 +68,10 @@ export class regDollScene {
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
   }
   initLights() {
-    if (this.lights != undefined) {
-      this.lights.map((item) => {
-        this.scene.add(item);
-      });
-    } else {
-      this.lights = [];
-      let tmpLight = new THREE.DirectionalLight(0xffffff, 0.5);
-      this.lights.push(tmpLight);
-      this.scene.add(tmpLight);
-    }
+    this.defaultSpotLight = getDefaultSpotLight(SceneConfig.sceneLen);
+    this.scene.add(this.defaultSpotLight);
+    this.defaultAmbientLight = getDefaultAmbientLight();
+    this.scene.add(this.defaultAmbientLight);
   }
   initCamera() {
     this.camera = new THREE.PerspectiveCamera(
@@ -102,7 +94,6 @@ export class regDollScene {
   }
   initScene() {
     this.scene = new THREE.Scene();
-
     this.scene.background = new THREE.Color('rgb(255, 255, 255)');
   }
   initAxesHelper() {
@@ -118,6 +109,10 @@ export class regDollScene {
     {
       this.camera.far = len * 3;
       this.camera.updateProjectionMatrix();
+    }
+    {
+      this.scene.remove(this.defaultSpotLight);
+      this.scene.add(this.defaultSpotLight);
     }
   }
   render = (renderTime: number) => {

@@ -1,10 +1,11 @@
 import * as THREE from 'three';
+import SceneConfig from '../config/SceneConfig';
 /*
  * @Descripttion:
  * @Author: lgldlk
  * @Date: 2021-05-10 21:00:12
  * @Editors: lgldlk
- * @LastEditTime: 2021-05-10 22:20:01
+ * @LastEditTime: 2021-05-11 21:43:17
  */
 /**
  * 获取帮助表格
@@ -12,7 +13,7 @@ import * as THREE from 'three';
  * @param divisions 设置有几个格子
  * @returns  THREE.GridHelper实例
  */
-export function getGridHelper(size: number, divisions: number) {
+export function getGridHelper(size: number, divisions: number): THREE.GridHelper {
   let gridHelp = new THREE.GridHelper(size, divisions);
   gridHelp.position.y = 0;
   gridHelp.material instanceof THREE.Material && (gridHelp.material.opacity = 0.25);
@@ -40,4 +41,16 @@ export function getTrackArr(eleNum: number): Array<number> {
     return [2, 8, 18, 32, 18, (eleNum - 78) % 8];
   }
   return [];
+}
+
+export function getDefaultAmbientLight(): THREE.AmbientLight {
+  const light = new THREE.AmbientLight(SceneConfig.lightColor, 0.8);
+  return light;
+}
+
+export function getDefaultSpotLight(sceneLen: number): THREE.SpotLight {
+  const light = new THREE.SpotLight(SceneConfig.lightColor, 1);
+  light.position.set(0, sceneLen, sceneLen);
+  light.lookAt(0, 0, 0);
+  return light;
 }
