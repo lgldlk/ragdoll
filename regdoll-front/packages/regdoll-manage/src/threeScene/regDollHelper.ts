@@ -5,7 +5,7 @@ import SceneConfig from '../config/SceneConfig';
  * @Author: lgldlk
  * @Date: 2021-05-10 21:00:12
  * @Editors: lgldlk
- * @LastEditTime: 2021-05-11 21:43:17
+ * @LastEditTime: 2021-05-11 22:26:22
  */
 /**
  * 获取帮助表格
@@ -50,7 +50,8 @@ export function getDefaultAmbientLight(): THREE.AmbientLight {
 
 export function getDefaultSpotLight(sceneLen: number): THREE.SpotLight {
   const light = new THREE.SpotLight(SceneConfig.lightColor, 1);
-  light.position.set(0, sceneLen, sceneLen);
+  light.position.set(sceneLen * 2, sceneLen * 2, 0);
+  light.angle = Math.PI;
   light.lookAt(0, 0, 0);
   return light;
 }

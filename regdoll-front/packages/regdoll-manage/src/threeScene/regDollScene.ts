@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-05-02 21:54:10
  * @Editors: lgldlk
- * @LastEditTime: 2021-05-11 21:43:35
+ * @LastEditTime: 2021-05-11 22:26:07
  */
 import * as THREE from 'three';
 import SceneConfig from '../config/SceneConfig';
@@ -80,7 +80,7 @@ export class regDollScene {
       1,
       10000,
     );
-    this.camera.position.set(10, 10, 10);
+    this.camera.position.set(10, 10, 0);
     this.scene.add(this.camera);
   }
   addListener() {
