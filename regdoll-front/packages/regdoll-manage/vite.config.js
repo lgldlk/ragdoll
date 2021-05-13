@@ -1,5 +1,10 @@
-import { defineConfig } from 'vite';
-
+/*
+ * @Descripttion:
+ * @Author: lgldlk
+ * @Date: 2021-05-04 18:35:16
+ * @Editors: lgldlk
+ * @LastEditTime: 2021-05-13 18:42:52
+ */
 const path = require('path');
 module.exports = {
     cssPreprocessOptions: {
