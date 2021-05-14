@@ -4,16 +4,18 @@ import { RegDollSceneObject3D } from './RegDollSceneObject3D';
  * @Descripttion:
  * @Author: lgldlk
  * @Date: 2021-05-02 21:54:10
- * @LastEditTime: 2021-05-12 07:38:44
+ * @LastEditTime: 2021-05-13 21:36:56
  */
 import * as THREE from 'three';
 import { Object3D } from 'three';
 import AtomModelConfig from '../config/AtomModelConfig';
-
+import { getTrackArr } from './RegDollHelper';
 export default class Atom extends RegDollSceneObject3D {
   nucleus!: THREE.Mesh; //原子核
+  electronics: Array<THREE.Object3D>;
   drawingCanvas!: HTMLCanvasElement;
   drawingContext!: CanvasRenderingContext2D;
+  nucleusWidth!: number;
   constructor(
     public quality: number = 0,
     public ele_number: number = 0,
@@ -21,11 +23,17 @@ export default class Atom extends RegDollSceneObject3D {
     public ch_name: string,
   ) {
     super();
+    this.electronics = [];
+    this.nucleusWidth =
+      AtomModelConfig.defaultNucleusConfig.baseAtomRadius +
+      AtomModelConfig.defaultNucleusConfig.baseRadius * this.quality;
     this.add(this.initNucleus());
+    this.initEleOrbit();
   }
+
   initNucleus(): THREE.Object3D {
     const geometry = new THREE.SphereGeometry(
-      AtomModelConfig.defaultNucleusConfig.baseRadius * this.quality,
+      this.nucleusWidth,
       AtomModelConfig.defaultSphere.widthSegments,
       AtomModelConfig.defaultSphere.heightSegments,
     );
@@ -33,15 +41,63 @@ export default class Atom extends RegDollSceneObject3D {
       color: AtomModelConfig.defaultNucleusConfig.color,
       shininess: AtomModelConfig.defaultNucleusConfig.shininess,
     });
-    material.map = this.getEnNameCanvas(
+    material.map = this.getTextCanvas(
       this.en_name,
       AtomModelConfig.defaultNucleusConfig.color,
-      AtomModelConfig.defaultNucleusConfig.baseRadius * this.quality * 480,
+      this.nucleusWidth * 480,
     );
-
-    return new THREE.Mesh(geometry, material);
+    const nucleus = new THREE.Mesh(geometry, material);
+    nucleus.rotateZ(Math.PI / 2);
+    return nucleus;
   }
-  getEnNameCanvas(en_name: string, color: THREE.Color, darwWH: number): THREE.Texture {
+  initEleOrbit() {
+    let eleArr = getTrackArr(this.ele_number);
+    eleArr.map((item, index) => {
+      let tmpEleOrbit = this.getEleOrbit(
+        this.nucleusWidth + (1 + index) * AtomModelConfig.defaultEleOrbit,
+        item,
+      );
+      this.electronics.push(tmpEleOrbit);
+    });
+    this.add(...this.electronics);
+  }
+  getEleOrbit(radius: number, eleNumber: number): THREE.Object3D {
+    const geoGeometry = new THREE.TorusGeometry(
+      radius,
+      AtomModelConfig.defaultTorus.tube,
+      AtomModelConfig.defaultTorus.radialSegments,
+      AtomModelConfig.defaultTorus.tubularSegments,
+    );
+    const geoMaterial = new THREE.MeshPhongMaterial({
+      color: AtomModelConfig.defaultTorus.color,
+      shininess: AtomModelConfig.defaultSphere.shininess,
+      side: THREE.DoubleSide,
+    });
+    const geoMesh = new THREE.Mesh(geoGeometry, geoMaterial);
+    geoMesh.rotateX(Math.PI / 2);
+    const eleGeometry = new THREE.SphereGeometry(
+      AtomModelConfig.defaultEleConfig.radius,
+      AtomModelConfig.defaultEleConfig.widthSegments,
+      AtomModelConfig.defaultEleConfig.heightSegments,
+    );
+    const eleMaterial = new THREE.MeshPhongMaterial({
+      color: AtomModelConfig.defaultEleConfig.color,
+      shininess: AtomModelConfig.defaultEleConfig.shininess,
+    });
+    eleMaterial.map = this.getTextCanvas(
+      eleNumber.toString(),
+      AtomModelConfig.defaultEleConfig.color,
+      AtomModelConfig.defaultEleConfig.radius * 1000,
+    );
+    const eleMesh = new THREE.Mesh(eleGeometry, eleMaterial);
+    eleMesh.rotateZ(Math.PI / 2);
+    eleMesh.position.set(radius, 0, 0);
+    const eleOrbit = new THREE.Object3D();
+    eleOrbit.add(geoMesh, eleMesh);
+    return eleOrbit;
+  }
+
+  getTextCanvas(str: string, color: THREE.Color, darwWH: number): THREE.Texture {
     this.drawingCanvas = document.createElement('canvas');
     this.drawingCanvas.width = this.drawingCanvas.height = darwWH;
     const cont2d = this.drawingCanvas.getContext('2d');
@@ -55,9 +111,12 @@ export default class Atom extends RegDollSceneObject3D {
     this.drawingContext.textAlign = 'center';
     this.drawingContext.textBaseline = 'middle';
     this.drawingContext.font = darwWH / 3 + 'px serif';
-    this.drawingContext.fillText(en_name, darwWH / 2, darwWH / 2);
-
+    this.drawingContext.fillText(str, darwWH / 2, darwWH / 2);
     return new THREE.CanvasTexture(this.drawingCanvas);
   }
-  renderEvent = () => {};
+  renderEvent = () => {
+    this.electronics.map((item) => {
+      item.rotateY(Math.PI * 0.002);
+    });
+  };
 }
