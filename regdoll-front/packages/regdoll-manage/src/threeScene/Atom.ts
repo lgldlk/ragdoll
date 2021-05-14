@@ -94,6 +94,7 @@ export default class Atom extends RegDollSceneObject3D {
     eleMesh.position.set(radius, 0, 0);
     const eleOrbit = new THREE.Object3D();
     eleOrbit.add(geoMesh, eleMesh);
+    eleOrbit.rotateY(Math.PI / 6);
     return eleOrbit;
   }
 

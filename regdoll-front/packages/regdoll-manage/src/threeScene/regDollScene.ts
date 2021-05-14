@@ -89,6 +89,9 @@ export class regDollScene {
     this.renderDom.addEventListener('pointerdown', this.onPointerDown);
     this.renderDom.addEventListener('pointerup', this.onPointerUp);
     this.renderDom.addEventListener('pointermove', this.onPointerMove);
+    this.renderDom.addEventListener('mouseleave', () => {
+      this.axesHelper.visible == false && this.setAxesHelperVisible(true);
+    });
   }
   onPointerDown = (event: { offsetX: number; offsetY: number }) => {
     this.onDownPosition.x = event.offsetX;
