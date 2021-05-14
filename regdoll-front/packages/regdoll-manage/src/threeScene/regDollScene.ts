@@ -110,9 +110,7 @@ export class regDollScene {
     this.raycaster.setFromCamera(this.pointer, this.camera);
     const intersects = this.raycaster.intersectObjects(this.objectArr, true);
     if (intersects.length > 0) {
-      this.transformControl.object &&
-        this.axesHelper.visible == true &&
-        this.setAxesHelperVisible(false);
+      this.setAxesHelperVisible(!this.transformControl.dragging);
       let selectObj = this.getSelectObj(intersects[0].object);
       if (selectObj !== this.transformControl.object) {
         this.transformControl.attach(selectObj);
