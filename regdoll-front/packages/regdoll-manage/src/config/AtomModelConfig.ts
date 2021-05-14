@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-05-02 21:54:09
  * @Editors: lgldlk
- * @LastEditTime: 2021-05-11 21:54:16
+ * @LastEditTime: 2021-05-12 21:53:13
  */
 
 import * as THREE from 'three';
@@ -21,6 +21,7 @@ interface DefaultTorusConfigType {
   tube: number;
   radialSegments: number;
   tubularSegments: number; // 圆环的默认环段数
+  color: THREE.Color;
 }
 
 interface DefaultEleConfigType extends DefaultSphereConfigType {
@@ -31,28 +32,31 @@ interface DefaultEleConfigType extends DefaultSphereConfigType {
 interface DefaultNucleusConfig extends DefaultSphereConfigType {
   // 默认原子核设置
   color: THREE.Color;
+  baseAtomRadius: number;
   baseRadius: number; //默认的原子核大小基数
 }
 export default class AtomModelConfig {
-  static shininess: number = 100; //反光材质亮度
+  static defaultEleOrbit: number = 5;
   static defaultSphere: DefaultSphereConfigType = {
-    widthSegments: 32,
-    heightSegments: 32,
+    widthSegments: 58,
+    heightSegments: 58,
     shininess: 100,
   };
   static defaultTorus: DefaultTorusConfigType = {
     tube: 0.05,
     radialSegments: 18,
     tubularSegments: 134,
+    color: new THREE.Color(0x000000),
   };
   static defaultEleConfig: DefaultEleConfigType = {
     ...AtomModelConfig.defaultSphere,
-    color: new THREE.Color(0xffff00),
-    radius: 0.5,
+    color: new THREE.Color(0xeeeee00),
+    radius: 0.65,
   };
   static defaultNucleusConfig: DefaultNucleusConfig = {
     ...AtomModelConfig.defaultSphere,
     color: new THREE.Color(0xee0000),
-    baseRadius: 1,
+    baseAtomRadius: 1,
+    baseRadius: 0.05,
   };
 }
