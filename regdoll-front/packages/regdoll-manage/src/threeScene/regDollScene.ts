@@ -3,14 +3,17 @@
  * @Author: lgldlk
  * @Date: 2021-05-02 21:54:10
  * @Editors: lgldlk
- * @LastEditTime: 2021-05-11 22:26:07
+ * @LastEditTime: 2021-05-13 21:56:36
  */
 import * as THREE from 'three';
 import SceneConfig from '../config/SceneConfig';
-import { OrbitControls } from '/@/assets/js/OrbitControls.js';
+
 import { nextTick } from 'vue';
-import { getDefaultAmbientLight, getDefaultSpotLight, getGridHelper } from './regDollHelper';
+import { getDefaultAmbientLight, getDefaultSpotLight, getGridHelper } from './RegDollHelper';
 import { RegDollSceneObject3D } from './RegDollSceneObject3D';
+
+import { TransformControls } from '/@/assets/js/TransformControls.js';
+import { OrbitControls } from '/@/assets/js/OrbitControls.js';
 
 export class regDollScene {
   scene!: THREE.Scene;
@@ -21,9 +24,14 @@ export class regDollScene {
   renderWidth!: number;
   renderHeight!: number;
   gridHelp!: THREE.GridHelper;
-  controls!: OrbitControls;
+  orbitControls!: OrbitControls;
+  transformControl!: TransformControls;
   defaultSpotLight!: THREE.SpotLight;
   defaultAmbientLight!: THREE.AmbientLight;
+  onDownPosition = new THREE.Vector2();
+  onUpPosition = new THREE.Vector2();
+  pointer = new THREE.Vector2();
+  raycaster = new THREE.Raycaster();
   /**
    *Creates an instance of Scene.
    * @param {Boolean} showAxes//是否展示坐标轴
@@ -51,7 +59,10 @@ export class regDollScene {
     this.initCamera();
     this.initLights();
     this.initRenderer();
-    this.initControls();
+    {
+      this.initOrbitControls();
+      this.initTransformControls();
+    }
     {
       this.showGirdHelper && this.initGridHelper();
       this.showAxes && this.initAxesHelper();
@@ -64,8 +75,52 @@ export class regDollScene {
     this.gridHelp = getGridHelper(SceneConfig.sceneLen * 2, SceneConfig.sceneLen * 2);
     this.scene.add(this.gridHelp);
   }
-  initControls() {
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+  initOrbitControls() {
+    this.orbitControls = new OrbitControls(this.camera, this.renderer.domElement);
+  }
+  initTransformControls() {
+    this.transformControl = new TransformControls(this.camera, this.renderer.domElement);
+    this.transformControl.addEventListener('dragging-changed', (event: any) => {
+      this.orbitControls.enabled = !event.value;
+    });
+    this.scene.add(this.transformControl);
+    this.renderDom.addEventListener('pointerdown', this.onPointerDown);
+    this.renderDom.addEventListener('pointerup', this.onPointerUp);
+    this.renderDom.addEventListener('pointermove', this.onPointerMove);
+  }
+  onPointerDown = (event: { offsetX: number; offsetY: number }) => {
+    this.onDownPosition.x = event.offsetX;
+    this.onDownPosition.y = event.offsetY;
+  };
+  onPointerUp = (event: { offsetX: number; offsetY: number }) => {
+    this.onUpPosition.x = event.offsetX;
+    this.onUpPosition.y = event.offsetY;
+
+    if (this.onDownPosition.distanceTo(this.onUpPosition) === 0) this.transformControl.detach();
+  };
+  onPointerMove = (event: { offsetX: number; offsetY: number }) => {
+    this.pointer.x = (event.offsetX / this.renderWidth) * 2 - 1;
+    this.pointer.y = -(event.offsetY / this.renderHeight) * 2 + 1;
+
+    this.raycaster.setFromCamera(this.pointer, this.camera);
+    const intersects = this.raycaster.intersectObjects(this.objectArr, true);
+    if (intersects.length > 0) {
+      let selectObj = this.getSelectObj(intersects[0].object);
+      if (selectObj !== this.transformControl.object) {
+        this.transformControl.attach(selectObj);
+      }
+    }
+  };
+  getSelectObj(object: THREE.Object3D) {
+    for (let tmpObj of this.objectArr) {
+      if (object === tmpObj) {
+        return tmpObj;
+      }
+      if (tmpObj.children.indexOf(object) != -1) {
+        return tmpObj;
+      }
+    }
+    return;
   }
   initLights() {
     this.defaultSpotLight = getDefaultSpotLight(SceneConfig.sceneLen);
@@ -80,9 +135,10 @@ export class regDollScene {
       1,
       10000,
     );
-    this.camera.position.set(10, 10, 0);
+    this.camera.position.set(30, 30, 0);
     this.scene.add(this.camera);
   }
+
   addListener() {
     window.addEventListener('resize', this.resizeRender);
   }
@@ -123,7 +179,8 @@ export class regDollScene {
     });
     this.renderer.render(this.scene, this.camera);
     this.refreshSelf && requestAnimationFrame(this.render);
-    this.controls.update();
+    this.orbitControls.update();
+    // this.transformControl.update();
   };
   /**
    * 调整绘制的dom大小

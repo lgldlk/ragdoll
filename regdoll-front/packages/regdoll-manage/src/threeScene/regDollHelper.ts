@@ -5,7 +5,7 @@ import SceneConfig from '../config/SceneConfig';
  * @Author: lgldlk
  * @Date: 2021-05-10 21:00:12
  * @Editors: lgldlk
- * @LastEditTime: 2021-05-11 22:26:22
+ * @LastEditTime: 2021-05-12 21:55:24
  */
 /**
  * 获取帮助表格
@@ -44,12 +44,12 @@ export function getTrackArr(eleNum: number): Array<number> {
 }
 
 export function getDefaultAmbientLight(): THREE.AmbientLight {
-  const light = new THREE.AmbientLight(SceneConfig.lightColor, 0.8);
+  const light = new THREE.AmbientLight(SceneConfig.lightColor, 1);
   return light;
 }
 
 export function getDefaultSpotLight(sceneLen: number): THREE.SpotLight {
-  const light = new THREE.SpotLight(SceneConfig.lightColor, 1);
+  const light = new THREE.SpotLight(SceneConfig.lightColor, 0.4);
   light.position.set(sceneLen * 2, sceneLen * 2, 0);
   light.angle = Math.PI;
   light.lookAt(0, 0, 0);
