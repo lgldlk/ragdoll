@@ -32,6 +32,7 @@ export class regDollScene {
   onUpPosition = new THREE.Vector2();
   pointer = new THREE.Vector2();
   raycaster = new THREE.Raycaster();
+  renderScene: Boolean = false;
   /**
    *Creates an instance of Scene.
    * @param {Boolean} showAxes//是否展示坐标轴
@@ -45,7 +46,6 @@ export class regDollScene {
   constructor(
     private renderDom: HTMLElement,
     private showAxes: Boolean,
-    private refreshSelf: Boolean,
     private showGirdHelper: Boolean,
     private backgroundColor?: THREE.Color,
   ) {
@@ -77,12 +77,14 @@ export class regDollScene {
   }
   initOrbitControls() {
     this.orbitControls = new OrbitControls(this.camera, this.renderer.domElement);
+    this.orbitControls.addEventListener('change', this.render);
   }
   initTransformControls() {
     this.transformControl = new TransformControls(this.camera, this.renderer.domElement);
     this.transformControl.addEventListener('dragging-changed', (event: any) => {
       this.orbitControls.enabled = !event.value;
     });
+    this.transformControl.addEventListener('change', this.render);
     this.scene.add(this.transformControl);
     this.renderDom.addEventListener('pointerdown', this.onPointerDown);
     this.renderDom.addEventListener('pointerup', this.onPointerUp);
@@ -95,7 +97,7 @@ export class regDollScene {
   onPointerUp = (event: { offsetX: number; offsetY: number }) => {
     this.onUpPosition.x = event.offsetX;
     this.onUpPosition.y = event.offsetY;
-
+    this.axesHelper.visible == false && this.setAxesHelperVisible(true);
     if (this.onDownPosition.distanceTo(this.onUpPosition) === 0) this.transformControl.detach();
   };
   onPointerMove = (event: { offsetX: number; offsetY: number }) => {
@@ -105,6 +107,9 @@ export class regDollScene {
     this.raycaster.setFromCamera(this.pointer, this.camera);
     const intersects = this.raycaster.intersectObjects(this.objectArr, true);
     if (intersects.length > 0) {
+      this.transformControl.object &&
+        this.axesHelper.visible == true &&
+        this.setAxesHelperVisible(false);
       let selectObj = this.getSelectObj(intersects[0].object);
       if (selectObj !== this.transformControl.object) {
         this.transformControl.attach(selectObj);
@@ -122,6 +127,9 @@ export class regDollScene {
     }
     return;
   }
+  setRenderScene(renderScene: Boolean) {
+    this.renderScene = renderScene;
+  }
   initLights() {
     this.defaultSpotLight = getDefaultSpotLight(SceneConfig.sceneLen);
     this.scene.add(this.defaultSpotLight);
@@ -138,7 +146,9 @@ export class regDollScene {
     this.camera.position.set(30, 30, 0);
     this.scene.add(this.camera);
   }
-
+  setAxesHelperVisible(visible: boolean) {
+    this.axesHelper.visible = visible;
+  }
   addListener() {
     window.addEventListener('resize', this.resizeRender);
   }
@@ -172,14 +182,15 @@ export class regDollScene {
     }
   }
   render = (renderTime: number) => {
-    this.objectArr.forEach((item) => {
-      if (item.renderEvent) {
-        item.renderEvent(renderTime * SceneConfig.timeBase);
-      }
-    });
+    if (this.renderScene) {
+      this.renderScene && requestAnimationFrame(this.render);
+      this.objectArr.forEach((item) => {
+        if (item.renderEvent) {
+          item.renderEvent(renderTime * SceneConfig.timeBase);
+        }
+      });
+    }
     this.renderer.render(this.scene, this.camera);
-    this.refreshSelf && requestAnimationFrame(this.render);
-    this.orbitControls.update();
     // this.transformControl.update();
   };
   /**
