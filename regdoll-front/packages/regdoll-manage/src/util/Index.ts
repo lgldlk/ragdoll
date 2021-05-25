@@ -9,3 +9,15 @@ export function callFunctions(functions: Array<Function>, ...args: Array<any>) {
     }
   }
 }
+
+/**
+ * 对象键全部转小写
+ * @param params
+ */
+export function toLowerCase(obj: object) {
+  let toobj = {};
+  for (const key in obj) {
+    (<any>toobj)[key.toLowerCase()] = (<any>obj)[key];
+  }
+  return toobj;
+}
