@@ -8,6 +8,7 @@
   "license": "ISC",
   "dependencies": {
     "@types/three": "^0.127.1",
+    "axios": "^0.21.1",
     "three": "^0.127.0",
     "vue": "^3.0.4",
     "vue-router": "^4.0.6"
