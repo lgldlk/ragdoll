@@ -1,3 +1,10 @@
+/*
+ * @Descripttion:
+ * @Author: lgldlk
+ * @Date: 2021-04-18 22:36:37
+ * @Editors: lgldlk
+ * @LastEditTime: 2021-05-29 14:54:28
+ */
 import { DtoValidationPipe } from './pipe/DtoValidation.pipe';
 import { NestFactory } from '@nestjs/core';
 import * as rateLimit from 'express-rate-limit';
@@ -13,6 +20,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     cors: true,
   });
+  app.enableCors();
   const configService = app.get(ConfigService);
   const swaggerOptions = configService.get<EnvSwaggerOptions>(
     'EnvSwaggerOptions',
@@ -45,6 +53,7 @@ async function bootstrap() {
   SwaggerModule.setup(swaggerOptions.setupUrl, app, document);
   await app.listen(serveOptions.port);
 
+  Logger.log(`http://localhost:${serveOptions.port}`, '服务启动成功');
   Logger.log(`http://localhost:${serveOptions.port}`, '服务启动成功');
 }
 bootstrap();
