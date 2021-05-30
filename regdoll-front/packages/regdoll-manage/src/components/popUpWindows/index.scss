@@ -1,0 +1,35 @@
+.pop-bg {
+    @apply absolute;
+    @apply inset-0;
+    @apply bg-gray-700;
+    @apply bg-opacity-70;
+    @apply flex;
+    @apply justify-center;
+    @apply items-center;
+    .center-slot {
+        @apply bg-white;
+        @apply py-3;
+        @apply px-3;
+        @apply rounded-md;
+        @apply pb-8;
+        @apply text-base;
+        min-width: 20rem;
+        .slot-header {
+            @apply flex;
+            @apply justify-between;
+            @apply items-center;
+            @apply border-solid;
+            @apply border-0;
+            @apply border-b-2;
+            @apply border-gray-200;
+            .header-title {
+                @apply whitespace-nowrap;
+            }
+            .forkIcon {
+                @apply cursor-pointer;
+                width: 0.75rem;
+                height: 0.75rem;
+            }
+        }
+    }
+}
