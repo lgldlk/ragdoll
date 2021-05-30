@@ -24,7 +24,7 @@ declare interface response {
 }
 declare interface responseData {
   data: any;
-  reason: string;
+  message: string;
   code: string;
   [propName: string]: any;
 }
