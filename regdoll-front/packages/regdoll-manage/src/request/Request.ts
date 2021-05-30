@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-05-25 21:48:37
  * @Editors: lgldlk
- * @LastEditTime: 2021-05-25 22:08:18
+ * @LastEditTime: 2021-05-29 19:52:36
  */
 
 import axios from 'axios';
@@ -54,8 +54,9 @@ class Request {
         .then((res: any) => {
           // 请求成功
           let header: any = toLowerCase(res.header);
+
           // 保存持续化session
-          if (res.header.session) {
+          if (header.session) {
             LocalStorage.setLocalStore('session', header.session);
           }
           resolve(res);
