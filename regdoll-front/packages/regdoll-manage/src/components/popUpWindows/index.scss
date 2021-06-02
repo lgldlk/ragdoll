@@ -6,9 +6,10 @@
     @apply flex;
     @apply justify-center;
     @apply items-center;
+    animation: popWindowShow 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
     .center-slot {
         @apply bg-white;
-        @apply py-3;
+        @apply py-2;
         @apply px-3;
         @apply rounded-md;
         @apply pb-8;
@@ -21,9 +22,11 @@
             @apply border-solid;
             @apply border-0;
             @apply border-b-2;
+            @apply w-full;
             @apply border-gray-200;
             .header-title {
                 @apply whitespace-nowrap;
+                padding-right: 0.75rem;
             }
             .forkIcon {
                 @apply cursor-pointer;
@@ -31,5 +34,14 @@
                 height: 0.75rem;
             }
         }
+    }
+}
+
+@keyframes popWindowShow {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 100;
     }
 }

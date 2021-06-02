@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-05-29 21:05:26
  * @Editors: lgldlk
- * @LastEditTime: 2021-05-30 20:48:09
+ * @LastEditTime: 2021-05-31 21:49:28
 -->
 <template>
   <teleport to="body">
@@ -11,7 +11,6 @@
       <div class="center-slot">
         <div class="slot-header">
           <div class="header-title">{{ windowTitle }}</div>
-
           <svg
             t="1622298296948"
             class="forkIcon"
