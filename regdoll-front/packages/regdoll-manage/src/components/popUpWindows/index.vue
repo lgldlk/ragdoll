@@ -3,12 +3,12 @@
  * @Author: lgldlk
  * @Date: 2021-05-29 21:05:26
  * @Editors: lgldlk
- * @LastEditTime: 2021-05-31 21:49:28
+ * @LastEditTime: 2021-06-03 07:36:13
 -->
 <template>
   <teleport to="body">
     <div class="pop-bg" @click="bgClick">
-      <div class="center-slot">
+      <div class="center-slot" @click.stop="">
         <div class="slot-header">
           <div class="header-title">{{ windowTitle }}</div>
           <svg
@@ -29,6 +29,9 @@
           </svg>
         </div>
         <slot> </slot>
+        <div class="footer">
+          <slot name="footer"></slot>
+        </div>
       </div>
     </div>
   </teleport>
