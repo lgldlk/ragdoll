@@ -3,17 +3,17 @@
  * @Author: lgldlk
  * @Date: 2021-05-02 21:54:10
  * @Editors: lgldlk
- * @LastEditTime: 2021-05-13 21:56:36
+ * @LastEditTime: 2021-06-03 20:46:12
  */
-import * as THREE from 'three';
-import SceneConfig from '../config/SceneConfig';
+import * as THREE from "three";
+import SceneConfig from "../config/SceneConfig";
 
-import { nextTick } from 'vue';
-import { getDefaultAmbientLight, getDefaultSpotLight, getGridHelper } from './RegDollHelper';
-import { RegDollSceneObject3D } from './RegDollSceneObject3D';
+import { nextTick } from "vue";
+import { getDefaultAmbientLight, getDefaultSpotLight, getGridHelper } from "./RegDollHelper";
+import { RegDollSceneObject3D } from "./RegDollSceneObject3D";
 
-import { TransformControls } from '/@/assets/js/TransformControls.js';
-import { OrbitControls } from '/@/assets/js/OrbitControls.js';
+import { TransformControls } from "/@/assets/js/TransformControls.js";
+import { OrbitControls } from "/@/assets/js/OrbitControls.js";
 
 export class regDollScene {
   scene!: THREE.Scene;
@@ -47,7 +47,7 @@ export class regDollScene {
     private renderDom: HTMLElement,
     private showAxes: Boolean,
     private showGirdHelper: Boolean,
-    private backgroundColor?: THREE.Color,
+    private backgroundColor: THREE.Color = new THREE.Color(0xffffff),
   ) {
     this.objectArr = [];
 
@@ -55,7 +55,7 @@ export class regDollScene {
       this.renderWidth = this.renderDom.clientWidth;
       this.renderHeight = this.renderDom.clientHeight;
     }
-    this.initScene();
+    this.initScene(backgroundColor);
     this.initCamera();
     this.initLights();
     this.initRenderer();
@@ -77,19 +77,19 @@ export class regDollScene {
   }
   initOrbitControls() {
     this.orbitControls = new OrbitControls(this.camera, this.renderer.domElement);
-    this.orbitControls.addEventListener('change', this.render);
+    this.orbitControls.addEventListener("change", this.render);
   }
   initTransformControls() {
     this.transformControl = new TransformControls(this.camera, this.renderer.domElement);
-    this.transformControl.addEventListener('dragging-changed', (event: any) => {
+    this.transformControl.addEventListener("dragging-changed", (event: any) => {
       this.orbitControls.enabled = !event.value;
     });
-    this.transformControl.addEventListener('change', this.render);
+    this.transformControl.addEventListener("change", this.render);
     this.scene.add(this.transformControl);
-    this.renderDom.addEventListener('pointerdown', this.onPointerDown);
-    this.renderDom.addEventListener('pointerup', this.onPointerUp);
-    this.renderDom.addEventListener('pointermove', this.onPointerMove);
-    this.renderDom.addEventListener('mouseleave', () => {
+    this.renderDom.addEventListener("pointerdown", this.onPointerDown);
+    this.renderDom.addEventListener("pointerup", this.onPointerUp);
+    this.renderDom.addEventListener("pointermove", this.onPointerMove);
+    this.renderDom.addEventListener("mouseleave", () => {
       this.axesHelper.visible == false && this.setAxesHelperVisible(true);
     });
   }
@@ -106,7 +106,6 @@ export class regDollScene {
   onPointerMove = (event: { offsetX: number; offsetY: number }) => {
     this.pointer.x = (event.offsetX / this.renderWidth) * 2 - 1;
     this.pointer.y = -(event.offsetY / this.renderHeight) * 2 + 1;
-
     this.raycaster.setFromCamera(this.pointer, this.camera);
     const intersects = this.raycaster.intersectObjects(this.objectArr, true);
     if (intersects.length > 0) {
@@ -151,7 +150,7 @@ export class regDollScene {
     this.axesHelper.visible = visible;
   }
   addListener() {
-    window.addEventListener('resize', this.resizeRender);
+    window.addEventListener("resize", this.resizeRender);
   }
   initRenderer() {
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -159,9 +158,12 @@ export class regDollScene {
     this.renderer.setSize(this.renderWidth, this.renderHeight);
     this.renderDom.appendChild(this.renderer.domElement);
   }
-  initScene() {
+  initScene(bgColor: THREE.Color) {
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color('rgb(255, 255, 255)');
+    this.scene.background = bgColor;
+  }
+  changeBackground(newBgColor: THREE.Color) {
+    this.scene.background = newBgColor;
   }
   initAxesHelper() {
     this.axesHelper = new THREE.AxesHelper(SceneConfig.sceneLen);
