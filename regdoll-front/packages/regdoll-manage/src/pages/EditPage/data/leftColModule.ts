@@ -1,13 +1,16 @@
+import { ADD_OBJECT } from "./../../../store/Scene/mutation-types";
+import { Store, useStore } from "vuex";
 /*
  * @Descripttion:
  * @Author: lgldlk
  * @Date: 2021-05-04 21:19:22
  * @Editors: lgldlk
- * @LastEditTime: 2021-06-01 21:56:56
+ * @LastEditTime: 2021-06-03 21:15:05
  */
 import { reactive, ref, provide, inject, readonly } from "vue";
 import { leafColumnModuleParts } from "./PROVIDE_KEY";
-
+import { getAtomList } from "/@/api/AtomRequest";
+import Atom from "/@/threeScene/Atom";
 const partsOption = [
   {
     name: "原子",
@@ -16,7 +19,6 @@ const partsOption = [
 </svg>`,
     click: () => {
       console.log("atomclick");
-
       openAtomChooseWindow();
     },
   },
@@ -39,25 +41,53 @@ const partsOption = [
     },
   },
 ];
+let store: Store<any> | null;
 export const getParts = () => inject(leafColumnModuleParts);
 const proParts = (): Array<any> => {
   provide(leafColumnModuleParts, partsOption);
   return partsOption;
 };
-const showAtomChooseWindow = ref<boolean>(true);
+const showAtomChooseWindow = ref<boolean>(false),
+  atomArray = ref<Array<AtomVO>>([]),
+  chooseAtomEnName = ref<string>("");
+
 const closeAtomChooseWindow = () => {
     setTimeout(() => {
       showAtomChooseWindow.value = false;
-    }, 500);
+    }, 200);
   },
-  openAtomChooseWindow = () => {
+  openAtomChooseWindow = async () => {
+    if (atomArray.value.length == 0) {
+      let atomListResult = await getAtomList();
+      if (atomListResult.code == "200") {
+        atomArray.value = atomListResult.data;
+      }
+    }
     showAtomChooseWindow.value = true;
-  };
+  },
+  affirmChooseAtom = () => {
+    if (chooseAtomEnName.value.length > 0) {
+      atomArray.value.map((item, i) => {
+        console.log(item);
 
-export default function leafColMod() {
+        if (item.en_name == chooseAtomEnName.value) {
+          store?.commit(
+            "scene/" + ADD_OBJECT,
+            new Atom(item.quality, item.ele_number, item.en_name, item.ch_name),
+          );
+        }
+      });
+      closeAtomChooseWindow();
+    }
+  };
+export default function leafColMod(storeIn: Store<any>) {
   proParts();
+  store = storeIn;
   return {
     showAtomChooseWindow,
     closeAtomChooseWindow,
+    affirmChooseAtom,
+    atomArray,
+    chooseAtomEnName,
   };
 }
