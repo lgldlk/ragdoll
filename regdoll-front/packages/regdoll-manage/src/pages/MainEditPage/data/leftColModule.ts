@@ -5,7 +5,7 @@ import { Store, useStore } from "vuex";
  * @Author: lgldlk
  * @Date: 2021-05-04 21:19:22
  * @Editors: lgldlk
- * @LastEditTime: 2021-06-03 21:15:05
+ * @LastEditTime: 2021-06-03 21:50:08
  */
 import { reactive, ref, provide, inject, readonly } from "vue";
 import { leafColumnModuleParts } from "./PROVIDE_KEY";
@@ -68,8 +68,6 @@ const closeAtomChooseWindow = () => {
   affirmChooseAtom = () => {
     if (chooseAtomEnName.value.length > 0) {
       atomArray.value.map((item, i) => {
-        console.log(item);
-
         if (item.en_name == chooseAtomEnName.value) {
           store?.commit(
             "scene/" + ADD_OBJECT,

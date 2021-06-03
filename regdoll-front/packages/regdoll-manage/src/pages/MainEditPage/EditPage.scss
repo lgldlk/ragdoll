@@ -19,3 +19,8 @@
         width: 25%;
     }
 }
+
+.popWindow_footer {
+    @apply flex;
+    @apply justify-end;
+}
