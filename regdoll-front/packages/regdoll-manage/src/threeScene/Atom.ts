@@ -1,15 +1,15 @@
-import { RegDollSceneObject3D } from './RegDollSceneObject3D';
+import { RegDollSceneObject3D } from "./RegDollSceneObject3D";
 /*
  * @Editors: lgldlk
  * @Descripttion:
  * @Author: lgldlk
  * @Date: 2021-05-02 21:54:10
- * @LastEditTime: 2021-05-13 21:36:56
+ * @LastEditTime: 2021-06-03 21:34:16
  */
-import * as THREE from 'three';
-import { Object3D } from 'three';
-import AtomModelConfig from '../config/AtomModelConfig';
-import { getTrackArr } from './RegDollHelper';
+import * as THREE from "three";
+import { Object3D } from "three";
+import AtomModelConfig from "../config/AtomModelConfig";
+import { getTrackArr } from "./RegDollHelper";
 export default class Atom extends RegDollSceneObject3D {
   nucleus!: THREE.Mesh; //原子核
   electronics: Array<THREE.Object3D>;
@@ -98,21 +98,21 @@ export default class Atom extends RegDollSceneObject3D {
     return eleOrbit;
   }
 
-  getTextCanvas(str: string, color: THREE.Color, darwWH: number): THREE.Texture {
-    this.drawingCanvas = document.createElement('canvas');
-    this.drawingCanvas.width = this.drawingCanvas.height = darwWH;
-    const cont2d = this.drawingCanvas.getContext('2d');
+  getTextCanvas(str: string, color: THREE.Color, drawWH: number): THREE.Texture {
+    this.drawingCanvas = document.createElement("canvas");
+    this.drawingCanvas.width = this.drawingCanvas.height = drawWH;
+    const cont2d = this.drawingCanvas.getContext("2d");
     if (!(cont2d instanceof CanvasRenderingContext2D)) {
-      throw new Error('Failed to get 2D context');
+      throw new Error("Failed to get 2D context");
     }
     this.drawingContext = cont2d;
-    this.drawingContext.fillStyle = '#' + color.getHexString();
-    this.drawingContext.fillRect(0, 0, darwWH, darwWH);
-    this.drawingContext.fillStyle = '#000';
-    this.drawingContext.textAlign = 'center';
-    this.drawingContext.textBaseline = 'middle';
-    this.drawingContext.font = darwWH / 3 + 'px serif';
-    this.drawingContext.fillText(str, darwWH / 2, darwWH / 2);
+    this.drawingContext.fillStyle = "#" + color.getHexString();
+    this.drawingContext.fillRect(0, 0, drawWH, drawWH);
+    this.drawingContext.fillStyle = "#000";
+    this.drawingContext.textAlign = "center";
+    this.drawingContext.textBaseline = "middle";
+    this.drawingContext.font = drawWH / 3.5 + "px serif";
+    this.drawingContext.fillText(str, drawWH / 2, drawWH / 2);
     return new THREE.CanvasTexture(this.drawingCanvas);
   }
   renderEvent = () => {
