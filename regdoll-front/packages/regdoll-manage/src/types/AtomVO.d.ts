@@ -5,7 +5,7 @@
  * @Editors: lgldlk
  * @LastEditTime: 2021-06-02 21:20:24
  */
-declare interface Atom {
+declare interface AtomVO {
   en_name: string;
   ch_name: string;
   quality: number;
