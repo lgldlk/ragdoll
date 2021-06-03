@@ -1,11 +1,11 @@
-import * as THREE from 'three';
-import SceneConfig from '../config/SceneConfig';
+import * as THREE from "three";
+import SceneConfig from "../config/SceneConfig";
 /*
  * @Descripttion:
  * @Author: lgldlk
  * @Date: 2021-05-10 21:00:12
  * @Editors: lgldlk
- * @LastEditTime: 2021-05-12 21:55:24
+ * @LastEditTime: 2021-06-03 21:20:56
  */
 /**
  * 获取帮助表格
@@ -33,6 +33,8 @@ export function getTrackArr(eleNum: number): Array<number> {
     return [2, (eleNum - 2) % 8];
   } else if (eleNum <= 18) {
     return [2, 8, (eleNum - 10) % 8];
+  } else if (eleNum <= 28) {
+    return [2, 8, (eleNum - 10) % 18];
   } else if (eleNum <= 36) {
     return [2, 8, 18, (eleNum - 28) % 8];
   } else if (eleNum <= 52) {
