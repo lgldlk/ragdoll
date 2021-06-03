@@ -28,7 +28,7 @@
       </div>
       <template #footer>
         <span class="popWindow_footer">
-          <el-button size="mini" round="true" @click="closeAtomChooseWindow">取 消</el-button>
+          <el-button size="mini" :round="true" @click="closeAtomChooseWindow">取 消</el-button>
           <el-button size="mini" type="primary" round="round" @click="affirmChooseAtom"
             >确 定</el-button
           >

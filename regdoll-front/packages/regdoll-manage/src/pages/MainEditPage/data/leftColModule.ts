@@ -1,11 +1,11 @@
-import { ADD_OBJECT } from "./../../../store/Scene/mutation-types";
+import { ADD_OBJECT, RENDER_SCENE } from "./../../../store/Scene/mutation-types";
 import { Store, useStore } from "vuex";
 /*
  * @Descripttion:
  * @Author: lgldlk
  * @Date: 2021-05-04 21:19:22
  * @Editors: lgldlk
- * @LastEditTime: 2021-06-03 21:50:08
+ * @LastEditTime: 2021-06-03 21:58:39
  */
 import { reactive, ref, provide, inject, readonly } from "vue";
 import { leafColumnModuleParts } from "./PROVIDE_KEY";
@@ -18,7 +18,6 @@ const partsOption = [
 </path>
 </svg>`,
     click: () => {
-      console.log("atomclick");
       openAtomChooseWindow();
     },
   },
@@ -73,6 +72,7 @@ const closeAtomChooseWindow = () => {
             "scene/" + ADD_OBJECT,
             new Atom(item.quality, item.ele_number, item.en_name, item.ch_name),
           );
+          store?.commit("scene/" + RENDER_SCENE);
         }
       });
       closeAtomChooseWindow();

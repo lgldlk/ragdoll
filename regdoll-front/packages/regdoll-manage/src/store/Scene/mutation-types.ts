@@ -3,3 +3,5 @@ export const INIT_REGDOLL_SCENE = "INIT_REGDOLL_SCENE";
 export const ADD_OBJECT = "ADD_OBJECT";
 
 export const REMOVE_OBJECT = "REMOVE_OBJECT";
+
+export const RENDER_SCENE = "RENDER_SCENE";

@@ -1,10 +1,17 @@
+/*
+ * @Descripttion:
+ * @Author: lgldlk
+ * @Date: 2021-05-02 21:54:10
+ * @Editors: lgldlk
+ * @LastEditTime: 2021-06-03 19:28:32
+ */
 /**
  * 循环调用函数
  * @param functions 要调用的函数
  */
 export function callFunctions(functions: Array<Function>, ...args: Array<any>) {
   for (let i = 0; i < functions.length; i++) {
-    if (typeof functions == 'function') {
+    if (typeof functions == "function") {
       (functions[i] as any)(args[i]);
     }
   }
@@ -15,9 +22,12 @@ export function callFunctions(functions: Array<Function>, ...args: Array<any>) {
  * @param params
  */
 export function toLowerCase(obj: object) {
-  let toobj = {};
-  for (const key in obj) {
-    (<any>toobj)[key.toLowerCase()] = (<any>obj)[key];
+  if (typeof obj == "undefined") {
+    return {};
   }
-  return toobj;
+  let toObj = {};
+  for (const key in obj) {
+    (<any>toObj)[key.toLowerCase()] = (<any>obj)[key];
+  }
+  return toObj;
 }

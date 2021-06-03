@@ -4,7 +4,7 @@ import { RegDollSceneObject3D } from "./RegDollSceneObject3D";
  * @Descripttion:
  * @Author: lgldlk
  * @Date: 2021-05-02 21:54:10
- * @LastEditTime: 2021-06-03 21:34:16
+ * @LastEditTime: 2021-06-03 21:51:32
  */
 import * as THREE from "three";
 import { Object3D } from "three";
@@ -111,7 +111,7 @@ export default class Atom extends RegDollSceneObject3D {
     this.drawingContext.fillStyle = "#000";
     this.drawingContext.textAlign = "center";
     this.drawingContext.textBaseline = "middle";
-    this.drawingContext.font = drawWH / 3.5 + "px serif";
+    this.drawingContext.font = drawWH / 4 + "px serif";
     this.drawingContext.fillText(str, drawWH / 2, drawWH / 2);
     return new THREE.CanvasTexture(this.drawingCanvas);
   }

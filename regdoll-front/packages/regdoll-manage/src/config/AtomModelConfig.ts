@@ -6,7 +6,7 @@
  * @LastEditTime: 2021-05-12 21:53:13
  */
 
-import * as THREE from 'three';
+import * as THREE from "three";
 
 interface DefaultSphereConfigType {
   //球类的默认设置
@@ -57,6 +57,6 @@ export default class AtomModelConfig {
     ...AtomModelConfig.defaultSphere,
     color: new THREE.Color(0xee0000),
     baseAtomRadius: 1,
-    baseRadius: 0.05,
+    baseRadius: 0.08,
   };
 }

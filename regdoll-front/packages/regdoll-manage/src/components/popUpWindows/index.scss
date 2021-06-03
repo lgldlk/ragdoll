@@ -3,9 +3,6 @@
     @apply inset-0;
     @apply bg-gray-700;
     @apply bg-opacity-70;
-    @apply flex;
-    @apply justify-center;
-    @apply items-center;
     animation: popWindowShow 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
     .center-slot {
         @apply bg-white;
@@ -13,8 +10,12 @@
         @apply px-3;
         @apply rounded-md;
         @apply pb-4;
+        @apply absolute;
         @apply text-base;
-        min-width: 20rem;
+        left: 50%;
+        top: 30%;
+        transform: translate(-50%, -50%);
+        min-width: 10rem;
         .slot-header {
             @apply flex;
             @apply justify-between;

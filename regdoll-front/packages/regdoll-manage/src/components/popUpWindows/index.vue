@@ -59,14 +59,4 @@ export default defineComponent({
 </script>
 <style scoped lang="scss">
 @import "./index.scss";
-.pop-bg {
-  .center-slot {
-    .slot-header {
-      .header-title {
-      }
-      .header-fork {
-      }
-    }
-  }
-}
 </style>
