@@ -1103,6 +1103,11 @@
     "@types/keygrip" "*"
     "@types/node" "*"
 
+"@types/dat.gui@^0.7.6":
+  version "0.7.6"
+  resolved "https://registry.nlark.com/@types/dat.gui/download/@types/dat.gui-0.7.6.tgz?cache=0&sync_timestamp=1621241439753&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Fdat.gui%2Fdownload%2F%40types%2Fdat.gui-0.7.6.tgz#61aaacdb01f70e1401e051dfcf4192a30acb2435"
+  integrity sha1-Yaqs2wH3DhQB4FHfz0GSowrLJDU=
+
 "@types/estree@*":
   version "0.0.47"
   resolved "https://registry.npm.taobao.org/@types/estree/download/@types/estree-0.0.47.tgz?cache=0&sync_timestamp=1616657481143&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Festree%2Fdownload%2F%40types%2Festree-0.0.47.tgz#d7a51db20f0650efec24cd04994f523d93172ed4"
@@ -2498,6 +2503,11 @@ dashdash@^1.12.0:
   integrity sha1-hTz6D3y+L+1d4gMmuN1YEDX24vA=
   dependencies:
     assert-plus "^1.0.0"
+
+dat.gui@^0.7.7:
+  version "0.7.7"
+  resolved "https://registry.npm.taobao.org/dat.gui/download/dat.gui-0.7.7.tgz#7f96dbd21621a76385203659aebfa264ee6ae89b"
+  integrity sha1-f5bb0hYhp2OFIDZZrr+iZO5q6Js=
 
 dateformat@^3.0.0:
   version "3.0.3"
