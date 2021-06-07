@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-05-02 21:54:10
  * @Editors: lgldlk
- * @LastEditTime: 2021-06-03 20:46:12
+ * @LastEditTime: 2021-06-07 22:26:16
  */
 import * as THREE from "three";
 import SceneConfig from "../config/SceneConfig";
@@ -28,11 +28,12 @@ export class regDollScene {
   transformControl!: TransformControls;
   defaultSpotLight!: THREE.SpotLight;
   defaultAmbientLight!: THREE.AmbientLight;
-  onDownPosition = new THREE.Vector2();
-  onUpPosition = new THREE.Vector2();
+  // onDownPosition = new THREE.Vector2();
+  // onUpPosition = new THREE.Vector2();
   pointer = new THREE.Vector2();
   raycaster = new THREE.Raycaster();
   renderScene: Boolean = false;
+  selectObj: RegDollSceneObject3D | undefined;
   /**
    *Creates an instance of Scene.
    * @param {Boolean} showAxes//是否展示坐标轴
@@ -47,7 +48,7 @@ export class regDollScene {
     private renderDom: HTMLElement,
     private showAxes: Boolean,
     private showGirdHelper: Boolean,
-    private backgroundColor: THREE.Color = new THREE.Color(0xffffff),
+    public backgroundColor: THREE.Color = new THREE.Color(0xffffff),
   ) {
     this.objectArr = [];
 
@@ -77,7 +78,11 @@ export class regDollScene {
   }
   initOrbitControls() {
     this.orbitControls = new OrbitControls(this.camera, this.renderer.domElement);
-    this.orbitControls.addEventListener("change", this.render);
+    this.orbitControls.addEventListener("change",
+      () => {
+          this.transformControl.detach ()
+        this.render(0)
+      });
   }
   initTransformControls() {
     this.transformControl = new TransformControls(this.camera, this.renderer.domElement);
@@ -86,23 +91,23 @@ export class regDollScene {
     });
     this.transformControl.addEventListener("change", this.render);
     this.scene.add(this.transformControl);
-    this.renderDom.addEventListener("pointerdown", this.onPointerDown);
-    this.renderDom.addEventListener("pointerup", this.onPointerUp);
+    // this.renderDom.addEventListener("pointerdown", this.onPointerDown);
+    // this.renderDom.addEventListener("pointerup", this.onPointerUp);
     this.renderDom.addEventListener("pointermove", this.onPointerMove);
     this.renderDom.addEventListener("mouseleave", () => {
       this.axesHelper.visible == false && this.setAxesHelperVisible(true);
     });
   }
-  onPointerDown = (event: { offsetX: number; offsetY: number }) => {
-    this.onDownPosition.x = event.offsetX;
-    this.onDownPosition.y = event.offsetY;
-  };
-  onPointerUp = (event: { offsetX: number; offsetY: number }) => {
-    this.onUpPosition.x = event.offsetX;
-    this.onUpPosition.y = event.offsetY;
-    this.axesHelper.visible == false && this.setAxesHelperVisible(true);
-    if (this.onDownPosition.distanceTo(this.onUpPosition) === 0) this.transformControl.detach();
-  };
+  // onPointerDown = (event: { offsetX: number; offsetY: number }) => {
+  //   this.onDownPosition.x = event.offsetX;
+  //   this.onDownPosition.y = event.offsetY;
+  // };
+  // onPointerUp = (event: { offsetX: number; offsetY: number }) => {
+  //   this.onUpPosition.x = event.offsetX;
+  //   this.onUpPosition.y = event.offsetY;
+  //   this.axesHelper.visible == false && this.setAxesHelperVisible(true);
+  
+  // };
   onPointerMove = (event: { offsetX: number; offsetY: number }) => {
     this.pointer.x = (event.offsetX / this.renderWidth) * 2 - 1;
     this.pointer.y = -(event.offsetY / this.renderHeight) * 2 + 1;
@@ -110,9 +115,10 @@ export class regDollScene {
     const intersects = this.raycaster.intersectObjects(this.objectArr, true);
     if (intersects.length > 0) {
       this.setAxesHelperVisible(!this.transformControl.dragging);
-      let selectObj = this.getSelectObj(intersects[0].object);
-      if (selectObj !== this.transformControl.object) {
-        this.transformControl.attach(selectObj);
+      this. selectObj = this.getSelectObj(intersects[0].object);
+      if (this.selectObj !== this.transformControl.object) {
+        this.transformControl.attach(this.selectObj);
+ 
       }
     }
   };
@@ -185,7 +191,7 @@ export class regDollScene {
     }
   }
   render = (renderTime: number) => {
-    if (this.renderScene) {
+    if (this.renderScene&&renderTime>0) {
       this.renderScene && requestAnimationFrame(this.render);
       this.objectArr.forEach((item) => {
         if (item.renderEvent) {
