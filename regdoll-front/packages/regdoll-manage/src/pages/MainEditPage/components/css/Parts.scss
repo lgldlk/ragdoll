@@ -18,7 +18,10 @@
         @apply font-bold;
         @apply rounded-xl;
         @apply text-gray-700;
-        width: 45%;
-        margin: 2.5%;
+        width: 40%;
+        margin: 5%;
+        .part-title {
+            margin-top: 0.5rem;
+        }
     }
 }

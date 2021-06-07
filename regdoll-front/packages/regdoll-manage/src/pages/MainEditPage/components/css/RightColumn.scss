@@ -1,4 +1,25 @@
 .rightMenu {
     @include menuBackgroundColor;
     @apply border-l-2;
+    @apply px-4;
+    @apply py-2;
+    @apply shadow-lg;
+    @apply overflow-hidden;
+    @apply relative;
+    &:deep(.el-tabs__item) {
+        @apply border-none;
+        @apply text-white;
+        &:hover {
+            color: rgb(64, 158, 255);
+            cursor: pointer;
+        }
+    }
+    &:deep(.el-tabs__nav) {
+        @apply border-none;
+    }
+    &:deep(.el-tab-pane) {
+        @apply text-white;
+        max-height: calc(100vh - 55px - 1rem);
+        overflow: auto;
+    }
 }

@@ -1,4 +1,10 @@
 .leafMenu {
     @include menuBackgroundColor;
     @apply border-r-2;
+    @apply shadow-lg;
+}
+
+.popWindow_footer {
+    @apply flex;
+    @apply justify-end;
 }
