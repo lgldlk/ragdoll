@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-05-02 21:54:10
  * @Editors: lgldlk
- * @LastEditTime: 2021-06-07 22:26:16
+ * @LastEditTime: 2021-06-08 07:43:59
  */
 import * as THREE from "three";
 import SceneConfig from "../config/SceneConfig";
@@ -66,7 +66,7 @@ export class regDollScene {
     }
     {
       this.showGirdHelper && this.initGridHelper();
-      this.showAxes && this.initAxesHelper();
+      this.showAxes && this.initAxesHelper(null);
     }
     this.addListener();
     requestAnimationFrame(this.render);
@@ -171,8 +171,8 @@ export class regDollScene {
   changeBackground(newBgColor: THREE.Color) {
     this.scene.background = newBgColor;
   }
-  initAxesHelper() {
-    this.axesHelper = new THREE.AxesHelper(SceneConfig.sceneLen);
+  initAxesHelper(sceneLen:number|null) {
+    this.axesHelper = new THREE.AxesHelper(sceneLen||SceneConfig.sceneLen);
     this.scene.add(this.axesHelper);
   }
   changeSceneLen(len: number) {
