@@ -5,7 +5,7 @@ import SceneConfig from "../config/SceneConfig";
  * @Author: lgldlk
  * @Date: 2021-05-10 21:00:12
  * @Editors: lgldlk
- * @LastEditTime: 2021-06-03 21:20:56
+ * @LastEditTime: 2021-06-10 22:17:35
  */
 /**
  * 获取帮助表格
@@ -13,11 +13,12 @@ import SceneConfig from "../config/SceneConfig";
  * @param divisions 设置有几个格子
  * @returns  THREE.GridHelper实例
  */
-export function getGridHelper(size: number, divisions: number): THREE.GridHelper {
+export function getGridHelper(size: number, divisions: number) :THREE.GridHelper
+{
   let gridHelp = new THREE.GridHelper(size, divisions);
-  gridHelp.position.y = 0;
   gridHelp.material instanceof THREE.Material && (gridHelp.material.opacity = 0.25);
   gridHelp.material instanceof THREE.Material && (gridHelp.material.transparent = true);
+
   return gridHelp;
 }
 

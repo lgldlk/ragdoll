@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-06-03 19:43:58
  * @Editors: lgldlk
- * @LastEditTime: 2021-06-03 21:57:28
+ * @LastEditTime: 2021-06-10 22:11:55
  */
 
 import { SceneState } from "./state";
@@ -22,8 +22,8 @@ const mutations: MutationTree<SceneState> = {
   [INIT_REGDOLL_SCENE](state, payload: initSceneVO) {
     state.mainScene = new regDollScene(payload.renderDom, payload.showAxes, payload.showGirdHelper);
   },
-  [ADD_OBJECT](state, payload: RegDollSceneObject3D) {
-    state.mainScene?.addObject(payload);
+  [ADD_OBJECT](state, payload: [RegDollSceneObject3D,Event|null]) {
+    state.mainScene?.addObject(payload[0],payload[1]||null);
   },
   [REMOVE_OBJECT](state, payload: RegDollSceneObject3D) {
     state.mainScene?.removeObject(payload);
