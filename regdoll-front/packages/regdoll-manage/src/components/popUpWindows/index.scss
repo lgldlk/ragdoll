@@ -3,7 +3,7 @@
     @apply inset-0;
     @apply bg-gray-700;
     @apply bg-opacity-70;
-    animation: popWindowShow 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    @include useOpacityAni;
     .center-slot {
         @apply bg-white;
         @apply py-3;
@@ -41,14 +41,5 @@
         .footer {
             margin-top: 1rem;
         }
-    }
-}
-
-@keyframes popWindowShow {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 100;
     }
 }

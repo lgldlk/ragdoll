@@ -13,13 +13,14 @@
         @apply items-center;
         .bar-item {
             @apply mt-10;
+            @apply cursor-pointer;
             @apply flex;
             @apply justify-center;
             @apply items-center;
         }
     }
     .menuCon {
-        flex: 7;
+        flex: 5;
         max-height: 100%;
         overflow: hidden;
         overflow-y: auto;
