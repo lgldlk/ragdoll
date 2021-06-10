@@ -11,6 +11,21 @@ body {
     width: 60%;
 }
 
+@keyframes opacityAni {
+    from {
+        opacity: 0;
+        scale: 0.8;
+    }
+    to {
+        scale: 1;
+        opacity: 100;
+    }
+}
+
+@mixin useOpacityAni {
+    animation: opacityAni 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
 @mixin menuBackgroundColor {
     @apply bg-gray-800;
     @apply box-border;

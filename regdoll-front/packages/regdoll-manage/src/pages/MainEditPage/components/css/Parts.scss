@@ -2,6 +2,7 @@
     @apply w-full;
     @apply flex;
     @apply flex-wrap;
+    @include useOpacityAni;
     .part {
         @apply bg-white;
         @apply border;

@@ -2,6 +2,28 @@
     @include menuBackgroundColor;
     @apply border-r-2;
     @apply shadow-lg;
+    @apply flex;
+    @apply flex-row;
+    .menuSliderBar {
+        @apply flex-1;
+        @apply bg-gray-700;
+        @apply flex;
+        @apply flex-col;
+        @apply justify-center;
+        @apply items-center;
+        .bar-item {
+            @apply mt-10;
+            @apply flex;
+            @apply justify-center;
+            @apply items-center;
+        }
+    }
+    .menuCon {
+        flex: 7;
+        max-height: 100%;
+        overflow: hidden;
+        overflow-y: auto;
+    }
 }
 
 .popWindow_footer {
