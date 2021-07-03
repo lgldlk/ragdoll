@@ -1,0 +1,32 @@
+.parts {
+    @apply w-full;
+    @apply flex;
+    @apply flex-wrap;
+    @include useOpacityAni(0.5s);
+    .part {
+        @apply bg-white;
+        @apply border;
+        @apply border-black;
+        @apply shadow-lg;
+        @apply overflow-hidden;
+        @apply cursor-pointer;
+        @apply p-2;
+        @apply box-border;
+        @apply text-center;
+        @apply text-lg;
+        @apply select-none;
+        @apply text-gray-800;
+        @apply font-bold;
+        @apply rounded-xl;
+        @apply text-gray-700;
+        width: 40%;
+        margin: 5%;
+        &:hover {
+            box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(255, 255, 255, 0.8), inset 18px 18px 30px rgba(0, 0, 0, 0.1), inset -18px -18px 30px rgba(255, 255, 255, 1);
+            transition: box-shadow .2s ease-out;
+        }
+        .part-title {
+            margin-top: 0.3rem;
+        }
+    }
+}
