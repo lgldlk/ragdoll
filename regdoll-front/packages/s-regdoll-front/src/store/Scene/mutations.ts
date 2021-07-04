@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-06-03 19:43:58
  * @Editors: lgldlk
- * @LastEditTime: 2021-06-10 22:11:55
+ * @LastEditTime: 2021-07-04 15:47:50
  */
 
 import { SceneState } from "./state";
@@ -20,10 +20,10 @@ type initSceneVO = {
 };
 const mutations: MutationTree<SceneState> = {
   [INIT_REGDOLL_SCENE](state, payload: initSceneVO) {
-    state.mainScene = new regDollScene(payload.renderDom, payload.showAxes, payload.showGirdHelper);
+    state.mainScene = new regDollScene(payload.renderDom, payload.showAxes, payload.showGirdHelper, payload.backgroundColor);
   },
-  [ADD_OBJECT](state, payload: [RegDollSceneObject3D,Event|null]) {
-    state.mainScene?.addObject(payload[0],payload[1]||null);
+  [ADD_OBJECT](state, payload: [RegDollSceneObject3D, Event | null]) {
+    state.mainScene?.addObject(payload[0], payload[1] || null);
   },
   [REMOVE_OBJECT](state, payload: RegDollSceneObject3D) {
     state.mainScene?.removeObject(payload);
