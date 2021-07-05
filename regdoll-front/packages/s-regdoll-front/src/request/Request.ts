@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-05-25 21:48:37
  * @Editors: lgldlk
- * @LastEditTime: 2021-06-02 22:04:11
+ * @LastEditTime: 2021-07-05 08:47:40
  */
 
 import axios, { AxiosResponse } from "axios";
@@ -48,6 +48,7 @@ class Request {
         header: data.headers !== undefined ? { ...this.headers, ...data.headers } : this.headers,
         method: data.method || "GET",
         data: data.data || data.params || "",
+        params: data.params || {}
       };
       axios
         .request({

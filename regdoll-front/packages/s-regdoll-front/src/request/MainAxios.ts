@@ -8,7 +8,7 @@
 import Request from "./Request";
 import { BaseUrl, reqErrorMsg } from "../config/RequestConfig";
 import { ElMessage } from "element-plus";
-let request = new Request();
+const request = new Request();
 request.init({
   baseUrl: BaseUrl,
   response: (res: response): Promise<responseData> => {
