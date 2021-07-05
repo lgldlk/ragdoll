@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-05-02 21:54:10
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-02 22:09:02
+ * @LastEditTime: 2021-07-05 16:03:55
  */
 import * as THREE from "three";
 import SceneConfig from "../config/SceneConfig";
@@ -12,10 +12,18 @@ import { nextTick } from "vue";
 import { getDefaultAmbientLight, getDefaultSpotLight, getGridHelper } from "./RegDollHelper";
 import { RegDollSceneObject3D } from "./RegDollSceneObject3D";
 
+// @ts-ignore
 import { TransformControls } from "/@/assets/js/TransformControls.js";
+// @ts-ignore
 import { OrbitControls } from "/@/assets/js/OrbitControls.js";
 import { GridHelper, Mesh, MeshBasicMaterial, PlaneGeometry } from 'three';
-
+// @ts-ignore
+import { EffectComposer } from '/@/assets/js/EffectComposer.js'
+// @ts-ignore
+import { RenderPass } from '/@/assets/js/RenderPass.js'
+// @ts-ignore
+import { ShaderPass } from '/@/assets/js/ShaderPass'
+import { AdditiveBlendShader } from '/@/assets/js/AdditiveBlendShader'
 export class regDollScene {
   scene!: THREE.Scene;
   camera!: THREE.PerspectiveCamera;
@@ -28,7 +36,7 @@ export class regDollScene {
   orbitControls!: OrbitControls;
   transformControl!: TransformControls;
   defaultSpotLight!: THREE.SpotLight;
-  defaultAmbientLight!: THREE.AmbientLight;
+  defaultAmbientLight!: THREE.Light;
   mouserVector2: THREE.Vector2
   // onDownPosition = new THREE.Vector2();
   // onUpPosition = new THREE.Vector2();
@@ -36,6 +44,9 @@ export class regDollScene {
   raycaster = new THREE.Raycaster();
   renderScene: Boolean = false;
   selectObj: RegDollSceneObject3D | undefined;
+  // finalComposer: any;
+  // composer2: any;
+
   /**
    *Creates an instance of Scene.
    * @param {Boolean} showAxes//是否展示坐标轴
@@ -51,6 +62,7 @@ export class regDollScene {
     private showAxes: Boolean,
     private showGirdHelper: Boolean,
     public backgroundColor: THREE.Color = new THREE.Color(0xffffff),
+    public gridColor: THREE.Color = new THREE.Color(0xffffff)
   ) {
     this.objectArr = [];
     this.mouserVector2 = new THREE.Vector2()
@@ -75,7 +87,7 @@ export class regDollScene {
   }
 
   initGridHelper() {
-    this.gridHelp = getGridHelper(SceneConfig.sceneLen * 2, SceneConfig.sceneLen * 2);
+    this.gridHelp = getGridHelper(SceneConfig.sceneLen * 2, SceneConfig.sceneLen * 2, this.gridColor);
 
     this.scene.add(this.gridHelp)
   }
@@ -84,7 +96,7 @@ export class regDollScene {
     this.orbitControls.addEventListener("change",
       () => {
         this.transformControl.detach()
-        this.render(0)
+        this.render()
       });
   }
   initTransformControls() {
@@ -98,7 +110,7 @@ export class regDollScene {
     // this.renderDom.addEventListener("pointerup", this.onPointerUp);
     this.renderDom.addEventListener("pointermove", this.onPointerMove);
     this.renderDom.addEventListener("mouseleave", () => {
-      this.axesHelper.visible == false && this.setAxesHelperVisible(true);
+      this.axesHelper && this.axesHelper.visible == false && this.setAxesHelperVisible(true);
     });
   }
   // onPointerDown = (event: { offsetX: number; offsetY: number }) => {
@@ -142,6 +154,9 @@ export class regDollScene {
     this.scene.add(this.defaultSpotLight);
     this.defaultAmbientLight = getDefaultAmbientLight();
     this.scene.add(this.defaultAmbientLight);
+    // var light = new THREE.PointLight(0xffffff);
+    // light.position.set(0, 250, 0);
+    // this.scene.add(light);
   }
   initCamera() {
     this.camera = new THREE.PerspectiveCamera(
@@ -154,7 +169,7 @@ export class regDollScene {
     this.scene.add(this.camera);
   }
   setAxesHelperVisible(visible: boolean) {
-    this.axesHelper.visible = visible;
+    this.axesHelper && (this.axesHelper.visible = visible);
   }
   addListener() {
     window.addEventListener("resize", this.resizeRender);
@@ -164,10 +179,42 @@ export class regDollScene {
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(this.renderWidth, this.renderHeight);
     this.renderDom.appendChild(this.renderer.domElement);
+    // var renderTargetParameters =
+    // {
+    //   minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter,
+    //   format: THREE.RGBFormat, stencilBuffer: false
+    // };
+    // const renderTarget = new THREE.WebGLRenderTarget(this.renderWidth, this.renderHeight, renderTargetParameters);
+
+    // this.composer2 = new EffectComposer(this.renderer, renderTarget);
+
+    // // prepare the secondary render's passes
+    // var render2Pass = new RenderPass(this.scene, this.camera);
+    // this.composer2.addPass(render2Pass);
+
+    // this.finalComposer = new EffectComposer(this.renderer, renderTarget);
+    // var renderModel = new RenderPass(this.scene, this.camera);
+    // this.finalComposer.addPass(renderModel);
+    // var effectBlend = new ShaderPass(AdditiveBlendShader, "tDiffuse1");
+    // effectBlend.renderToScreen = true;
+    // this.finalComposer.addPass(effectBlend);
+    // var effectBlend = new ShaderPass(AdditiveBlendShader, "tDiffuse1");
+    // effectBlend.uniforms['tDiffuse2'].value = this.composer2.renderTarget2;
+    // effectBlend.renderToScreen = true;
+    // this.finalComposer.addPass(effectBlend);
+
   }
   initScene(bgColor: THREE.Color) {
     this.scene = new THREE.Scene();
     this.scene.background = bgColor;
+    var imagePrefix = "textures/nebula/nebula-";
+    var directions = ["xpos", "xneg", "ypos", "yneg", "zpos", "zneg"];
+    var imageSuffix = ".png";
+    var imageURLs = [];
+    for (var i = 0; i < 6; i++)
+      imageURLs.push(imagePrefix + directions[i] + imageSuffix);
+    var textureCube = THREE.ImageUtils.loadTextureCube(imageURLs);
+    this.scene.background = textureCube;
   }
   changeBackground(newBgColor: THREE.Color) {
     this.scene.background = newBgColor;
@@ -202,6 +249,9 @@ export class regDollScene {
       });
     }
     this.renderer.render(this.scene, this.camera);
+
+    // this.finalComposer.render();
+    // this.composer2.render();
     // this.transformControl.update();
   };
   /**

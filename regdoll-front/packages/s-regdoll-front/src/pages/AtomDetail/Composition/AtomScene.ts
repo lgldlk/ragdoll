@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-07-04 15:38:48
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-04 16:46:52
+ * @LastEditTime: 2021-07-05 21:57:26
  */
 
 import { Store } from 'vuex';
@@ -15,7 +15,8 @@ export default function initScene(store: Store<RootState>, renderDom: HTMLElemen
   store.commit(SCENE_MODULE_COMMIT_PREFIX + INIT_REGDOLL_SCENE, {
     renderDom: renderDom,
     showAxes: true,
-    showGirdHelper: true,
-    backgroundColor: new Color(0, 0, 0)
+    showGirdHelper: false,
+    backgroundColor: new Color(0, 0, 0),
+    gridColor: new Color("rgb(0,  82,  82)")
   });
 }

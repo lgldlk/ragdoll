@@ -1,8 +1,10 @@
 .scene_container {
+    @apply flex;
+    @apply flex-row;
     height: 100vh;
     width: 100vw;
     #mainScene {
-        margin: 0;
+        width: 78%;
         background-color: aqua;
         overflow: hidden;
         height: 100vh;
