@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-07-05 13:49:55
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-06 10:52:36
+ * @LastEditTime: 2021-07-06 16:18:47
 -->
 <template>
   <div class="right_menu">
@@ -18,10 +18,10 @@
               <div class="tool_option"
                    v-for="(item,i) in toolsLIst"
                    :key="i"
-                   @click="item.clickFunc">
+                   @click="item.clickFunc(item)">
                 <div class="icon_con"
-                     v-html="item.image"></div>
-                <div class="tool_title">{{item.title}}</div>
+                     v-html="item.image.value||item.image"></div>
+                <div class="tool_title">{{item.title.value||item.title}}</div>
               </div>
             </div>
           </el-collapse-item>

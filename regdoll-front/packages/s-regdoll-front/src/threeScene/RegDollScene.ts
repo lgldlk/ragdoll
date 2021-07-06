@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-05-02 21:54:10
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-06 09:02:56
+ * @LastEditTime: 2021-07-06 21:58:17
  */
 import * as THREE from "three";
 import SceneConfig from "../config/SceneConfig";
@@ -44,6 +44,7 @@ export class regDollScene {
   raycaster = new THREE.Raycaster();
   renderScene: Boolean = false;
   selectObj: RegDollSceneObject3D | undefined;
+  lockChoice: Boolean = false;//锁定选择对象
   // finalComposer: any;
   // composer2: any;
 
@@ -95,9 +96,14 @@ export class regDollScene {
     this.orbitControls = new OrbitControls(this.camera, this.renderer.domElement);
     this.orbitControls.addEventListener("change",
       () => {
-        this.transformControl.detach()
+        if (!this.lockChoice) {
+          this.transformControl.detach()
+        }
         this.render()
       });
+  }
+  setLockChoice(payload: Boolean) {
+    this.lockChoice = payload;
   }
   initTransformControls() {
     this.transformControl = new TransformControls(this.camera, this.renderer.domElement);
@@ -125,11 +131,14 @@ export class regDollScene {
   // };
   onPointerMove = (event: { offsetX: number; offsetY: number, clientX: number, clientY: number }) => {
     this.mouserVector2.set((event.offsetX / this.renderWidth) * 2 - 1, - (event.offsetY / this.renderHeight) * 2 + 1);
+
     this.raycaster.setFromCamera(this.mouserVector2, this.camera);
     const intersects = this.raycaster.intersectObjects(this.objectArr, true);
     if (intersects.length > 0) {
       this.setAxesHelperVisible(!this.transformControl.dragging);
-      this.selectObj = this.getSelectObj(intersects[0].object);
+      if (!this.lockChoice) {
+        this.selectObj = this.getSelectObj(intersects[0].object);
+      }
       if (this.selectObj !== this.transformControl.object) {
         this.transformControl.attach(this.selectObj);
       }
@@ -279,7 +288,9 @@ export class regDollScene {
     }
     this.objectArr.push(obj);
     this.scene.add(obj);
-    this.transformControl.attach(obj)
+    if (!this.lockChoice) {
+      this.transformControl.attach(obj)
+    }
     this.render()
   }
 

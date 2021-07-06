@@ -3,14 +3,14 @@
  * @Author: lgldlk
  * @Date: 2021-06-03 19:43:58
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-06 09:04:11
+ * @LastEditTime: 2021-07-06 21:48:55
  */
 
 import { SceneState } from "./state";
 
 import { MutationTree } from "vuex";
 import { regDollScene } from "/@/threeScene/RegDollScene";
-import { INIT_REGDOLL_SCENE, ADD_OBJECT, REMOVE_OBJECT, RENDER_SCENE, SET_BACKGROUND_TEXT_URE_CUBE } from "./mutation-types";
+import { INIT_REGDOLL_SCENE, ADD_OBJECT, REMOVE_OBJECT, RENDER_SCENE, SET_BACKGROUND_TEXT_URE_CUBE, SET_LOCK_CHOICE } from "./mutation-types";
 import { RegDollSceneObject3D } from "/@/threeScene/RegDollSceneObject3D";
 type initSceneVO = {
   renderDom: HTMLElement;
@@ -34,6 +34,9 @@ const mutations: MutationTree<SceneState> = {
   },
   [SET_BACKGROUND_TEXT_URE_CUBE](state, payload: THREE.Texture) {
     state.mainScene?.setBackgroundTextUreCube(payload)
+  },
+  [SET_LOCK_CHOICE](state, payload: Boolean) {
+    state.mainScene?.setLockChoice(payload)
   }
 
 };

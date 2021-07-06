@@ -53,6 +53,9 @@
     &:deep(.el-collapse-item__header) {
         @apply border-none;
     }
+    &:deep(.el-collapse) {
+        @apply rounded-md;
+    }
     &:deep(.icon) {
         @apply w-12;
         @apply box-border;
