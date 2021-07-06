@@ -22,6 +22,7 @@
                     @apply flex-1;
                     @apply p-1;
                     @apply flex-col;
+                    @apply select-none;
                     background: #004848;
                     @apply m-2;
                     @apply cursor-pointer;
@@ -57,4 +58,9 @@
         @apply box-border;
         @apply p-1;
     }
+}
+
+.popWindow_footer {
+    @apply flex;
+    @apply justify-end;
 }
