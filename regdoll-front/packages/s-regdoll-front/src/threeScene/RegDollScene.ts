@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-05-02 21:54:10
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-05 16:03:55
+ * @LastEditTime: 2021-07-06 09:02:56
  */
 import * as THREE from "three";
 import SceneConfig from "../config/SceneConfig";
@@ -204,17 +204,14 @@ export class regDollScene {
     // this.finalComposer.addPass(effectBlend);
 
   }
+  setBackgroundTextUreCube(textureCube: THREE.Texture) {
+    this.scene.background = textureCube;
+    this.render();
+  }
   initScene(bgColor: THREE.Color) {
     this.scene = new THREE.Scene();
     this.scene.background = bgColor;
-    var imagePrefix = "textures/nebula/nebula-";
-    var directions = ["xpos", "xneg", "ypos", "yneg", "zpos", "zneg"];
-    var imageSuffix = ".png";
-    var imageURLs = [];
-    for (var i = 0; i < 6; i++)
-      imageURLs.push(imagePrefix + directions[i] + imageSuffix);
-    var textureCube = THREE.ImageUtils.loadTextureCube(imageURLs);
-    this.scene.background = textureCube;
+
   }
   changeBackground(newBgColor: THREE.Color) {
     this.scene.background = newBgColor;
