@@ -8,16 +8,18 @@ import { ADD_OBJECT } from '/@/store/Scene/mutation-types';
  * @Author: lgldlk
  * @Date: 2021-07-05 22:30:42
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-06 11:14:47
+ * @LastEditTime: 2021-07-06 15:32:58
  */
-
+import { CLOSE_LOADING_WINDOW, OPEN_LOADING_WINDOW } from '/@/PROVIDE_KEY'
 
 import { AtomRequest } from '/@/api/AtomRequest'
+import { inject } from 'vue'
 export default function rightToolModule(store: Store<RootState>) {
   const showAtomChooseWindow = ref<boolean>(false),
     atomArray = ref<Array<AtomVO>>([]),
     chooseAtomEnName = ref<string>("");
-
+  const openLoadingWindow = inject<Function>(OPEN_LOADING_WINDOW),
+    closeLoadingWindow = inject<Function>(CLOSE_LOADING_WINDOW)
   const closeAtomChooseWindow = () => {
     setTimeout(() => {
       showAtomChooseWindow.value = false;
@@ -34,6 +36,9 @@ export default function rightToolModule(store: Store<RootState>) {
     },
     affirmChooseAtom = () => {
       closeAtomChooseWindow();
+      console.log(openLoadingWindow);
+
+      openLoadingWindow && openLoadingWindow();
       if (chooseAtomEnName.value.length > 0) {
         atomArray.value.map((item, i) => {
           if (item.en_name == chooseAtomEnName.value) {
@@ -44,6 +49,7 @@ export default function rightToolModule(store: Store<RootState>) {
           }
         });
       }
+      closeLoadingWindow && closeLoadingWindow();
     };
 
   const toolsLIst: Array<{
