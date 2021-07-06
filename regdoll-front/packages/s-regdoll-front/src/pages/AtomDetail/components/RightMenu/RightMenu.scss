@@ -18,23 +18,26 @@
                 @apply flex;
                 @apply flex-row;
                 @apply flex-wrap;
+                @apply pt-2;
                 .tool_option {
                     @apply flex-1;
+                    @apply rounded-lg;
                     @apply p-1;
                     @apply flex-col;
                     @apply select-none;
-                    background: #004848;
                     @apply m-2;
                     @apply cursor-pointer;
                     @apply flex;
                     @apply justify-center;
                     @apply items-center;
                     min-width: 33%;
+                    background: #004848;
                     box-shadow: 0px 0px 10px rgb(0, 255, 255, 75%);
                     border: 1px solid rgba(127, 255, 255, 0.75);
                     .icon_con {}
                     .tool_title {
                         @apply text-sm;
+                        margin-top: 0.5rem;
                         color: rgba(127, 255, 255, 0.75);
                     }
                 }
@@ -55,6 +58,9 @@
     }
     &:deep(.el-collapse) {
         @apply rounded-md;
+    }
+    &:deep(div.el-collapse-item__header.is-active) {
+        border-bottom: 1px solid rgba(127, 255, 255, 0.75);
     }
     &:deep(.icon) {
         @apply w-12;
