@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-07-04 15:22:18
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-05 14:02:45
+ * @LastEditTime: 2021-07-06 08:15:25
 -->
 
 
@@ -19,7 +19,7 @@ import { useStore } from "vuex";
 import initScene from "./Composition/AtomScene";
 import initAtom from "./Composition/InitAtom";
 import { useRoute } from "vue-router";
-import rightMenu from "./components/RightMenu.vue";
+import rightMenu from "./components/RightMenu/RightMenu.vue";
 export default defineComponent({
 	name: "",
 	components: {

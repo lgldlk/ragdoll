@@ -1,0 +1,60 @@
+.right_menu {
+    @apply h-full;
+    @apply overflow-y-auto;
+    @apply box-border;
+    width: 22%;
+    background: #003030;
+    border: 1px rgb(235, 238, 245) solid;
+    border-right: none;
+    @apply pt-3;
+    .choose_menu {}
+    .tool_menu {
+        @apply w-full;
+        .tools_container {
+            @apply px-1;
+            @apply m-1;
+            @apply shadow-md;
+            .tool_options {
+                @apply flex;
+                @apply flex-row;
+                @apply flex-wrap;
+                .tool_option {
+                    @apply flex-1;
+                    @apply p-1;
+                    @apply flex-col;
+                    background: #004848;
+                    @apply m-2;
+                    @apply cursor-pointer;
+                    @apply flex;
+                    @apply justify-center;
+                    @apply items-center;
+                    min-width: 33%;
+                    box-shadow: 0px 0px 10px rgb(0, 255, 255, 75%);
+                    border: 1px solid rgba(127, 255, 255, 0.75);
+                    .icon_con {}
+                    .tool_title {
+                        @apply text-sm;
+                        color: rgba(127, 255, 255, 0.75);
+                    }
+                }
+            }
+        }
+    }
+    &:deep(.el-collapse-item) {
+        @apply bg-black;
+        border-left: 0.5rem solid #002323;
+        border-right: 0.5rem solid #002323;
+        border-bottom: 1px solid rgb(235, 238, 245);
+    }
+    &:deep(.el-collapse-item__wrap) {
+        @apply border-none;
+    }
+    &:deep(.el-collapse-item__header) {
+        @apply border-none;
+    }
+    &:deep(.icon) {
+        @apply w-12;
+        @apply box-border;
+        @apply p-1;
+    }
+}
