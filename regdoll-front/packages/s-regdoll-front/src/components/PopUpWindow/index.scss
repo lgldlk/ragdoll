@@ -5,15 +5,18 @@
     @apply bg-opacity-70;
     @include useOpacityAni;
     .center-slot {
-        @apply bg-white;
         @apply py-3;
         @apply px-3;
         @apply rounded-md;
         @apply pb-4;
         @apply absolute;
         @apply text-base;
+        border: 1px solid cyan;
+        border-radius: 4px;
         left: 50%;
         top: 30%;
+        background: #002323;
+        color: #5FCCCC;
         transform: translate(-50%, -50%);
         min-width: 10rem;
         .slot-header {
@@ -24,7 +27,6 @@
             @apply border-0;
             @apply border-b-2;
             @apply w-full;
-            @apply border-gray-200;
             margin-bottom: 0.75rem;
             padding-bottom: 0.45rem;
             .header-title {

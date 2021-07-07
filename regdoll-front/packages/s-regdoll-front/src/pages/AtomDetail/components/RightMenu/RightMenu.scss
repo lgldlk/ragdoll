@@ -7,12 +7,15 @@
     border: 1px rgb(235, 238, 245) solid;
     border-right: none;
     @apply pt-3;
-    .choose_menu {}
+    .choose_menu {
+        @apply px-1;
+        @apply mt-1;
+    }
     .tool_menu {
         @apply w-full;
         .tools_container {
             @apply px-1;
-            @apply m-1;
+            @apply mt-3;
             @apply shadow-md;
             .tool_options {
                 @apply flex;
@@ -46,8 +49,8 @@
     }
     &:deep(.el-collapse-item) {
         @apply bg-black;
-        border-left: 0.5rem solid #002323;
-        border-right: 0.5rem solid #002323;
+        border-left: 1rem solid #002323;
+        border-right: 1rem solid #002323;
         border-bottom: 1px solid rgb(235, 238, 245);
     }
     &:deep(.el-collapse-item__wrap) {
@@ -58,6 +61,7 @@
     }
     &:deep(.el-collapse) {
         @apply rounded-md;
+        @apply overflow-hidden;
     }
     &:deep(div.el-collapse-item__header.is-active) {
         border-bottom: 1px solid rgba(127, 255, 255, 0.75);
