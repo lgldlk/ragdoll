@@ -1,17 +1,18 @@
+
 /*
  * @Descripttion:
  * @Author: lgldlk
  * @Date: 2021-05-02 21:54:10
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-06 21:58:17
+ * @LastEditTime: 2021-07-07 22:40:20
  */
 import * as THREE from "three";
 import SceneConfig from "../config/SceneConfig";
 
-import { nextTick } from "vue";
+import { nextTick, ref, Ref } from "vue";
 import { getDefaultAmbientLight, getDefaultSpotLight, getGridHelper } from "./RegDollHelper";
 import { RegDollSceneObject3D } from "./RegDollSceneObject3D";
-
+import store from '/@/store';
 // @ts-ignore
 import { TransformControls } from "/@/assets/js/TransformControls.js";
 // @ts-ignore
@@ -47,7 +48,7 @@ export class regDollScene {
   lockChoice: Boolean = false;//锁定选择对象
   // finalComposer: any;
   // composer2: any;
-
+  public nowSelectObj: RegDollSceneObject3D | undefined;
   /**
    *Creates an instance of Scene.
    * @param {Boolean} showAxes//是否展示坐标轴
@@ -96,9 +97,7 @@ export class regDollScene {
     this.orbitControls = new OrbitControls(this.camera, this.renderer.domElement);
     this.orbitControls.addEventListener("change",
       () => {
-        if (!this.lockChoice) {
-          this.transformControl.detach()
-        }
+        this.transformControlDetach()
         this.render()
       });
   }
@@ -136,15 +135,32 @@ export class regDollScene {
     const intersects = this.raycaster.intersectObjects(this.objectArr, true);
     if (intersects.length > 0) {
       this.setAxesHelperVisible(!this.transformControl.dragging);
-      if (!this.lockChoice) {
-        this.selectObj = this.getSelectObj(intersects[0].object);
-      }
+
+      this.selectObj = this.getMouseSelectObj(intersects[0].object);
+
       if (this.selectObj !== this.transformControl.object) {
-        this.transformControl.attach(this.selectObj);
+
+        this.transformControlAttach(this.selectObj);
       }
     }
   };
-  getSelectObj(object: THREE.Object3D) {
+  transformControlDetach() {
+    if (!this.lockChoice) {
+      if (this.nowSelectObj) { this.nowSelectObj = undefined }
+      this.transformControl.detach()
+    }
+  }
+  transformControlAttach(attachObj: RegDollSceneObject3D | undefined) {
+    if (this.selectObj != undefined && this.selectObj.uuid != this.nowSelectObj?.uuid) {
+      this.nowSelectObj = this.selectObj
+    }
+    if (!this.lockChoice) {
+      this.transformControl.attach(attachObj);
+    } else {
+      this.transformControl.attach(this.nowSelectObj);
+    }
+  }
+  getMouseSelectObj(object: THREE.Object3D) {
     for (let tmpObj of this.objectArr) {
       if (object === tmpObj) {
         return tmpObj;
@@ -289,7 +305,7 @@ export class regDollScene {
     this.objectArr.push(obj);
     this.scene.add(obj);
     if (!this.lockChoice) {
-      this.transformControl.attach(obj)
+      this.transformControlAttach(obj)
     }
     this.render()
   }
