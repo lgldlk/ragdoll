@@ -4,7 +4,7 @@
  * @Author: lgldlk
  * @Date: 2021-05-02 21:54:10
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-08 10:54:08
+ * @LastEditTime: 2021-07-08 21:59:30
  */
 import * as THREE from "three";
 import SceneConfig from "../config/SceneConfig";
@@ -42,7 +42,7 @@ export class regDollScene {
   mouserVector2: THREE.Vector2
   // onDownPosition = new THREE.Vector2();
   // onUpPosition = new THREE.Vector2();
-
+  lockScene: Boolean = false;
   raycaster = new THREE.Raycaster();
   renderScene: Boolean = false;
   selectObj: RegDollSceneObject3D | undefined;
@@ -61,11 +61,12 @@ export class regDollScene {
    * @memberof Scene
    */
   constructor(
-    private renderDom: HTMLElement,
+    public renderDom: HTMLElement,
     private showAxes: Boolean,
     private showGirdHelper: Boolean,
     public backgroundColor: THREE.Color = new THREE.Color(0xffffff),
-    public gridColor: THREE.Color = new THREE.Color(0xffffff)
+    public gridColor: THREE.Color = new THREE.Color(0xffffff),
+    public userSelect: Boolean = true
   ) {
     this.objectArr = [];
     this.mouserVector2 = new THREE.Vector2()
@@ -79,7 +80,7 @@ export class regDollScene {
     this.initRenderer();
     {
       this.initOrbitControls();
-      this.initTransformControls();
+      this.userSelect && this.initTransformControls();
     }
     {
       this.showGirdHelper && this.initGridHelper();
@@ -96,14 +97,29 @@ export class regDollScene {
   }
   initOrbitControls() {
     this.orbitControls = new OrbitControls(this.camera, this.renderer.domElement);
-    this.orbitControls.addEventListener("change",
-      () => {
-        this.transformControlDetach()
-        this.render()
-      });
+    this.orbitControls.addEventListener("change", this.orbitControlsChangeFunc);
+  }
+  orbitControlsChangeFunc = () => {
+
+    if (!this.lockScene) {
+      this.userSelect && this.transformControlDetach();
+      this.render()
+    }
+
   }
   setLockChoice(payload: Boolean) {
     this.lockChoice = payload;
+  }
+  setLockScene(payload: Boolean) {
+
+    if (this.lockScene == false && payload == true) {
+      let tmpMask = document.createElement("div");
+      tmpMask.className = "canvas_mask"
+      this.renderDom.appendChild(tmpMask)
+    } else if (this.lockScene == true && payload == false) {
+      this.renderDom.removeChild(this.renderDom.children[1])
+    }
+    this.lockScene = payload;
   }
   initTransformControls() {
     this.transformControl = new TransformControls(this.camera, this.renderer.domElement);
@@ -130,6 +146,9 @@ export class regDollScene {
 
   // };
   onPointerMove = (event: { offsetX: number; offsetY: number, clientX: number, clientY: number }) => {
+    if (this.lockScene) {
+      return;
+    }
     this.mouserVector2.set((event.offsetX / this.renderWidth) * 2 - 1, - (event.offsetY / this.renderHeight) * 2 + 1);
 
     this.raycaster.setFromCamera(this.mouserVector2, this.camera);
@@ -253,7 +272,7 @@ export class regDollScene {
     this.scene.add(this.axesHelper);
   }
   changeSceneLen(len: number) {
-    {
+    if (this.showAxes) {
       this.scene.remove(this.axesHelper);
       this.axesHelper = new THREE.AxesHelper(len);
       this.scene.add(this.axesHelper);
@@ -310,8 +329,11 @@ export class regDollScene {
     }
     this.objectArr.push(obj);
     this.scene.add(obj);
-    if (!this.lockChoice) {
+    if (!this.lockChoice && this.userSelect) {
       this.transformControlAttach(obj)
+    }
+    if (!this.userSelect) {
+      store.commit(SCENE_MODULE_COMMIT_PREFIX + SET_NOW_SELECT_OBJ, obj)
     }
     this.render()
   }

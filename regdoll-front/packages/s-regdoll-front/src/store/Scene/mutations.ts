@@ -1,10 +1,10 @@
-import { SET_NOW_SELECT_OBJ } from './mutation-types';
+import { SET_LOCK_SCENE, SET_NOW_SELECT_OBJ } from './mutation-types';
 /*
  * @Descripttion:
  * @Author: lgldlk
  * @Date: 2021-06-03 19:43:58
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-08 08:44:52
+ * @LastEditTime: 2021-07-08 21:55:43
  */
 
 import { SceneState } from "./state";
@@ -18,11 +18,12 @@ type initSceneVO = {
   showAxes: Boolean;
   showGirdHelper: Boolean;
   backgroundColor?: THREE.Color;
-  gridColor?: THREE.Color
+  gridColor?: THREE.Color,
+  userSelect: Boolean
 };
 const mutations: MutationTree<SceneState> = {
   [INIT_REGDOLL_SCENE](state, payload: initSceneVO) {
-    state.mainScene = new regDollScene(payload.renderDom, payload.showAxes, payload.showGirdHelper, payload.backgroundColor, payload.gridColor);
+    state.mainScene = new regDollScene(payload.renderDom, payload.showAxes, payload.showGirdHelper, payload.backgroundColor, payload.gridColor, payload.userSelect);
   },
   [ADD_OBJECT](state, payload: [RegDollSceneObject3D, Event | null]) {
     state.mainScene?.addObject(payload[0], payload[1] || null);
@@ -42,6 +43,9 @@ const mutations: MutationTree<SceneState> = {
   [SET_NOW_SELECT_OBJ](state, payload: RegDollSceneObject3D | undefined) {
     state.nowSelectObj = payload
   },
+  [SET_LOCK_SCENE](state, payload: Boolean) {
+    state.mainScene?.setLockScene(payload);
+  }
 };
 
 export default mutations;
