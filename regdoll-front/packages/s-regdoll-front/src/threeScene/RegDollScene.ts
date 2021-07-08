@@ -4,7 +4,7 @@
  * @Author: lgldlk
  * @Date: 2021-05-02 21:54:10
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-07 22:40:20
+ * @LastEditTime: 2021-07-08 10:54:08
  */
 import * as THREE from "three";
 import SceneConfig from "../config/SceneConfig";
@@ -12,7 +12,7 @@ import SceneConfig from "../config/SceneConfig";
 import { nextTick, ref, Ref } from "vue";
 import { getDefaultAmbientLight, getDefaultSpotLight, getGridHelper } from "./RegDollHelper";
 import { RegDollSceneObject3D } from "./RegDollSceneObject3D";
-import store from '/@/store';
+import store, { SCENE_MODULE_COMMIT_PREFIX } from '/@/store';
 // @ts-ignore
 import { TransformControls } from "/@/assets/js/TransformControls.js";
 // @ts-ignore
@@ -25,6 +25,7 @@ import { RenderPass } from '/@/assets/js/RenderPass.js'
 // @ts-ignore
 import { ShaderPass } from '/@/assets/js/ShaderPass'
 import { AdditiveBlendShader } from '/@/assets/js/AdditiveBlendShader'
+import { SET_NOW_SELECT_OBJ } from '../store/Scene/mutation-types';
 export class regDollScene {
   scene!: THREE.Scene;
   camera!: THREE.PerspectiveCamera;
@@ -146,12 +147,17 @@ export class regDollScene {
   };
   transformControlDetach() {
     if (!this.lockChoice) {
-      if (this.nowSelectObj) { this.nowSelectObj = undefined }
+      if (this.nowSelectObj) {
+        store.commit(SCENE_MODULE_COMMIT_PREFIX + SET_NOW_SELECT_OBJ, undefined)
+        this.nowSelectObj = undefined
+      }
       this.transformControl.detach()
     }
   }
   transformControlAttach(attachObj: RegDollSceneObject3D | undefined) {
-    if (this.selectObj != undefined && this.selectObj.uuid != this.nowSelectObj?.uuid) {
+    if (!this.lockChoice && attachObj != undefined && attachObj.uuid != this.nowSelectObj?.uuid) {
+
+      store.commit(SCENE_MODULE_COMMIT_PREFIX + SET_NOW_SELECT_OBJ, attachObj)
       this.nowSelectObj = this.selectObj
     }
     if (!this.lockChoice) {

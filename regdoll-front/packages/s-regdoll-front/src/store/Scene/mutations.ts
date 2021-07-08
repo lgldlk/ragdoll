@@ -1,9 +1,10 @@
+import { SET_NOW_SELECT_OBJ } from './mutation-types';
 /*
  * @Descripttion:
  * @Author: lgldlk
  * @Date: 2021-06-03 19:43:58
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-06 21:48:55
+ * @LastEditTime: 2021-07-08 08:44:52
  */
 
 import { SceneState } from "./state";
@@ -37,8 +38,10 @@ const mutations: MutationTree<SceneState> = {
   },
   [SET_LOCK_CHOICE](state, payload: Boolean) {
     state.mainScene?.setLockChoice(payload)
-  }
-
+  },
+  [SET_NOW_SELECT_OBJ](state, payload: RegDollSceneObject3D | undefined) {
+    state.nowSelectObj = payload
+  },
 };
 
 export default mutations;

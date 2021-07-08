@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-07-03 09:24:27
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-06 21:47:33
+ * @LastEditTime: 2021-07-07 22:36:21
  */
 export const INIT_REGDOLL_SCENE = "INIT_REGDOLL_SCENE";
 
@@ -17,3 +17,6 @@ export const SET_BACKGROUND_TEXT_URE_CUBE = "SET_BACKGROUND_TEXT_URE_CUBE"
 
 
 export const SET_LOCK_CHOICE = "SET_LOCK_CHOICE"
+
+
+export const SET_NOW_SELECT_OBJ = "SET_NOW_SELECT_OBJ"
