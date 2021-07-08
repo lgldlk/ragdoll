@@ -4,6 +4,7 @@
     height: 100vh;
     width: 100vw;
     #mainScene {
+        @apply relative;
         width: 78%;
         background-color: aqua;
         overflow: hidden;

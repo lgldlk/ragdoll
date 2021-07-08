@@ -3,12 +3,12 @@
  * @Author: lgldlk
  * @Date: 2021-07-05 13:49:55
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-07 21:29:25
+ * @LastEditTime: 2021-07-08 10:43:48
 -->
 <template>
   <div class="right_menu">
     <div class="choose_menu">
-        <chooseMenu></chooseMenu>
+      <chooseMenu></chooseMenu>
     </div>
     <div class="tool_menu">
       <div class="tools_container">
@@ -58,15 +58,15 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, } from "vue";
+import { defineComponent } from "vue";
 import rightToolModule from "./Composition/RightTools";
 import { useStore } from "vuex";
 import popWindow from "/@/components/PopUpWindow/index.vue";
-import { log } from "util";
-import chooseMenu from '../RightChooseMenu/index.vue'
+
+import chooseMenu from "../RightChooseMenu/index.vue";
 export default defineComponent({
 	name: "",
-	components: { popWindow ,chooseMenu},
+	components: { popWindow, chooseMenu },
 	setup() {
 		const store = useStore(),
 			rightTool = rightToolModule(store);

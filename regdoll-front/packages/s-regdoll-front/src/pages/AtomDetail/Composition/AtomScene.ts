@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-07-04 15:38:48
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-06 09:08:04
+ * @LastEditTime: 2021-07-08 21:39:46
  */
 
 import { Store } from 'vuex';
@@ -14,10 +14,11 @@ import { CubeTextureLoader } from 'three'
 export default function initScene(store: Store<RootState>, renderDom: HTMLElement) {
   store.commit(SCENE_MODULE_COMMIT_PREFIX + INIT_REGDOLL_SCENE, {
     renderDom: renderDom,
-    showAxes: true,
+    showAxes: false,
     showGirdHelper: false,
     backgroundColor: new Color(0, 0, 0),
-    gridColor: new Color("rgb(0,  82,  82)")
+    gridColor: new Color("rgb(0,  82,  82)"),
+    userSelect: false
   });
   var imagePrefix = "textures/nebula/nebula-";
   var directions = ["xpos", "xneg", "ypos", "yneg", "zpos", "zneg"];

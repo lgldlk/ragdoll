@@ -3,11 +3,10 @@
  * @Author: lgldlk
  * @Date: 2021-07-07 10:45:08
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-08 10:33:34
+ * @LastEditTime: 2021-07-08 15:43:53
 -->
 <template>
-  <div class="choose_menu"
-       v-show="selectObj != undefined">
+  <div class="choose_menu">
     <el-card class="choose_menu_container">
       <template #header>
         <div class="container_header">
@@ -21,6 +20,7 @@
         <div class="atom_quality">原子质量：{{selectObj?.quality}}</div>
         <div class="atom_describe">原子相关：{{selectObj?.describe}}</div>
       </div>
+
     </el-card>
   </div>
 </template>
