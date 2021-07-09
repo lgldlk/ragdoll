@@ -4,7 +4,7 @@
  * @Author: lgldlk
  * @Date: 2021-05-02 21:54:10
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-08 21:59:30
+ * @LastEditTime: 2021-07-09 09:28:20
  */
 import * as THREE from "three";
 import SceneConfig from "../config/SceneConfig";
@@ -134,6 +134,9 @@ export class regDollScene {
     this.renderDom.addEventListener("mouseleave", () => {
       this.axesHelper && this.axesHelper.visible == false && this.setAxesHelperVisible(true);
     });
+  }
+  getRendererDomElement() {
+    return this.renderer.domElement;
   }
   // onPointerDown = (event: { offsetX: number; offsetY: number }) => {
   //   this.onDownPosition.x = event.offsetX;

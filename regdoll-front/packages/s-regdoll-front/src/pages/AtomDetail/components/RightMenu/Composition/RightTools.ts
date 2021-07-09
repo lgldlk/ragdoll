@@ -1,4 +1,4 @@
-import { SET_LOCK_CHOICE, SET_LOCK_SCENE } from './../../../../../store/Scene/mutation-types';
+import { RENDER_SCENE, SET_LOCK_CHOICE, SET_LOCK_SCENE } from './../../../../../store/Scene/mutation-types';
 import AtomModel from '/@/threeScene/atomModule/AtomModule';
 import { RootState, SCENE_MODULE_COMMIT_PREFIX } from '/@/store';
 import { Store } from 'vuex';
@@ -9,13 +9,13 @@ import { ADD_OBJECT } from '/@/store/Scene/mutation-types';
  * @Author: lgldlk
  * @Date: 2021-07-05 22:30:42
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-08 21:34:07
+ * @LastEditTime: 2021-07-09 09:26:19
  */
 import { CLOSE_LOADING_WINDOW, OPEN_LOADING_WINDOW } from '/@/PROVIDE_KEY'
 
 import { AtomRequest } from '/@/api/AtomRequest'
 import { inject } from 'vue'
-import { base64Img2Blob, downloadFile, exportCanvasAsPNG } from '/@/util/ImageSave';
+import { saveThreeCanvasFile } from '/@/util/ImageSave';
 export default function rightToolModule(store: Store<RootState>) {
   const showAtomChooseWindow = ref<boolean>(false),
     atomArray = ref<Array<AtomVO>>([]),
@@ -61,7 +61,7 @@ export default function rightToolModule(store: Store<RootState>) {
 
     {
       image: `<svg t="1625530340711" class="icon" viewBox="0 0 1028 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3902" ><path d="M918.372101 734.697681a109.791385 109.791385 0 0 0-56.388047 15.520488l-121.225117-107.770966a181.424409 181.424409 0 0 0-4.591861-194.603048L831.126752 357.338585a110.204652 110.204652 0 1 0-52.806396-51.199245l-94.546408 90.18414A180.460118 180.460118 0 0 0 585.462214 367.34884a182.434618 182.434618 0 0 0-50.510465 7.209221L464.283016 249.797212a144.092583 144.092583 0 1 0-64.286047 35.265488l70.025872 123.980234a182.434618 182.434618 0 0 0-53.219663 73.469768l-197.450002-25.392989a110.204652 110.204652 0 1 0-14.326604 72.229966L404.083725 554.926342a180.322362 180.322362 0 0 0 32.602209 97.668873l-109.332199 104.372989a144.643606 144.643606 0 1 0 50.189036 53.67885l112.776094-107.495455a181.332571 181.332571 0 0 0 200.480629-6.795953l123.980234 110.204652A110.204652 110.204652 0 1 0 918.372101 734.697681z" fill="#BFE9E9" p-id="3903"></path></svg>`,
-      title: `添加原子`,
+      title: `切换原子`,
       clickFunc: () => {
         openAtomChooseWindow()
       }
@@ -104,21 +104,22 @@ export default function rightToolModule(store: Store<RootState>) {
       title: `保存图片`,
       clickFunc: () => {
         openLoadingWindow && openLoadingWindow();
-        exportCanvasAsPNG((store.state.scene.nowSelectObj as AtomModel).ch_name + '元素.png', (store.state.scene.mainScene?.renderDom.children[0] as any).toDataURL("image/png"));
+        store.commit(SCENE_MODULE_COMMIT_PREFIX + RENDER_SCENE);
+        saveThreeCanvasFile(store.state.scene.mainScene?.getRendererDomElement(), (store.state.scene.nowSelectObj as AtomModel).ch_name + '元素.jpeg');
         setTimeout(() => { closeLoadingWindow && closeLoadingWindow() }, 2000)
       }
     },
     {
-      image: `<svg t="1625530340711" class="icon" viewBox="0 0 1028 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3902" ><path d="M918.372101 734.697681a109.791385 109.791385 0 0 0-56.388047 15.520488l-121.225117-107.770966a181.424409 181.424409 0 0 0-4.591861-194.603048L831.126752 357.338585a110.204652 110.204652 0 1 0-52.806396-51.199245l-94.546408 90.18414A180.460118 180.460118 0 0 0 585.462214 367.34884a182.434618 182.434618 0 0 0-50.510465 7.209221L464.283016 249.797212a144.092583 144.092583 0 1 0-64.286047 35.265488l70.025872 123.980234a182.434618 182.434618 0 0 0-53.219663 73.469768l-197.450002-25.392989a110.204652 110.204652 0 1 0-14.326604 72.229966L404.083725 554.926342a180.322362 180.322362 0 0 0 32.602209 97.668873l-109.332199 104.372989a144.643606 144.643606 0 1 0 50.189036 53.67885l112.776094-107.495455a181.332571 181.332571 0 0 0 200.480629-6.795953l123.980234 110.204652A110.204652 110.204652 0 1 0 918.372101 734.697681z" fill="#BFE9E9" p-id="3903"></path></svg>`,
-      title: `添加原子`,
+      image: `<svg t="1625789015119" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3049" ><path d="M716.8 0l102.4 102.4-409.6 409.6 409.6 409.6-102.4 102.4-512-512z" p-id="3050" fill="#BFE9E9"></path></svg>`,
+      title: `上一个`,
       clickFunc: () => {
 
 
       }
     },
     {
-      image: `<svg t="1625530340711" class="icon" viewBox="0 0 1028 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3902" ><path d="M918.372101 734.697681a109.791385 109.791385 0 0 0-56.388047 15.520488l-121.225117-107.770966a181.424409 181.424409 0 0 0-4.591861-194.603048L831.126752 357.338585a110.204652 110.204652 0 1 0-52.806396-51.199245l-94.546408 90.18414A180.460118 180.460118 0 0 0 585.462214 367.34884a182.434618 182.434618 0 0 0-50.510465 7.209221L464.283016 249.797212a144.092583 144.092583 0 1 0-64.286047 35.265488l70.025872 123.980234a182.434618 182.434618 0 0 0-53.219663 73.469768l-197.450002-25.392989a110.204652 110.204652 0 1 0-14.326604 72.229966L404.083725 554.926342a180.322362 180.322362 0 0 0 32.602209 97.668873l-109.332199 104.372989a144.643606 144.643606 0 1 0 50.189036 53.67885l112.776094-107.495455a181.332571 181.332571 0 0 0 200.480629-6.795953l123.980234 110.204652A110.204652 110.204652 0 1 0 918.372101 734.697681z" fill="#BFE9E9" p-id="3903"></path></svg>`,
-      title: `添加原子`,
+      image: `<svg t="1625789079596" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4027" ><path d="M333.825 848.984L591.443 512 333.825 175.016c-24.123-31.554-15.866-75.12 18.442-97.306C365.057 69.439 380.31 65 395.945 65h16.093L768 512 412.038 959h-16.093c-41.94 0-75.939-31.27-75.939-69.844 0-14.38 4.826-28.409 13.82-40.172z" p-id="4028" fill="#BFE9E9"></path></svg>`,
+      title: `返回`,
       clickFunc: () => {
 
       }

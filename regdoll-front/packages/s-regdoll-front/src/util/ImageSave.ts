@@ -3,35 +3,9 @@
  * @Author: lgldlk
  * @Date: 2021-07-08 15:26:09
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-08 15:40:30
+ * @LastEditTime: 2021-07-09 09:27:40
  */
-export function base64Img2Blob(code: string) {
-  var parts = code.split(';base64,');
-  var contentType = parts[0].split(':')[1];
-  var raw = window.atob(parts[1]);
-  var rawLength = raw.length;
-
-  var uInt8Array = new Uint8Array(rawLength);
-
-  for (var i = 0; i < rawLength; ++i) {
-    uInt8Array[i] = raw.charCodeAt(i);
-  }
-
-  return new Blob([uInt8Array], { type: contentType });
-}
-export function downloadFile(fileName: string, content: string) {
-
-  var aLink = document.createElement('a');
-  var blob = base64Img2Blob(content); //new Blob([content]);
-
-  var evt = document.createEvent("HTMLEvents");
-  evt.initEvent("click", false, false);//initEvent 不加后两个参数在FF下会报错
-  aLink.download = fileName;
-  aLink.href = URL.createObjectURL(blob);
-
-  // aLink.dispatchEvent(evt);
-}
-
+import { ElMessage } from 'element-plus';
 export function exportCanvasAsPNG(fileName: string, imgURL: string) {
 
 
@@ -40,6 +14,19 @@ export function exportCanvasAsPNG(fileName: string, imgURL: string) {
   dlLink.href = imgURL;
   dlLink.dataset.downloadurl = [dlLink.download, dlLink.href].join(':');
 
+  document.body.appendChild(dlLink);
+  dlLink.click();
+  document.body.removeChild(dlLink);
+}
+export function saveThreeCanvasFile(canvas: HTMLCanvasElement | undefined, fileName: string) {
+  if (!canvas) {
+    ElMessage({ type: "error", message: "您好保存图片失败请刷新后重试~" })
+    return;
+  }
+  var dlLink = document.createElement('a');
+  dlLink.download = fileName;
+  dlLink.href = canvas.toDataURL("image/jpeg");
+  dlLink.dataset.downloadurl = [dlLink.download, dlLink.href].join(':');
   document.body.appendChild(dlLink);
   dlLink.click();
   document.body.removeChild(dlLink);
