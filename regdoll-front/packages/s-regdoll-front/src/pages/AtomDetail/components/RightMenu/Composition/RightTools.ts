@@ -1,4 +1,5 @@
-import { RENDER_SCENE, SET_LOCK_CHOICE, SET_LOCK_SCENE } from './../../../../../store/Scene/mutation-types';
+import { ElMessage } from 'element-plus';
+import { REMOVE_OBJECT, RENDER_SCENE, SET_LOCK_CHOICE, SET_LOCK_SCENE } from './../../../../../store/Scene/mutation-types';
 import AtomModel from '/@/threeScene/atomModule/AtomModule';
 import { RootState, SCENE_MODULE_COMMIT_PREFIX } from '/@/store';
 import { Store } from 'vuex';
@@ -9,7 +10,7 @@ import { ADD_OBJECT } from '/@/store/Scene/mutation-types';
  * @Author: lgldlk
  * @Date: 2021-07-05 22:30:42
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-09 09:26:19
+ * @LastEditTime: 2021-07-09 15:43:26
  */
 import { CLOSE_LOADING_WINDOW, OPEN_LOADING_WINDOW } from '/@/PROVIDE_KEY'
 
@@ -101,7 +102,7 @@ export default function rightToolModule(store: Store<RootState>) {
     },
     {
       image: `<svg t="1625728667198" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2186" ><path d="M512 12.8C787.712 12.8 1011.2 236.288 1011.2 512S787.712 1011.2 512 1011.2 12.8 787.712 12.8 512 236.288 12.8 512 12.8z m0 25.6C250.4448 38.4 38.4 250.4448 38.4 512S250.4448 985.6 512 985.6 985.6 773.5552 985.6 512 773.5552 38.4 512 38.4z m67.9936 524.9024v153.4464h-136.3968v-153.4464h136.3968z m-4.0704-255.744c13.6704 0 26.752 5.4528 36.352 15.1808l89.344 90.2656c9.472 9.5744 14.7712 22.5024 14.7712 35.968v235.8016c0 17.664-14.3104 31.9744-31.9488 31.9744h-70.3488v-171.5712a15.9744 15.9744 0 0 0-15.9744-15.9744h-172.6208a15.9744 15.9744 0 0 0-16 15.9744v171.5712H339.2c-17.664 0-31.9744-14.3104-31.9744-31.9744V339.5072c0-17.664 14.336-31.9488 31.9744-31.9488h236.7488z m-131.2512 92.6976h-57.5488a3.2 3.2 0 0 0-3.2 3.2v25.5744c0 1.7664 1.4336 3.2 3.2 3.2h57.5488a3.2 3.2 0 0 0 3.2-3.2v-25.5744a3.2 3.2 0 0 0-3.2-3.2z" fill="#BFE9E9" p-id="2187"></path></svg>`,
-      title: `保存图片`,
+      title: `截图并保存`,
       clickFunc: () => {
         openLoadingWindow && openLoadingWindow();
         store.commit(SCENE_MODULE_COMMIT_PREFIX + RENDER_SCENE);
@@ -112,16 +113,49 @@ export default function rightToolModule(store: Store<RootState>) {
     {
       image: `<svg t="1625789015119" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3049" ><path d="M716.8 0l102.4 102.4-409.6 409.6 409.6 409.6-102.4 102.4-512-512z" p-id="3050" fill="#BFE9E9"></path></svg>`,
       title: `上一个`,
-      clickFunc: () => {
-
-
+      clickFunc: async () => {
+        let nowELe = (store.state.scene.nowSelectObj as AtomModel).ele_number;
+        if (nowELe <= 1) {
+          ElMessage({ type: "info", message: "您不能上一个了" })
+          return;
+        }
+        openLoadingWindow && openLoadingWindow();
+        let addAtomData = await (await AtomRequest.getAtomByEleNum(nowELe - 1)).data;
+        if (addAtomData) {
+          store?.commit(SCENE_MODULE_COMMIT_PREFIX + REMOVE_OBJECT,
+            store.state.scene.nowSelectObj
+          )
+          store?.commit(
+            SCENE_MODULE_COMMIT_PREFIX + ADD_OBJECT,
+            [new AtomModel(addAtomData.quality, addAtomData.ele_number, addAtomData.en_name, addAtomData.ch_name)],
+          );
+        }
+        closeLoadingWindow && closeLoadingWindow();
       }
     },
     {
       image: `<svg t="1625789079596" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4027" ><path d="M333.825 848.984L591.443 512 333.825 175.016c-24.123-31.554-15.866-75.12 18.442-97.306C365.057 69.439 380.31 65 395.945 65h16.093L768 512 412.038 959h-16.093c-41.94 0-75.939-31.27-75.939-69.844 0-14.38 4.826-28.409 13.82-40.172z" p-id="4028" fill="#BFE9E9"></path></svg>`,
-      title: `返回`,
-      clickFunc: () => {
-
+      title: `下一个`,
+      clickFunc: async () => {
+        let nowELe = (store.state.scene.nowSelectObj as AtomModel).ele_number;
+        if (nowELe <= 1) {
+          ElMessage({ type: "info", message: "您不能上一个了" })
+          return;
+        }
+        openLoadingWindow && openLoadingWindow();
+        let addAtomData = await (await AtomRequest.getAtomByEleNum(nowELe + 1)).data;
+        if (addAtomData) {
+          store?.commit(SCENE_MODULE_COMMIT_PREFIX + REMOVE_OBJECT,
+            store.state.scene.nowSelectObj
+          )
+          store?.commit(
+            SCENE_MODULE_COMMIT_PREFIX + ADD_OBJECT,
+            [new AtomModel(addAtomData.quality, addAtomData.ele_number, addAtomData.en_name, addAtomData.ch_name)],
+          );
+        } else {
+          ElMessage({ type: "info", message: "您好暂时没有收录这种元素的信息" })
+        }
+        closeLoadingWindow && closeLoadingWindow();
       }
     }
   ]
