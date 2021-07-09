@@ -1,3 +1,10 @@
+/*
+ * @Descripttion:
+ * @Author: lgldlk
+ * @Date: 2021-04-30 15:04:15
+ * @Editors: lgldlk
+ * @LastEditTime: 2021-07-05 09:11:01
+ */
 import { AtomDto } from './dto/atom.dto';
 import { Atom } from '../../database/entitys/Atom.entity';
 import { Injectable } from '@nestjs/common';
@@ -10,15 +17,16 @@ export class AtomService {
   constructor(
     @InjectRepository(Atom)
     private readonly atomRepo: Repository<Atom>,
-  ) {}
+  ) { }
   async addAtom(atom: AtomDto): Promise<ResponseData> {
     await this.atomRepo.insert(atom);
-    return { statusCode: 200, message: '插入成功' };
+    return { code: '200', message: '插入成功' };
   }
 
   async findList(): Promise<ResponseData> {
     return {
-      statusCode: 200,
+      code: '200',
+      message: '查找成功',
       data: await this.atomRepo.find({
         order: {
           ele_number: 'ASC',
@@ -28,12 +36,13 @@ export class AtomService {
   }
   async getAtomByEleNum(ele_number: number): Promise<ResponseData> {
     return {
-      statusCode: 200,
-      data: await this.atomRepo.find({
+      code: '200',
+      message: '查找成功',
+      data: (await this.atomRepo.find({
         where: {
           ele_number,
         },
-      }),
+      }))[0],
     };
   }
 }

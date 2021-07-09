@@ -1,5 +1,6 @@
 export interface ResponseData {
-  statusCode: number;
-  message?: string;
   data?: any;
+  message: string;
+  code: string;
+  [propName: string]: any;
 }
