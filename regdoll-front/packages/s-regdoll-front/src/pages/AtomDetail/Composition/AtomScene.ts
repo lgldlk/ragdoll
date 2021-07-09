@@ -3,12 +3,12 @@
  * @Author: lgldlk
  * @Date: 2021-07-04 15:38:48
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-08 21:39:46
+ * @LastEditTime: 2021-07-09 14:28:29
  */
 
 import { Store } from 'vuex';
 import { RootState, SCENE_MODULE_COMMIT_PREFIX } from '/@/store';
-import { INIT_REGDOLL_SCENE, RENDER_SCENE, SET_BACKGROUND_TEXT_URE_CUBE } from '/@/store/Scene/mutation-types';
+import { INIT_REGDOLL_SCENE, RENDER_SCENE, SET_BACKGROUND_TEXT_URE_CUBE, SET_RENDER_SCENE } from '/@/store/Scene/mutation-types';
 import { Color } from "three";
 import { CubeTextureLoader } from 'three'
 export default function initScene(store: Store<RootState>, renderDom: HTMLElement) {
@@ -30,5 +30,5 @@ export default function initScene(store: Store<RootState>, renderDom: HTMLElemen
     store.commit(SCENE_MODULE_COMMIT_PREFIX + RENDER_SCENE);
   });
   store.commit(SCENE_MODULE_COMMIT_PREFIX + SET_BACKGROUND_TEXT_URE_CUBE, textureCube);
-
+  store.commit(SCENE_MODULE_COMMIT_PREFIX + SET_RENDER_SCENE, true)
 }

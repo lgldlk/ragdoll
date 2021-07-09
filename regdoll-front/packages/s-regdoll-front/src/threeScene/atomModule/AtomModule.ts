@@ -4,7 +4,7 @@
  * @Descripttion:
  * @Author: lgldlk
  * @Date: 2021-05-02 21:54:10
- * @LastEditTime: 2021-07-07 21:55:43
+ * @LastEditTime: 2021-07-09 14:28:16
  */
 import * as THREE from "three";
 import { Object3D } from "three";
@@ -67,6 +67,8 @@ export default class AtomModel extends RegDollSceneObject3D {
         this.nucleusWidth + (1 + index) * AtomModelConfig.defaultEleOrbit,
         item,
       );
+
+      // tmpEleOrbit.rotateZ(index * Math.PI / eleArr.length)
       this.electronics.push(tmpEleOrbit);
     });
     this.add(...this.electronics);
@@ -94,17 +96,26 @@ export default class AtomModel extends RegDollSceneObject3D {
       color: AtomModelConfig.defaultEleConfig.color,
       shininess: AtomModelConfig.defaultEleConfig.shininess,
     });
-    eleMaterial.map = this.getTextCanvas(
-      eleNumber.toString(),
-      AtomModelConfig.defaultEleConfig.color,
-      AtomModelConfig.defaultEleConfig.radius * 1000,
-    );
+
+    // eleMaterial.map = this.getTextCanvas(
+    //   eleNumber.toString(),
+    //   AtomModelConfig.defaultEleConfig.color,
+    //   AtomModelConfig.defaultEleConfig.radius * 1000,
+    // );
     const eleMesh = new THREE.Mesh(eleGeometry, eleMaterial);
-    eleMesh.rotateZ(Math.PI / 2);
-    eleMesh.position.set(radius, 0, 0);
+
+    // eleMesh.rotateZ(Math.PI / 2);
+    eleMesh.position.set(0, 0, radius);
     // addShine(eleMesh)
     const eleOrbit = new THREE.Object3D();
     eleOrbit.add(geoMesh, eleMesh);
+    for (let i = 1; i < eleNumber; i++) {
+      let tmpEle = eleMesh.clone()
+      tmpEle.position.set(Math.sin(i * Math.PI * 2 / eleNumber) * radius, 0, Math.cos(i * Math.PI * 2 / eleNumber) * radius);
+      // tmpEle.rotateY(i * Math.PI * 2 / eleNumber)
+
+      eleOrbit.add(tmpEle)
+    }
     eleOrbit.rotateY(Math.PI / 6);
     return eleOrbit;
   }
@@ -127,8 +138,9 @@ export default class AtomModel extends RegDollSceneObject3D {
     return new THREE.CanvasTexture(this.drawingCanvas);
   }
   renderEvent = () => {
-    this.electronics.map((item) => {
-      item.rotateY(Math.PI * 0.002);
+    this.electronics.map((item, i) => {
+      // item.rotateX(Math.random() * (i + 1) * Math.PI * 0.005 * (i % 2 == 0 ? 1 : -1));
+      item.rotateY(Math.random() * (i + 1) * Math.PI * 0.005);
     });
   };
 }

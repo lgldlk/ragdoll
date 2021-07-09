@@ -4,7 +4,7 @@
  * @Author: lgldlk
  * @Date: 2021-05-02 21:54:10
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-09 09:28:20
+ * @LastEditTime: 2021-07-09 15:34:16
  */
 import * as THREE from "three";
 import SceneConfig from "../config/SceneConfig";
@@ -120,6 +120,7 @@ export class regDollScene {
       this.renderDom.removeChild(this.renderDom.children[1])
     }
     this.lockScene = payload;
+    this.render(1)
   }
   initTransformControls() {
     this.transformControl = new TransformControls(this.camera, this.renderer.domElement);
@@ -290,7 +291,7 @@ export class regDollScene {
     }
   }
   render = (renderTime: number = 0) => {
-    if (this.renderScene && renderTime > 0) {
+    if (!this.lockScene && this.renderScene && renderTime > 0) {
       this.renderScene && requestAnimationFrame(this.render);
       this.objectArr.forEach((item) => {
         if (item.renderEvent) {

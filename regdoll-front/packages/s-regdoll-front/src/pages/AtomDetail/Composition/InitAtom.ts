@@ -5,7 +5,7 @@ import { ADD_OBJECT, SET_LOCK_CHOICE } from './../../../store/Scene/mutation-typ
  * @Author: lgldlk
  * @Date: 2021-07-05 08:07:46
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-08 14:53:08
+ * @LastEditTime: 2021-07-09 09:27:20
  */
 
 import { RouteLocationNormalizedLoaded, Router } from 'vue-router';
@@ -22,8 +22,6 @@ export default async function initAtom(store: Store<RootState>, router: RouteLoc
       ElMessage({ type: "error", message: "您好暂时不支持这种元素哦~" })
       return
     }
-    console.log(initAtomData);
-
     store.commit(SCENE_MODULE_COMMIT_PREFIX + ADD_OBJECT, [new AtomModel(initAtomData.quality, initAtomData.ele_number, initAtomData.en_name, initAtomData.ch_name)])
     store?.commit(
       SCENE_MODULE_COMMIT_PREFIX + SET_LOCK_CHOICE,

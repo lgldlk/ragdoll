@@ -1,10 +1,10 @@
-import { SET_LOCK_SCENE, SET_NOW_SELECT_OBJ } from './mutation-types';
+import { SET_LOCK_SCENE, SET_NOW_SELECT_OBJ, SET_RENDER_SCENE } from './mutation-types';
 /*
  * @Descripttion:
  * @Author: lgldlk
  * @Date: 2021-06-03 19:43:58
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-08 21:55:43
+ * @LastEditTime: 2021-07-09 09:33:32
  */
 
 import { SceneState } from "./state";
@@ -45,6 +45,9 @@ const mutations: MutationTree<SceneState> = {
   },
   [SET_LOCK_SCENE](state, payload: Boolean) {
     state.mainScene?.setLockScene(payload);
+  },
+  [SET_RENDER_SCENE](state, payload: Boolean) {
+    state.mainScene?.setRenderScene(payload)
   }
 };
 
