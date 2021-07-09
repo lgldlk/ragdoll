@@ -5,7 +5,7 @@ import SceneConfig from "../config/SceneConfig";
  * @Author: lgldlk
  * @Date: 2021-05-10 21:00:12
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-05 14:57:22
+ * @LastEditTime: 2021-07-09 15:46:50
  */
 /**
  * 获取帮助表格
@@ -31,17 +31,17 @@ export function getTrackArr(eleNum: number): Array<number> {
   if (eleNum <= 2) {
     return [eleNum];
   } else if (eleNum <= 10) {
-    return [2, (eleNum - 2) % 8];
+    return [2, (eleNum - 2)];
   } else if (eleNum <= 18) {
-    return [2, 8, (eleNum - 10) % 8];
+    return [2, 8, (eleNum - 10)];
   } else if (eleNum <= 28) {
-    return [2, 8, (eleNum - 10) % 18];
+    return [2, 8, (eleNum - 10)];
   } else if (eleNum <= 36) {
-    return [2, 8, 18, (eleNum - 28) % 8];
+    return [2, 8, 18, (eleNum - 28)];
   } else if (eleNum <= 52) {
-    return [2, 8, 18, 18, (eleNum - 44) % 8];
+    return [2, 8, 18, 18, (eleNum - 44)];
   } else if (eleNum <= 86) {
-    return [2, 8, 18, 32, 18, (eleNum - 78) % 8];
+    return [2, 8, 18, 32, 18, (eleNum - 78)];
   }
   return [];
 }
