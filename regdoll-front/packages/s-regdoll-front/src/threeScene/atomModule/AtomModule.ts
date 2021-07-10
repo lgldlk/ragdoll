@@ -4,10 +4,9 @@
  * @Descripttion:
  * @Author: lgldlk
  * @Date: 2021-05-02 21:54:10
- * @LastEditTime: 2021-07-09 14:28:16
+ * @LastEditTime: 2021-07-10 16:49:43
  */
 import * as THREE from "three";
-import { Object3D } from "three";
 import { AtomModelConfig } from "/@/config/AtomModelConfig";
 import { RegDollSceneObject3D } from '../RegDollSceneObject3D';
 import { getTrackArr } from "../RegDollHelper";
@@ -19,16 +18,13 @@ export default class AtomModel extends RegDollSceneObject3D {
   drawingContext!: CanvasRenderingContext2D;
   nucleusWidth!: number;
   constructor(
-    public quality: number = 0,
-    public ele_number: number = 0,
-    public en_name: string,
-    public ch_name: string,
+    public atomData: AtomVO
   ) {
     super();
     this.electronics = [];
     this.nucleusWidth =
       AtomModelConfig.defaultNucleusConfig.baseAtomRadius +
-      AtomModelConfig.defaultNucleusConfig.baseRadius * this.quality;
+      AtomModelConfig.defaultNucleusConfig.baseRadius * this.atomData.quality;
     this.initNucleus()
     this.initEleOrbit();
   }
@@ -47,7 +43,7 @@ export default class AtomModel extends RegDollSceneObject3D {
       specular: 0xffffff,
     });
     material.map = this.getTextCanvas(
-      this.en_name,
+      this.atomData.en_name,
       AtomModelConfig.defaultNucleusConfig.color,
       this.nucleusWidth * 480,
     );
@@ -61,7 +57,7 @@ export default class AtomModel extends RegDollSceneObject3D {
     return nucleus;
   }
   initEleOrbit() {
-    let eleArr = getTrackArr(this.ele_number);
+    let eleArr = getTrackArr(this.atomData.ele_number);
     eleArr.map((item, index) => {
       let tmpEleOrbit = this.getEleOrbit(
         this.nucleusWidth + (1 + index) * AtomModelConfig.defaultEleOrbit,

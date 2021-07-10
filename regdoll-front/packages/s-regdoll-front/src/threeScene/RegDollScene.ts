@@ -4,7 +4,7 @@
  * @Author: lgldlk
  * @Date: 2021-05-02 21:54:10
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-09 15:34:16
+ * @LastEditTime: 2021-07-10 17:03:04
  */
 import * as THREE from "three";
 import SceneConfig from "../config/SceneConfig";
@@ -28,7 +28,7 @@ import { AdditiveBlendShader } from '/@/assets/js/AdditiveBlendShader'
 import { SET_NOW_SELECT_OBJ } from '../store/Scene/mutation-types';
 export class regDollScene {
   scene!: THREE.Scene;
-  camera!: THREE.PerspectiveCamera;
+  public camera!: THREE.PerspectiveCamera;
   objectArr: Array<RegDollSceneObject3D>;
   axesHelper!: THREE.AxesHelper;
   renderer!: THREE.WebGLRenderer;
