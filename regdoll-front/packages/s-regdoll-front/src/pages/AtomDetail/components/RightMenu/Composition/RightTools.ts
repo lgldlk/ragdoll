@@ -10,7 +10,7 @@ import { ADD_OBJECT } from '/@/store/Scene/mutation-types';
  * @Author: lgldlk
  * @Date: 2021-07-05 22:30:42
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-09 15:43:26
+ * @LastEditTime: 2021-07-10 22:07:46
  */
 import { CLOSE_LOADING_WINDOW, OPEN_LOADING_WINDOW } from '/@/PROVIDE_KEY'
 
@@ -21,6 +21,7 @@ export default function rightToolModule(store: Store<RootState>) {
   const showAtomChooseWindow = ref<boolean>(false),
     atomArray = ref<Array<AtomVO>>([]),
     chooseAtomEnName = ref<string>("");
+  let nowAtom: number = -1;
   const openLoadingWindow = inject<Function>(OPEN_LOADING_WINDOW),
     closeLoadingWindow = inject<Function>(CLOSE_LOADING_WINDOW)
   const closeAtomChooseWindow = () => {
@@ -28,13 +29,20 @@ export default function rightToolModule(store: Store<RootState>) {
       showAtomChooseWindow.value = false;
     }, 200);
   },
-    openAtomChooseWindow = async () => {
+    initAtomArray = async () => {
       if (atomArray.value.length == 0) {
         let atomListResult = await AtomRequest.reqAtomList();
         if (atomListResult.code == "200") {
           atomArray.value = atomListResult.data;
+          console.log(atomArray.value);
+
         }
       }
+    },
+    openAtomChooseWindow = async () => {
+      openLoadingWindow && openLoadingWindow();
+      await initAtomArray()
+      closeLoadingWindow && closeLoadingWindow();
       showAtomChooseWindow.value = true;
     },
     affirmChooseAtom = () => {
@@ -43,9 +51,14 @@ export default function rightToolModule(store: Store<RootState>) {
       if (chooseAtomEnName.value.length > 0) {
         atomArray.value.map((item, i) => {
           if (item.en_name == chooseAtomEnName.value) {
+            nowAtom = i;
+            window.history.pushState(null, item.ch_name + "元素", "/atomDetail?element_number=" + item.ele_number);
+            store?.commit(SCENE_MODULE_COMMIT_PREFIX + REMOVE_OBJECT,
+              store.state.scene.nowSelectObj
+            )
             store?.commit(
               SCENE_MODULE_COMMIT_PREFIX + ADD_OBJECT,
-              [new AtomModel(item.quality, item.ele_number, item.en_name, item.ch_name)],
+              [new AtomModel(item)],
             );
           }
         });
@@ -114,48 +127,54 @@ export default function rightToolModule(store: Store<RootState>) {
       image: `<svg t="1625789015119" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3049" ><path d="M716.8 0l102.4 102.4-409.6 409.6 409.6 409.6-102.4 102.4-512-512z" p-id="3050" fill="#BFE9E9"></path></svg>`,
       title: `上一个`,
       clickFunc: async () => {
-        let nowELe = (store.state.scene.nowSelectObj as AtomModel).ele_number;
+        let nowELe = (store.state.scene.nowSelectObj as AtomModel).atomData.ele_number;
         if (nowELe <= 1) {
           ElMessage({ type: "info", message: "您不能上一个了" })
           return;
         }
         openLoadingWindow && openLoadingWindow();
         let addAtomData = await (await AtomRequest.getAtomByEleNum(nowELe - 1)).data;
+        window.history.pushState(null, addAtomData.ch_name + "元素", "/atomDetail?element_number=" + addAtomData.ele_number);
         if (addAtomData) {
           store?.commit(SCENE_MODULE_COMMIT_PREFIX + REMOVE_OBJECT,
             store.state.scene.nowSelectObj
           )
           store?.commit(
             SCENE_MODULE_COMMIT_PREFIX + ADD_OBJECT,
-            [new AtomModel(addAtomData.quality, addAtomData.ele_number, addAtomData.en_name, addAtomData.ch_name)],
+            [new AtomModel(addAtomData)],
           );
         }
         closeLoadingWindow && closeLoadingWindow();
+        ElMessage({ type: "success", message: "切换成功" })
       }
     },
     {
       image: `<svg t="1625789079596" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4027" ><path d="M333.825 848.984L591.443 512 333.825 175.016c-24.123-31.554-15.866-75.12 18.442-97.306C365.057 69.439 380.31 65 395.945 65h16.093L768 512 412.038 959h-16.093c-41.94 0-75.939-31.27-75.939-69.844 0-14.38 4.826-28.409 13.82-40.172z" p-id="4028" fill="#BFE9E9"></path></svg>`,
       title: `下一个`,
       clickFunc: async () => {
-        let nowELe = (store.state.scene.nowSelectObj as AtomModel).ele_number;
-        if (nowELe <= 1) {
-          ElMessage({ type: "info", message: "您不能上一个了" })
+        let nowELe = (store.state.scene.nowSelectObj as AtomModel).atomData.ele_number;
+        openLoadingWindow && openLoadingWindow();
+        await initAtomArray()
+        if (nowELe >= atomArray.value[atomArray.value.length - 1].ele_number) {
+          closeLoadingWindow && closeLoadingWindow();
+          ElMessage({ type: "info", message: "您不能下一个了" })
           return;
         }
-        openLoadingWindow && openLoadingWindow();
-        let addAtomData = await (await AtomRequest.getAtomByEleNum(nowELe + 1)).data;
+        let addAtomData = (await AtomRequest.getAtomByEleNum(nowELe + 1)).data;
+        window.history.pushState(null, addAtomData.ch_name + "元素", "/atomDetail?element_number=" + addAtomData.ele_number);
         if (addAtomData) {
           store?.commit(SCENE_MODULE_COMMIT_PREFIX + REMOVE_OBJECT,
             store.state.scene.nowSelectObj
           )
           store?.commit(
             SCENE_MODULE_COMMIT_PREFIX + ADD_OBJECT,
-            [new AtomModel(addAtomData.quality, addAtomData.ele_number, addAtomData.en_name, addAtomData.ch_name)],
+            [new AtomModel(addAtomData)],
           );
         } else {
           ElMessage({ type: "info", message: "您好暂时没有收录这种元素的信息" })
         }
         closeLoadingWindow && closeLoadingWindow();
+        ElMessage({ type: "success", message: "切换成功" })
       }
     }
   ]
@@ -165,7 +184,6 @@ export default function rightToolModule(store: Store<RootState>) {
     closeAtomChooseWindow,
     atomArray,
     chooseAtomEnName,
-
     affirmChooseAtom
   }
 }
