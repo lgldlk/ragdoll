@@ -8,18 +8,29 @@
                 @apply text-lg;
             }
             .atom_en_name {
-                @applytext-lg;
+                @apply text-lg;
                 color: rgb(0, 211, 211);
             }
-            .container_body {
-                .text {}
-                .item {}
+        }
+    }
+    .container_body {
+        .atom_ele_number {}
+        .atom_quality {}
+        .describe_body {
+            div {
+                @apply mt-2;
             }
+        }
+        .into_nucleus {
+            @apply mt-5;
         }
     }
     &:deep(.el-card.box-card) {
         @apply rounded-md;
         border-left: none;
         border-right: none;
+    }
+    &:deep(.el-button) {
+        @apply w-full;
     }
 }
