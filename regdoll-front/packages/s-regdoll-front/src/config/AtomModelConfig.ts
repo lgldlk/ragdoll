@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-05-02 21:54:09
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-05 14:58:34
+ * @LastEditTime: 2021-07-10 09:46:50
  */
 
 import * as THREE from "three";
@@ -30,13 +30,13 @@ interface DefaultEleConfigType extends DefaultSphereConfigType {
   radius: number;
 }
 interface DefaultNucleusConfig extends DefaultSphereConfigType {
-  // 默认原子核设置
+  // 默认原子核设置 
   color: THREE.Color;
   baseAtomRadius: number;
   baseRadius: number; //默认的原子核大小基数
 }
 export namespace AtomModelConfig {
-  export const defaultEleOrbit: number = 5,
+  export const defaultEleOrbit: number = 3,
     defaultSphere: DefaultSphereConfigType = {
       widthSegments: 58,
       heightSegments: 58,
@@ -50,7 +50,7 @@ export namespace AtomModelConfig {
     },
     defaultEleConfig: DefaultEleConfigType = {
       ...defaultSphere,
-      color: new THREE.Color("rgb(191, 233, 233)"),
+      color: new THREE.Color("rgb(0,224,198)"),
       radius: 0.65,
     },
     defaultNucleusConfig: DefaultNucleusConfig = {
