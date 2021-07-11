@@ -1,3 +1,4 @@
+import AtomModel from '/@/threeScene/atomModule/AtomModule';
 import { Router } from 'vue-router';
 import { RootState, SCENE_MODULE_COMMIT_PREFIX } from '/@/store';
 import { Store } from 'vuex';
@@ -11,7 +12,7 @@ import { TWEEN } from "/@/assets/js/tween.module.min.js";
  * @Author: lgldlk
  * @Date: 2021-07-07 19:12:29
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-10 22:25:42
+ * @LastEditTime: 2021-07-11 17:00:39
  */
 
 
@@ -32,7 +33,7 @@ export default function rightChooseModule(store: Store<RootState>, router: Route
         }
         new TWEEN.Tween(tweenFov)
           .to({ fov: 2 }, 2000)
-          .easing(TWEEN.Easing.Quadratic.In)
+          // .easing(TWEEN.Easing.Quadratic.In)
           .onUpdate(() => {
             store?.commit(
               SCENE_MODULE_COMMIT_PREFIX + SET_LOCK_SCENE,
@@ -46,7 +47,10 @@ export default function rightChooseModule(store: Store<RootState>, router: Route
             //update
           }).onComplete(() => {
             router.push({
-
+              path: "atomInside",
+              query: {
+                element_number: (store.state.scene.nowSelectObj as AtomModel).atomData.ele_number
+              }
             })
           })
           .start()
