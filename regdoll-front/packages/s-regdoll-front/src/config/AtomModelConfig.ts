@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-05-02 21:54:09
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-10 09:46:50
+ * @LastEditTime: 2021-07-12 07:26:33
  */
 
 import * as THREE from "three";
@@ -58,5 +58,16 @@ export namespace AtomModelConfig {
       color: new THREE.Color("rgb(95, 209, 209)"),
       baseAtomRadius: 1,
       baseRadius: 0.08,
+    },
+    inSideAtomInsideConfig = {
+      ...defaultSphere,
+      atomExcircleColor: new THREE.Color("rgb(95, 209, 209)"),
+      atomProtonColor: new THREE.Color("rgb(250, 0, 0)"),
+      neutronColor: new THREE.Color("rgb(0,0,200)"),
+      globuleRadius: 6,
+      phiStart: 0,
+      phiLength: 3.2,
+      radius: 20,
+
     }
 }

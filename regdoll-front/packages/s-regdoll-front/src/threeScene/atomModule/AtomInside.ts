@@ -6,7 +6,7 @@ import { RegDollSceneObject3D } from '/@/threeScene/RegDollSceneObject3D';
  * @Author: lgldlk
  * @Date: 2021-07-11 20:01:57
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-12 07:26:56
+ * @LastEditTime: 2021-07-12 08:03:05
  */
 
 //@ts-ignore
@@ -66,12 +66,12 @@ export default class AtomInside extends RegDollSceneObject3D {
     neutron.material.color = AtomModelConfig.inSideAtomInsideConfig.neutronColor
     this.add(proton, neutron);
     this.rotateY(Math.PI / 4)
-    const spriteTextStyle = { bold: true, center: true, fontColor: "rgb(0,0,0)" }, protonSpriteText = new SpriteText("X " + this.ele_number, new THREE.Vector3(AtomModelConfig.inSideAtomInsideConfig.radius / 2, -1.5 * AtomModelConfig.inSideAtomInsideConfig.defaultGlobuleRadius / 2, 0),
+    const spriteTextStyle = { bold: true, center: true, fontColor: "rgb(0,0,0)" }, protonSpriteText = new SpriteText("X " + this.ele_number,
+      new THREE.Vector3(AtomModelConfig.inSideAtomInsideConfig.radius / 2, -1.5 * AtomModelConfig.inSideAtomInsideConfig.globuleRadius / 2, 0),
       spriteTextStyle),
-      neutronSpriteText = new SpriteText("X " + this.neutron_number, new THREE.Vector3(-AtomModelConfig.inSideAtomInsideConfig.radius / 2, -1.5 * AtomModelConfig.inSideAtomInsideConfig.defaultGlobuleRadius / 2, 0),
+      neutronSpriteText = new SpriteText("X " + this.neutron_number,
+        new THREE.Vector3(-AtomModelConfig.inSideAtomInsideConfig.radius / 2, -1.5 * AtomModelConfig.inSideAtomInsideConfig.globuleRadius / 2, 0),
         spriteTextStyle);
-
-
     this.add(protonSpriteText, neutronSpriteText);
 
   }

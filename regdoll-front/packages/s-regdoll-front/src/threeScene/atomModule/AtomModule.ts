@@ -4,7 +4,7 @@
  * @Descripttion:
  * @Author: lgldlk
  * @Date: 2021-05-02 21:54:10
- * @LastEditTime: 2021-07-10 16:49:43
+ * @LastEditTime: 2021-07-11 20:02:00
  */
 import * as THREE from "three";
 import { AtomModelConfig } from "/@/config/AtomModelConfig";

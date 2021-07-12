@@ -15,6 +15,39 @@
     border: 1px rgb(235, 238, 245) solid;
     border-right: none;
     @apply pt-3;
+    @apply h-full;
+    @apply overflow-y-auto;
+    @apply box-border;
+    width: 22%;
+    background: #003030;
+    border: 1px rgb(235, 238, 245) solid;
+    border-right: none;
+    @apply pt-3;
+    &:deep(.el-collapse-item) {
+        @apply bg-black;
+        border-left: 1rem solid #002323;
+        border-right: 1rem solid #002323;
+        border-bottom: 1px solid rgb(235, 238, 245);
+    }
+    &:deep(.el-collapse-item__wrap) {
+        @apply border-none;
+    }
+    &:deep(.el-collapse-item__header) {
+        @apply border-none;
+    }
+    &:deep(.el-collapse) {
+        @apply rounded-md;
+        @apply overflow-hidden;
+    }
+    &:deep(div.el-collapse-item__header.is-active) {
+        border-bottom: 1px solid rgba(127, 255, 255, 0.75);
+    }
+    &:deep(.icon) {
+        @apply w-10;
+        @apply box-border;
+        @apply p-1;
+        filter: drop-shadow(2px 2px 2px rgb(0, 255, 255, 0.75));
+    }
     .choose_menu {
         @apply px-1;
         @apply mt-1;

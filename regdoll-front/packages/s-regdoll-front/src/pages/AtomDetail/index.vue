@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-07-04 15:22:18
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-08 14:52:39
+ * @LastEditTime: 2021-07-09 19:52:07
 -->
 
 
@@ -18,7 +18,7 @@ import { defineComponent, onMounted } from "vue";
 import { useStore } from "vuex";
 import initScene from "./Composition/AtomScene";
 import initAtom from "./Composition/InitAtom";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import rightMenu from "./components/RightMenu/RightMenu.vue";
 export default defineComponent({
 	name: "",
@@ -27,12 +27,13 @@ export default defineComponent({
 	},
 	setup() {
 		const store = useStore(),
-			router = useRoute();
+			route = useRoute(),
+			router = useRouter();
 		onMounted(() => {
 			let tmpScene = document.getElementById("mainScene");
 			if (tmpScene) {
 				initScene(store, tmpScene);
-				initAtom(store, router);
+				initAtom(store, route, router);
 			}
 		});
 	},

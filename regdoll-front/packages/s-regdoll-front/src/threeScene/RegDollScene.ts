@@ -4,7 +4,7 @@
  * @Author: lgldlk
  * @Date: 2021-05-02 21:54:10
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-10 17:03:04
+ * @LastEditTime: 2021-07-12 08:04:52
  */
 import * as THREE from "three";
 import SceneConfig from "../config/SceneConfig";
@@ -35,7 +35,7 @@ export class regDollScene {
   renderWidth!: number;
   renderHeight!: number;
   gridHelp!: GridHelper
-  orbitControls!: OrbitControls;
+  public orbitControls!: OrbitControls;
   transformControl!: TransformControls;
   defaultSpotLight!: THREE.SpotLight;
   defaultAmbientLight!: THREE.Light;
