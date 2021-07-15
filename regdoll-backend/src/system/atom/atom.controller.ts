@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-04-30 21:55:38
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-05 08:24:50
+ * @LastEditTime: 2021-07-15 08:59:02
  */
 import { Atom } from './../../database/entitys/Atom.entity';
 import { AtomService } from './atom.service';
@@ -19,7 +19,7 @@ export class AtomController {
   constructor(private readonly atomService: AtomService) { }
 
   @Post('addAtom')
-  async addAtom(@Body() atom: AtomDto): Promise<ResponseData> {
+  async addAtom(@Body("addAtom") atom: AtomDto): Promise<ResponseData> {
     return await this.atomService.addAtom(atom);
   }
 
@@ -27,11 +27,19 @@ export class AtomController {
   async getAtomList(): Promise<ResponseData> {
     return await this.atomService.findList();
   }
+  @Post("updateAtom")
+  async updateAtom(@Body("upAtom") atom: AtomDto) {
+    return await this.atomService.updateAtom(atom);
+  }
+
+  @Post("deleteAtom")
+  async deleteAtom(@Body() body: any) {
+
+    return await this.atomService.deleteAtom(body.id);
+  }
 
   @Get('getAtomByEleNum')
   async getAtomById(@Query('ele_number') ele_number): Promise<ResponseData> {
     return await this.atomService.getAtomByEleNum(ele_number);
   }
-
-
 }

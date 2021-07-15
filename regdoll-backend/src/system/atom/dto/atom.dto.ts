@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-05-02 14:16:05
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-09 14:51:33
+ * @LastEditTime: 2021-07-15 08:40:45
  */
 import { ApiProperty } from '@nestjs/swagger';
 import {
@@ -55,21 +55,26 @@ export class AtomDto {
   @ApiProperty({ description: '化合价', uniqueItems: true })
   @IsString({ message: '化合价错误' })
   valence: string
-  @ApiProperty({ description: '周期', uniqueItems: true })
-  @IsString({ message: '周期错误' })
-  period: string
-  @ApiProperty({ description: '族', uniqueItems: true })
-  @IsString({ message: '族错误' })
-  race: string
-  @ApiProperty({ description: '区', uniqueItems: true })
-  @IsString({ message: '区描述错误' })
-  zone: string
+  @ApiProperty({ description: '位置', uniqueItems: true })
+  @IsString({ message: '位置错误' })
+  location: string
   @ApiProperty({ description: '物态（常温）', uniqueItems: true })
   @IsString({ message: '物态（常温）描述错误' })
   matterState: string
   @ApiProperty({ description: '离子电荷量', uniqueItems: true })
   @IsString({ message: '离子电荷量描述错误' })
   IonicCharge: string
+
+  @ApiProperty({ description: '原子颜色', uniqueItems: true })
+  @IsString({ message: '原子颜色' })
+  color: string
+  @ApiProperty({ description: '原子半径', uniqueItems: true })
+  @IsNumber()
+  radius: number
+
+
+  id: number;
+
   // @ApiProperty({ description: '原子颜色', uniqueItems: true })
   // @IsString({ message: '原子颜色描述错误' })
   // nucleusColor: string
