@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-07-12 09:21:00
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-15 11:02:16
+ * @LastEditTime: 2021-07-16 16:34:46
 -->
 <template>
   <div class="moleculeEditPage">
@@ -79,16 +79,11 @@
               "
             ></el-input-number>
           </div>
-          <span>反应活性：</span>
-          <el-select v-model="moleculeForm.reactivity" placeholder="请选择">
-            <el-option
-              v-for="item in reactivityOption"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            >
-            </el-option>
-          </el-select>
+          <span>水溶性：</span>
+             <el-input
+            v-model="moleculeForm.reactivity"
+            clearable
+            placeholder="请输入水溶性"></el-input>
           <div>知识点：</div>
           <div id="wangEditor"></div>
           <div class="">
