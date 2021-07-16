@@ -48,6 +48,7 @@ class Request {
         header: data.headers !== undefined ? { ...this.headers, ...data.headers } : this.headers,
         method: data.method || "GET",
         data: data.data || data.params || "",
+        params: data.params || {}
       };
       axios
         .request({
