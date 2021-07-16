@@ -154,7 +154,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import { allAtoms } from "./composition";
+import { allAtoms } from "./AtomComposition";
 export default defineComponent({
   name: "",
   setup() {
