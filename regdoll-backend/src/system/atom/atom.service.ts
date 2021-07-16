@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-04-30 15:04:15
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-15 08:56:03
+ * @LastEditTime: 2021-07-15 16:50:17
  */
 import { AtomDto } from './dto/atom.dto';
 import { Atom } from '../../database/entitys/Atom.entity';
@@ -32,9 +32,9 @@ export class AtomService {
     return { code: '200', message: '插入成功' };
   }
   async updateAtom(atom: AtomDto) {
-    await this.atomRepo.update(atom, {
-      id: atom.id
-    })
+
+
+    await this.atomRepo.save(atom)
     return {
       code: '200',
       message: "更新成功"
