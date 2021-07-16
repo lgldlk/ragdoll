@@ -3,12 +3,15 @@
  * @Author: lgldlk
  * @Date: 2021-07-12 09:21:00
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-13 14:27:21
+ * @LastEditTime: 2021-07-15 11:02:16
 -->
 <template>
   <div class="moleculeEditPage">
     <div id="container"></div>
     <div>
+      <router-link class="goHome"  to="/">
+        <i class="el-icon-s-home"></i>
+      </router-link>
       <!-- <popWindow 
     :showWindow="saveToMoleculeVis"
              windowTitle="保存分子"
@@ -33,7 +36,7 @@
     </template>
   </popWindow> -->
       <el-drawer title="保存分子" v-model="saveToMoleculeVis" direction="rtl">
-        <div class="moleculeCon">
+        <div class="moleculeCon drawer-inside">
           <span>分子名：</span>
           <el-input
             v-model="moleculeForm.name"
@@ -65,8 +68,16 @@
             clearable
             placeholder="请输入密度"
           ></el-input>
-          <div v-for="item  in valenceList"  :key="item.uuid">
-              {{item.atomName}}：<el-input-number  size="mini" v-model="item.valence"  @change="(current,old)=>{ saveValenceChange(current,old, item)}"></el-input-number>
+          <div v-for="item in valenceList" :key="item.uuid">
+            {{ item.en_name }}：<el-input-number
+              size="mini"
+              v-model="item.valence"
+              @change="
+                (current, old) => {
+                  saveValenceChange(current, old, item);
+                }
+              "
+            ></el-input-number>
           </div>
           <span>反应活性：</span>
           <el-select v-model="moleculeForm.reactivity" placeholder="请选择">
@@ -78,10 +89,10 @@
             >
             </el-option>
           </el-select>
-          <div > 知识点：</div>
+          <div>知识点：</div>
           <div id="wangEditor"></div>
           <div class="">
-             <el-button type="primary" plain @click="saveMolecule">保存</el-button>
+            <el-button type="primary" plain @click="saveMolecule">保存</el-button>
           </div>
         </div>
       </el-drawer>
@@ -92,11 +103,13 @@
       v-show="nowSelectObj != undefined"
       @clisk="openAtomChangeName"
     >
-      {{ nowSelectObj?.atomName }}&nbsp;&nbsp;{{ nowSelectObj?.valence }}&nbsp;&nbsp;&nbsp;{{
+      {{ nowSelectObj?.atom.en_name }}&nbsp;&nbsp;{{
+        nowSelectObj?.valence
+      }}&nbsp;&nbsp;&nbsp;{{
         selectAtomPosition.x + "," + selectAtomPosition.y + "," + selectAtomPosition.z
       }}
     </div>
-    <popWindow
+    <!-- <popWindow
       v-if="atomChangeNameVisible"
       windowTitle="原子名输入"
       @forkClick="closeAtomChangeName"
@@ -124,8 +137,8 @@
           >
         </span>
       </template>
-    </popWindow>
-    <popWindow
+    </popWindow> -->
+    <!-- <popWindow
       v-if="radiusInputVib"
       windowTitle="原子半径输入"
       @forkClick="closeRadiusInput"
@@ -151,8 +164,8 @@
           >
         </span>
       </template>
-    </popWindow>
-    <popWindow
+    </popWindow> -->
+    <!-- <popWindow
       v-if="atomColorSetVib"
       windowTitle="原子颜色输入"
       @forkClick="closeAtomColorWindow"
@@ -177,7 +190,7 @@
           >
         </span>
       </template>
-    </popWindow>
+    </popWindow> -->
 
     <popWindow
       v-if="valenceInputVis"
@@ -186,22 +199,24 @@
     >
       <div>
         <div class="">
-          化合价：  <el-input-number  size="mini" v-model="valenceInput" ></el-input-number>
+          化合价： <el-input-number size="mini" v-model="valenceInput"></el-input-number>
         </div>
       </div>
       <template #footer>
         <span class="popWindow_footer">
-          <el-button size="mini" :round="true" @click="closeValence"
-            >取 消</el-button
-          >
-          <el-button size="mini" type="primary" round="round" @click="setSelectAtomValence"
+          <el-button size="mini" :round="true" @click="closeValence">取 消</el-button>
+          <el-button
+            size="mini"
+            type="primary"
+            round="round"
+            @click="setSelectAtomValence"
             >确 定</el-button
           >
         </span>
       </template>
     </popWindow>
 
-    <popWindow v-if="addAtomFormVib" windowTitle="添加原子" @forkClick="closeAtomWindow">
+    <!-- <popWindow v-if="addAtomFormVib" windowTitle="添加原子" @forkClick="closeAtomWindow">
       <div>
         <div class="">
           元素名输入：
@@ -235,7 +250,7 @@
           >
         </span>
       </template>
-    </popWindow>
+    </popWindow> -->
     <popWindow
       v-if="atomPositionWindow"
       windowTitle="坐标输入"
@@ -262,6 +277,37 @@
             type="primary"
             round="round"
             @click="changeSelectAtomPosition"
+            >确 定</el-button
+          >
+        </span>
+      </template>
+    </popWindow>
+    <popWindow
+      v-if="showAtomChooseWindow"
+      windowTitle="原子选择"
+      @forkClick="closeAtomChooseWindow"
+    >
+      <div>
+        原子选择：<el-select v-model="chooseAtomEnName" placeholder="请选择要添加的原子">
+          <el-option
+            v-for="item in atomArray"
+            :key="item.ch_name"
+            :label="item.ch_name"
+            :value="item.en_name"
+          >
+          </el-option>
+        </el-select>
+     <el-divider></el-divider>
+        <div>
+          化合价： <el-input-number size="mini" v-model="valenceInput"></el-input-number>
+        </div>
+      </div>
+      <template #footer>
+        <span class="popWindow_footer">
+          <el-button size="mini" :round="true" @click="closeAtomChooseWindow"
+            >取 消</el-button
+          >
+          <el-button size="mini" type="primary" round="round" @click="affirmChooseAtom"
             >确 定</el-button
           >
         </span>

@@ -7,12 +7,14 @@
         @apply select-none;
         @apply text-pink-500;
     }
+    .goHome {
+        @apply absolute;
+        @apply top-3;
+        @apply left-3;
+        @apply text-gray-500;
+        @apply text-3xl;
+    }
     .moleculeCon {
-        @apply px-3;
-        @apply box-border;
-        @apply pb-28;
-        @apply overflow-y-auto;
-        max-height: calc( 100vh - 46px);
         * {
             @apply my-2;
         }

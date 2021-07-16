@@ -10,27 +10,27 @@ import { OrbitControls } from "/@/assets/js/OrbitControls.js";
 import { onMounted, ref, watchEffect, shallowRef } from "vue";
 
 import { MoleculeRequest } from '/@/api/MoleculeRequest'
-
+import { AtomRequest } from '/@/api/AtomRequest'
 import { ElMessage } from 'element-plus'
 const nowSelectObj = ref(undefined),
-    atomChangeNameVisible = ref(false),
-    atomNameInput = ref(""),
+    // atomChangeNameVisible = ref(false),
+    // atomNameInput = ref(""),
     selectAtomPosition = ref({
         x: 0,
         y: 0,
         z: 0
     }),
     atomPositionWindow = ref(false),
-    openAtomChangeName = () => {
-        if (nowSelectObj.value) {
-            atomNameInput.value = nowSelectObj.value.atomName
-        }
-        atomChangeNameVisible.value = true;
-    },
-    closeAtomChangeName = () => {
-        atomChangeNameVisible.value = false;
-        atomNameInput.value = ""
-    },
+    // openAtomChangeName = () => {
+    //     if (nowSelectObj.value) {
+    //         atomNameInput.value = nowSelectObj.value.atomName
+    //     }
+    //     atomChangeNameVisible.value = true;
+    // },
+    // closeAtomChangeName = () => {
+    //     atomChangeNameVisible.value = false;
+    //     atomNameInput.value = ""
+    // },
     changeSelectAtomName = () => {
         nowSelectObj.value.atomName = atomNameInput.value
         closeAtomChangeName();
@@ -67,15 +67,15 @@ const nowSelectObj = ref(undefined),
         nowSelectObj.value.valence = valenceInput.value
         closeValence();
     },
-    radiusInput = ref(""),
-    radiusInputVib = ref(false),
-    openRadiusInput = () => {
-        radiusInput.value = nowSelectObj.value.geometry.parameters.radius
-        radiusInputVib.value = true;
-    },
-    closeRadiusInput = () => {
-        radiusInputVib.value = false;
-    },
+    // radiusInput = ref(""),
+    // radiusInputVib = ref(false),
+    // openRadiusInput = () => {
+    //     radiusInput.value = nowSelectObj.value.geometry.parameters.radius
+    //     radiusInputVib.value = true;
+    // },
+    // closeRadiusInput = () => {
+    //     radiusInputVib.value = false;
+    // },
     changeSelectAtomRadius = () => {
         // if () {
 
@@ -83,42 +83,45 @@ const nowSelectObj = ref(undefined),
         closeRadiusInput()
             // }
     },
-    atomColorSet = ref("rgb(0,0,0)"),
-    atomColorSetVib = ref(false),
-    openAtomColorWindow = () => {
-        atomColorSet.value = nowSelectObj.value.material.color.getStyle()
-        atomColorSetVib.value = true;
-    },
-    closeAtomColorWindow = () => {
-        atomColorSetVib.value = false;
-    },
-    setSelectAtomColor = () => {
-        nowSelectObj.value.material.color = new THREE.Color(atomColorSet.value);
-        closeAtomColorWindow()
-    },
-    addAtomForm = ref({
-        color: "rgb(0,224,198)",
-        radius: 20,
-        atomName: "H",
-        valence: 0
-    }),
-    addAtomFormVib = ref(false),
-    openAddAtomWindow = () => {
-        addAtomForm.value = {
-            color: "rgb(0,224,198)",
-            radius: 20,
-            atomName: "H",
-            valence: 0
-        };
-        addAtomFormVib.value = true;
-    },
-    closeAtomWindow = () => {
-        addAtomFormVib.value = false;
-    },
-    addPoint = () => {
+    // atomColorSet = ref("rgb(0,0,0)"),
+    // atomColorSetVib = ref(false),
+    // openAtomColorWindow = () => {
+    //     atomColorSet.value = nowSelectObj.value.material.color.getStyle()
+    //     atomColorSetVib.value = true;
+    // },
+    // closeAtomColorWindow = () => {
+    //     atomColorSetVib.value = false;
+    // },
+    // setSelectAtomColor = () => {
+    //     nowSelectObj.value.material.color = new THREE.Color(atomColorSet.value);
+    //     closeAtomColorWindow()
+    // // },
+    // addAtomForm = ref({
+    //     color: "rgb(0,224,198)",
+    //     radius: 20,
+    //     atomName: "H",
+    //     valence: 0
+    // }),
+    // addAtomFormVib = ref(false),
+    // openAddAtomWindow = () => {
+    //     addAtomForm.value = {
+    //         color: "rgb(0,224,198)",
+    //         radius: 20,
+    //         atomName: "H",
+    //         valence: 0
+    //     };
+    //     addAtomFormVib.value = true;
+    // },
+    // closeAtomWindow = () => {
+    //     addAtomFormVib.value = false;
+    // },
+    addPoint = (addAtom) => {
         splinePointsLength++;
-        positions.push(addSplineObject(null, parseFloat(addAtomForm.value.radius), addAtomForm.value.color, addAtomForm.value.atomName, addAtomForm.value.valence).position);
-        closeAtomWindow()
+        // positions.push(addSplineObject(null,
+        //   parseFloat(addAtomForm.value.radius),
+        //   addAtomForm.value.color, addAtomForm.value.atomName, addAtomForm.value.valence).position);
+        // closeAtomWindow()
+        positions.push(addSplineObject(null, addAtom, valenceInput.value).position)
     }
 
 
@@ -187,18 +190,17 @@ const inSceneAtoms = ref(new Map()),
         let atomDatas = []
         for (let tmpAtom of splineHelperObjects.value) {
             // tmpAtom
+
             atomDatas.push({
-                atomName: tmpAtom.atomName,
+                atom: tmpAtom.atom,
                 x: tmpAtom.position.x,
                 y: tmpAtom.position.y,
                 z: tmpAtom.position.z,
-                color: tmpAtom.material.color.getStyle(),
-                radius: tmpAtom.geometry.parameters.radius,
                 valence: tmpAtom.valence
             })
         }
         moleculeForm.value.atomDatas = atomDatas
-        let saveRes = await MoleculeRequest.reqAtomList(moleculeForm.value)
+        let saveRes = await MoleculeRequest.addMolecule(moleculeForm.value)
         if (saveRes.code == "200") {
             ElMessage({ type: "success", message: "保存成功" })
             location.reload();
@@ -210,24 +212,56 @@ const inSceneAtoms = ref(new Map()),
 
 function initSaveToMoleculeFrom() {
     // inSceneAtoms.value = new Map();
-    // valenceList.value = [];
+    valenceList.value = [];
     for (let tmpAtom of splineHelperObjects.value) {
-        // valenceList.value.push({
-        //     atomName: tmpAtom.atomName,
-        //     valence: tmpAtom.valence,
-        //     uuid: tmpAtom.uuid
-        // })
-        if (inSceneAtoms.value.has(tmpAtom.atomName)) {
-            inSceneAtoms.value.set(tmpAtom.atomName, inSceneAtoms.value.get(tmpAtom.atomName) + 1)
-        } else {
-            inSceneAtoms.value.set(tmpAtom.atomName, 1)
-        }
+        valenceList.value.push({
+                en_name: tmpAtom.atom.en_name,
+                valence: tmpAtom.valence,
+                uuid: tmpAtom.uuid
+            })
+            // if (inSceneAtoms.value.has(tmpAtom.atomName)) {
+            //     inSceneAtoms.value.set(tmpAtom.atomName, inSceneAtoms.value.get(tmpAtom.atomName) + 1)
+            // } else {
+            //     inSceneAtoms.value.set(tmpAtom.atomName, 1)
+            // }
     }
 
 }
 
-
-
+import { inject } from 'vue'
+import { OPEN_LOADING_WINDOW, CLOSE_LOADING_WINDOW } from '/@/PROVIDE_KEY'
+const showAtomChooseWindow = ref(false),
+    openLoadingWindow = inject(OPEN_LOADING_WINDOW),
+    closeLoadingWindow = inject(CLOSE_LOADING_WINDOW),
+    atomArray = ref([]),
+    chooseAtomEnName = ref(""),
+    closeAtomChooseWindow = () => {
+        setTimeout(() => {
+            showAtomChooseWindow.value = false;
+        }, 200);
+    },
+    openAtomChooseWindow = async() => {
+        if (atomArray.value.length == 0) {
+            let atomListResult = await AtomRequest.reqAtomList();
+            if (atomListResult.code == "200") {
+                atomArray.value = atomListResult.data;
+            }
+        }
+        showAtomChooseWindow.value = true;
+    },
+    affirmChooseAtom = () => {
+        closeAtomChooseWindow();
+        openLoadingWindow && openLoadingWindow();
+        if (chooseAtomEnName.value.length > 0) {
+            atomArray.value.map((item, i) => {
+                if (item.en_name == chooseAtomEnName.value) {
+                    valenceInput.value = 0;
+                    addPoint(item)
+                }
+            });
+        }
+        closeLoadingWindow && closeLoadingWindow();
+    };
 
 export function initMoleculeEditScene() {
     onMounted(() => {
@@ -235,6 +269,12 @@ export function initMoleculeEditScene() {
         animate();
     });
     return {
+        showAtomChooseWindow,
+        openAtomChooseWindow,
+        affirmChooseAtom,
+        chooseAtomEnName,
+        atomArray,
+        closeAtomChooseWindow,
         openSaveMoleculeWindow,
         closeSaveMoleculeWindow,
         expressionInput,
@@ -242,16 +282,16 @@ export function initMoleculeEditScene() {
         reactivityOption,
         moleculeForm,
         saveToMoleculeVis,
-        atomColorSet,
+        // atomColorSet,
         saveMolecule,
-        atomColorSetVib,
-        openAtomColorWindow,
-        closeAtomColorWindow,
-        setSelectAtomColor,
-        atomChangeNameVisible,
-        openAtomChangeName,
-        closeAtomChangeName,
-        atomNameInput,
+        // atomColorSetVib,
+        // openAtomColorWindow,
+        // closeAtomColorWindow,
+        // setSelectAtomColor,
+        // atomChangeNameVisible,
+        // openAtomChangeName,
+        // closeAtomChangeName,
+        // atomNameInput,
         changeSelectAtomName,
         nowSelectObj,
         selectAtomPosition,
@@ -259,15 +299,15 @@ export function initMoleculeEditScene() {
         openAtomPositionWindow,
         closeAtomPositionWindow,
         changeSelectAtomPosition,
-        radiusInput,
-        radiusInputVib,
-        openRadiusInput,
-        closeRadiusInput,
-        changeSelectAtomRadius,
-        addAtomForm,
-        addAtomFormVib,
-        openAddAtomWindow,
-        closeAtomWindow,
+        // radiusInput,
+        // radiusInputVib,
+        // openRadiusInput,
+        // closeRadiusInput,
+        // changeSelectAtomRadius,
+        // addAtomForm,
+        // addAtomFormVib,
+        // openAddAtomWindow,
+        // closeAtomWindow,
         addPoint,
         valenceInput,
         valenceInputVis,
@@ -289,7 +329,7 @@ function updateGroupGeometry(mesh, geometry) {
     // these do not update nicely together if shared
 }
 class MoleculeAtom extends THREE.Mesh {
-    atomName;
+    atom;
     valence;
     constructor(geometry, material) {
         super(geometry, material)
@@ -313,16 +353,17 @@ let transformControl;
 const ARC_SEGMENTS = 200;
 
 const params = {
-    openAddAtomWindow,
+    openAtomChooseWindow,
     removePoint: removePoint,
     openSaveMoleculeWindow,
     // exportSpline: exportSpline,
-    changeAtomName: changeAtomName,
+    // changeAtomName: changeAtomName,
     openAtomPositionWindow,
-    openRadiusInput,
-    openAtomColorWindow,
+    // openRadiusInput,
+    // openAtomColorWindow,
     openValence
 };
+let mainGui, selectObjFolder
 
 function init() {
     container = document.getElementById("container");
@@ -373,21 +414,23 @@ function init() {
     container.appendChild(renderer.domElement);
 
 
+    if (!mainGui) {
+        mainGui = new GUI();
 
-    const mainGui = new GUI();
+        mainGui.add(params, "openAtomChooseWindow", "添加原子");
 
-    mainGui.add(params, "openAddAtomWindow", "添加原子");
+        mainGui.add(params, "openSaveMoleculeWindow", "保存分子");
+        mainGui.open();
+        selectObjFolder = mainGui.addFolder("选中原子");
+        selectObjFolder.add(params, "removePoint", "删除选中原子");
+        // selectObjFolder.add(params, "changeAtomName", "改变原子名");
+        selectObjFolder.add(params, "openAtomPositionWindow", "输入位置")
+            // selectObjFolder.add(params, "openRadiusInput", "打开半径输入框")
 
-    mainGui.add(params, "openSaveMoleculeWindow", "保存分子");
-    mainGui.open();
-    const selectObjFolder = mainGui.addFolder("选中原子");
-    selectObjFolder.add(params, "removePoint", "删除选中原子");
-    selectObjFolder.add(params, "changeAtomName", "改变原子名");
-    selectObjFolder.add(params, "openAtomPositionWindow", "输入位置")
-    selectObjFolder.add(params, "openRadiusInput", "打开半径输入框")
+        // selectObjFolder.add(params, "openAtomColorWindow", "设定原子颜色")
+        selectObjFolder.add(params, "openValence", "元素化合价设定")
+    }
 
-    selectObjFolder.add(params, "openAtomColorWindow", "设定原子颜色")
-    selectObjFolder.add(params, "openValence", "元素化合价设定")
     watchEffect(() => {
             if (nowSelectObj.value == undefined) {
                 selectObjFolder.hide();
@@ -457,12 +500,12 @@ function init() {
 }
 
 
-function addSplineObject(position, radius = 20, color = Math.random() * 0xffffff, atomName = 'H', valence = 0) {
+function addSplineObject(position, atomData, valence) {
     const material = new THREE.MeshLambertMaterial({
-        color
+        color: atomData.color
     });
-    const object = new MoleculeAtom(new THREE.SphereGeometry(radius, 48, 48), material);
-    object.atomName = atomName;
+    const object = new MoleculeAtom(new THREE.SphereGeometry(atomData.radius, 48, 48), material);
+    object.atom = atomData;
     object.valence = valence;
     if (position) {
         object.position.copy(position);
