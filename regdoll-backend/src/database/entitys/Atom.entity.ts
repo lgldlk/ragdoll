@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-04-28 19:22:19
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-15 08:40:04
+ * @LastEditTime: 2021-07-15 10:04:03
  */
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { ConstituentAtoms } from './ConstituentAtoms.entity';
@@ -56,6 +56,6 @@ export class Atom {
   @Column({ type: "varchar", comment: "离子电荷量" })
   IonicCharge: string
 
-  @OneToMany(() => ConstituentAtoms, conAtoms => conAtoms.atomId)
+  @OneToMany(() => ConstituentAtoms, conAtoms => conAtoms.atom)
   atomPositions: ConstituentAtoms[];
 }

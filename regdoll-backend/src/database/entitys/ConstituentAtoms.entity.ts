@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-07-12 08:44:30
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-14 19:45:53
+ * @LastEditTime: 2021-07-16 10:10:37
  */
 import { number } from '@hapi/joi';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
@@ -26,5 +26,5 @@ export class ConstituentAtoms {
   molecule: Molecule;
 
   @ManyToOne(() => Atom, atom => atom.atomPositions)
-  atomId: Atom;
+  atom: Atom;
 }
