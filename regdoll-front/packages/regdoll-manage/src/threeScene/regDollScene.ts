@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-05-02 21:54:10
  * @Editors: lgldlk
- * @LastEditTime: 2021-06-10 22:23:09
+ * @LastEditTime: 2021-07-02 22:09:02
  */
 import * as THREE from "three";
 import SceneConfig from "../config/SceneConfig";
@@ -29,7 +29,7 @@ export class regDollScene {
   transformControl!: TransformControls;
   defaultSpotLight!: THREE.SpotLight;
   defaultAmbientLight!: THREE.AmbientLight;
-  mouserVector2:THREE.Vector2
+  mouserVector2: THREE.Vector2
   // onDownPosition = new THREE.Vector2();
   // onUpPosition = new THREE.Vector2();
 
@@ -53,7 +53,7 @@ export class regDollScene {
     public backgroundColor: THREE.Color = new THREE.Color(0xffffff),
   ) {
     this.objectArr = [];
-    this.mouserVector2=new THREE.Vector2()
+    this.mouserVector2 = new THREE.Vector2()
     {
       this.renderWidth = this.renderDom.clientWidth;
       this.renderHeight = this.renderDom.clientHeight;
@@ -76,14 +76,14 @@ export class regDollScene {
 
   initGridHelper() {
     this.gridHelp = getGridHelper(SceneConfig.sceneLen * 2, SceneConfig.sceneLen * 2);
-   
+
     this.scene.add(this.gridHelp)
   }
   initOrbitControls() {
     this.orbitControls = new OrbitControls(this.camera, this.renderer.domElement);
     this.orbitControls.addEventListener("change",
       () => {
-          this.transformControl.detach ()
+        this.transformControl.detach()
         this.render(0)
       });
   }
@@ -109,10 +109,10 @@ export class regDollScene {
   //   this.onUpPosition.x = event.offsetX;
   //   this.onUpPosition.y = event.offsetY;
   //   this.axesHelper.visible == false && this.setAxesHelperVisible(true);
-  
+
   // };
-  onPointerMove = (event: { offsetX: number; offsetY: number,clientX :number,clientY:number}) => {
-    this.mouserVector2.set( ( event.offsetX /this.renderWidth ) * 2 - 1, - ( event.offsetY / this.renderHeight ) * 2 + 1 );
+  onPointerMove = (event: { offsetX: number; offsetY: number, clientX: number, clientY: number }) => {
+    this.mouserVector2.set((event.offsetX / this.renderWidth) * 2 - 1, - (event.offsetY / this.renderHeight) * 2 + 1);
     this.raycaster.setFromCamera(this.mouserVector2, this.camera);
     const intersects = this.raycaster.intersectObjects(this.objectArr, true);
     if (intersects.length > 0) {
@@ -171,9 +171,10 @@ export class regDollScene {
   }
   changeBackground(newBgColor: THREE.Color) {
     this.scene.background = newBgColor;
+    this.render()
   }
-  initAxesHelper(sceneLen:number|null) {
-    this.axesHelper = new THREE.AxesHelper(sceneLen||SceneConfig.sceneLen);
+  initAxesHelper(sceneLen: number | null) {
+    this.axesHelper = new THREE.AxesHelper(sceneLen || SceneConfig.sceneLen);
     this.scene.add(this.axesHelper);
   }
   changeSceneLen(len: number) {
@@ -191,8 +192,8 @@ export class regDollScene {
       this.scene.add(this.defaultSpotLight);
     }
   }
-  render = (renderTime: number=0) => {
-    if (this.renderScene&&renderTime>0) {
+  render = (renderTime: number = 0) => {
+    if (this.renderScene && renderTime > 0) {
       this.renderScene && requestAnimationFrame(this.render);
       this.objectArr.forEach((item) => {
         if (item.renderEvent) {
@@ -221,15 +222,15 @@ export class regDollScene {
    * @param obj  要添加的物体
    */
   addObject(obj: RegDollSceneObject3D, event: { offsetX: number; offsetY: number, clientX: number, clientY: number } | null = null) {
-    if (event) { 
-    this.mouserVector2.set( ( event.offsetX /this.renderWidth ) * 2 - 1, - ( event.offsetY / this.renderHeight ) * 2 + 1 );
-    this.raycaster.setFromCamera(this.mouserVector2, this.camera);
+    if (event) {
+      this.mouserVector2.set((event.offsetX / this.renderWidth) * 2 - 1, - (event.offsetY / this.renderHeight) * 2 + 1);
+      this.raycaster.setFromCamera(this.mouserVector2, this.camera);
       const intersect = this.raycaster.intersectObject(this.gridHelp);
 
-        intersect.length > 0 && obj.position.copy(intersect[0]?.point).add(intersect[0]?.face?.normal || new THREE.Vector3())
-      
-  }
-      this.objectArr.push(obj);
+      intersect.length > 0 && obj.position.copy(intersect[0]?.point).add(intersect[0]?.face?.normal || new THREE.Vector3())
+
+    }
+    this.objectArr.push(obj);
     this.scene.add(obj);
     this.transformControl.attach(obj)
     this.render()

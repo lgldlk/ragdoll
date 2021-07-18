@@ -4,7 +4,7 @@ import { ADD_OBJECT, INIT_REGDOLL_SCENE } from "./../../../store/Scene/mutation-
  * @Author: lgldlk
  * @Date: 2021-05-10 20:58:26
  * @Editors: lgldlk
- * @LastEditTime: 2021-06-10 21:24:15
+ * @LastEditTime: 2021-07-04 15:45:37
  */
 import { regDollScene } from "../../../threeScene/RegDollScene";
 

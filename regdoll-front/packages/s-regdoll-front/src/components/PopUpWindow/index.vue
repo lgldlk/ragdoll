@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-05-29 21:05:26
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-06 14:26:42
+ * @LastEditTime: 2021-07-17 14:39:57
 -->
 <template>
   <teleport to="body">
@@ -20,11 +20,11 @@
           >
             <path
               d="M77.550933 29.2864l917.162667 917.162667-48.264533 48.264533L29.2864 77.550933z"
-              fill="#2c2c2c"
+              fill="#C0C4CC"
             ></path>
             <path
               d="M946.449067 29.2864L29.2864 946.449067l48.264533 48.264533 917.162667-917.162667z"
-              fill="#2c2c2c"
+              fill="#C0C4CC"
             ></path>
           </svg>
         </div>

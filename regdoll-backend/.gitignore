@@ -2,7 +2,7 @@
 /dist
 /node_modules
 /src/config/dev.sql.env
-
+/public
 # Logs
 logs
 *.log

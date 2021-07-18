@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-04-28 19:22:19
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-15 10:04:03
+ * @LastEditTime: 2021-07-17 08:59:17
  */
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { ConstituentAtoms } from './ConstituentAtoms.entity';

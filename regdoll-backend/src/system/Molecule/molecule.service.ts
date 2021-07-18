@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-07-12 08:56:44
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-16 11:14:58
+ * @LastEditTime: 2021-07-17 09:06:42
  */
 import { Molecule } from 'src/database/entitys/Molecule.entity';
 /*
@@ -17,6 +17,23 @@ import { ConstituentAtoms } from 'src/database/entitys/ConstituentAtoms.entity';
 
 @Injectable()
 export class MoleculeService {
+  constructor(@InjectRepository(Molecule)
+  private readonly moleculeRepo: Repository<Molecule>,
+
+    @InjectRepository(ConstituentAtoms)
+    private readonly constituentAtomRepo: Repository<ConstituentAtoms>
+  ) {
+
+  }
+  async getMoleculeById(id: any) {
+    let molecule: any = (await this.moleculeRepo.find({ where: { id } }))[0];
+    let atomDatas: any = (await this.constituentAtomRepo.query("select * from constituent_atoms WHERE moleculeId =?", [id]));
+    for (let atom of atomDatas) {
+      atom.atom = (await this.moleculeRepo.query("SELECT * from atom where id =?", [atom.atomId]))[0]
+    }
+    molecule.atomDatas = atomDatas;
+    return { code: "200", data: molecule }
+  }
   async updateMoleculeValence(molecule: Molecule) {
     await this.moleculeRepo.save(molecule);
     for (let tmp of molecule.atomDatas) {
@@ -48,14 +65,7 @@ export class MoleculeService {
 
 
 
-  constructor(@InjectRepository(Molecule)
-  private readonly moleculeRepo: Repository<Molecule>,
 
-    @InjectRepository(ConstituentAtoms)
-    private readonly constituentAtomRepo: Repository<ConstituentAtoms>
-  ) {
-
-  }
   async addMolecule(molecule: Molecule) {
     await this.constituentAtomRepo.save(molecule.atomDatas)
     await this.moleculeRepo.save(molecule)

@@ -1,0 +1,20 @@
+.edit-page {
+    @apply w-full;
+    @apply flex;
+    @apply h-screen;
+    .leaf-column {
+        @apply h-screen;
+        @apply flex-1;
+        width: 20%;
+    }
+    .center-scene {
+        @apply h-screen;
+        width: 80%;
+        flex: 4;
+    }
+    // .right-column {
+    //     @apply h-screen;
+    //     @apply flex-1;
+    //     width: 20%;
+    // }
+}

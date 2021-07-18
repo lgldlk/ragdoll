@@ -3,14 +3,14 @@
  * @Author: lgldlk
  * @Date: 2021-05-28 22:28:09
  * @Editors: lgldlk
- * @LastEditTime: 2021-06-02 22:05:45
+ * @LastEditTime: 2021-07-17 14:52:01
  */
 import Request from "./Request";
-import { BaseUrl, reqErrorMsg } from "../config/RequestConfig";
+import { ApiBaseUrl, reqErrorMsg } from "../config/RequestConfig";
 import { ElMessage } from "element-plus";
 const request = new Request();
 request.init({
-  baseUrl: BaseUrl,
+  baseUrl: ApiBaseUrl,
   response: (res: response): Promise<responseData> => {
     // 请求后置拦截器
     if (res.data.code == "200") {

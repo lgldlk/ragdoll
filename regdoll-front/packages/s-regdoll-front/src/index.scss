@@ -29,3 +29,9 @@ body {
     @apply border-0;
     @apply border-gray-600;
 }
+
+.canvas_mask {
+    @apply absolute;
+    @apply inset-0;
+    @apply z-30;
+}

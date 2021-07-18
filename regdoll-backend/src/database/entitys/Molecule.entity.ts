@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-07-12 08:29:56
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-16 10:07:31
+ * @LastEditTime: 2021-07-16 15:59:51
  */
 /*
  * @Descripttion:
@@ -34,7 +34,7 @@ export class Molecule {
 
   @Column({ type: "varchar", comment: "密度" })
   density: string
-  @Column({ type: "varchar", comment: "反应活性" })
+  @Column({ type: "varchar", comment: "水溶性" })
   reactivity: string
 
   @OneToMany(() => ConstituentAtoms, constituentAtoms => constituentAtoms.molecule)

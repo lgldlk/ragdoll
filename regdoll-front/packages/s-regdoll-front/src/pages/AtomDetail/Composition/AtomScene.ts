@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-07-04 15:38:48
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-09 14:28:29
+ * @LastEditTime: 2021-07-17 15:06:15
  */
 
 import { Store } from 'vuex';
@@ -11,6 +11,7 @@ import { RootState, SCENE_MODULE_COMMIT_PREFIX } from '/@/store';
 import { INIT_REGDOLL_SCENE, RENDER_SCENE, SET_BACKGROUND_TEXT_URE_CUBE, SET_RENDER_SCENE } from '/@/store/Scene/mutation-types';
 import { Color } from "three";
 import { CubeTextureLoader } from 'three'
+import { changeSceneBackground } from '/@/util';
 export default function initScene(store: Store<RootState>, renderDom: HTMLElement) {
   store.commit(SCENE_MODULE_COMMIT_PREFIX + INIT_REGDOLL_SCENE, {
     renderDom: renderDom,
@@ -20,15 +21,6 @@ export default function initScene(store: Store<RootState>, renderDom: HTMLElemen
     gridColor: new Color("rgb(0,  82,  82)"),
     userSelect: false
   });
-  var imagePrefix = "textures/nebula/nebula-";
-  var directions = ["xpos", "xneg", "ypos", "yneg", "zpos", "zneg"];
-  var imageSuffix = ".png";
-  var imageURLs = [];
-  for (var i = 0; i < 6; i++)
-    imageURLs.push(imagePrefix + directions[i] + imageSuffix);
-  var textureCube = new CubeTextureLoader().load(imageURLs, () => {
-    store.commit(SCENE_MODULE_COMMIT_PREFIX + RENDER_SCENE);
-  });
-  store.commit(SCENE_MODULE_COMMIT_PREFIX + SET_BACKGROUND_TEXT_URE_CUBE, textureCube);
+  changeSceneBackground("nebula");
   store.commit(SCENE_MODULE_COMMIT_PREFIX + SET_RENDER_SCENE, true)
 }

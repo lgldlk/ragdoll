@@ -9,9 +9,9 @@ import { ADD_OBJECT } from '/@/store/Scene/mutation-types';
  * @Author: lgldlk
  * @Date: 2021-07-05 22:30:42
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-06 22:05:25
+ * @LastEditTime: 2021-07-10 09:57:47
  */
-import { CLOSE_LOADING_WINDOW, OPEN_LOADING_WINDOW } from '/@/PROVIDE_KEY'
+import { CLOSE_LOADING_WINDOW, OPEN_LOADING_WINDOW } from '../../../../../PROVIDE_KEY'
 
 import { AtomRequest } from '/@/api/AtomRequest'
 import { inject } from 'vue'
@@ -43,7 +43,7 @@ export default function rightToolModule(store: Store<RootState>) {
           if (item.en_name == chooseAtomEnName.value) {
             store?.commit(
               SCENE_MODULE_COMMIT_PREFIX + ADD_OBJECT,
-              [new AtomModel(item.quality, item.ele_number, item.en_name, item.ch_name)],
+              [new AtomModel(item)],
             );
           }
         });

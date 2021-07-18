@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-07-06 10:41:58
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-10 09:54:37
+ * @LastEditTime: 2021-07-11 16:54:11
  */
 declare interface AtomVO {
   en_name: string;

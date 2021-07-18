@@ -21,22 +21,22 @@ import initAtom from "./Composition/InitAtom";
 import { useRoute, useRouter } from "vue-router";
 import rightMenu from "./components/RightMenu/RightMenu.vue";
 export default defineComponent({
-	name: "",
-	components: {
-		rightMenu,
-	},
-	setup() {
-		const store = useStore(),
-			route = useRoute(),
-			router = useRouter();
-		onMounted(() => {
-			let tmpScene = document.getElementById("mainScene");
-			if (tmpScene) {
-				initScene(store, tmpScene);
-				initAtom(store, route, router);
-			}
-		});
-	},
+  name: "",
+  components: {
+    rightMenu,
+  },
+  setup() {
+    const store = useStore(),
+      route = useRoute(),
+      router = useRouter();
+    onMounted(() => {
+      let tmpScene = document.getElementById("mainScene");
+      if (tmpScene) {
+        initScene(store, tmpScene);
+        initAtom(store, route);
+      }
+    });
+  },
 });
 </script>
 <style  lang="scss" scoped>

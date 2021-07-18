@@ -1,0 +1,25 @@
+.choose_menu {
+    .choose_menu_container {
+        .container_header {
+            @apply flex;
+            @apply items-center;
+            @apply justify-between;
+            .atom_ch_name {
+                @apply text-lg;
+            }
+            .atom_en_name {
+                @applytext-lg;
+                color: rgb(0, 211, 211);
+            }
+            .container_body {
+                .text {}
+                .item {}
+            }
+        }
+    }
+    &:deep(.el-card.box-card) {
+        @apply rounded-md;
+        border-left: none;
+        border-right: none;
+    }
+}

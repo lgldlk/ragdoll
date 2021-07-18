@@ -3,8 +3,9 @@
  * @Author: lgldlk
  * @Date: 2021-04-18 22:36:37
  * @Editors: lgldlk
- * @LastEditTime: 2021-05-29 14:54:28
+ * @LastEditTime: 2021-07-13 07:57:54
  */
+import * as serveStatic from 'serve-static';
 import { DtoValidationPipe } from './pipe/DtoValidation.pipe';
 import { NestFactory } from '@nestjs/core';
 import * as rateLimit from 'express-rate-limit';
@@ -16,6 +17,7 @@ import { ConfigService } from '@nestjs/config';
 import { ServeOptions } from './config/serve.config';
 import * as csurf from 'csurf';
 import { Logger, ValidationPipe } from '@nestjs/common';
+import path = require('path');
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     cors: true,
@@ -42,7 +44,10 @@ async function bootstrap() {
   app.use(helmet());
 
   app.useGlobalPipes(new DtoValidationPipe());
-
+  app.use('/public', serveStatic(path.join(__dirname, '../public'), {
+    maxAge: '1d',
+    extensions: ['jpg', 'jpeg', 'png', 'gif'],
+  }));
   const options = new DocumentBuilder()
     .setTitle(swaggerOptions.title)
     .setDescription(swaggerOptions.desc)

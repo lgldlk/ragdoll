@@ -10,13 +10,15 @@ import { ADD_OBJECT } from '/@/store/Scene/mutation-types';
  * @Author: lgldlk
  * @Date: 2021-07-05 22:30:42
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-10 22:07:46
+ * @LastEditTime: 2021-07-17 15:03:28
  */
-import { CLOSE_LOADING_WINDOW, OPEN_LOADING_WINDOW } from '/@/PROVIDE_KEY'
+import { CLOSE_LOADING_WINDOW, OPEN_LOADING_WINDOW } from '../../../../../PROVIDE_KEY'
 
 import { AtomRequest } from '/@/api/AtomRequest'
 import { inject } from 'vue'
 import { saveThreeCanvasFile } from '/@/util/ImageSave';
+import { SceneBackgroundRequest } from '/@/api/SceneBackground';
+import { changeSceneBackground } from '/@/util';
 export default function rightToolModule(store: Store<RootState>) {
   const showAtomChooseWindow = ref<boolean>(false),
     atomArray = ref<Array<AtomVO>>([]),
@@ -64,7 +66,34 @@ export default function rightToolModule(store: Store<RootState>) {
         });
       }
       closeLoadingWindow && closeLoadingWindow();
-    };
+    },
+    initNowAtom = async () => {
+      await initAtomArray()
+      atomArray.value.map((item, i) => {
+        if (item.en_name === (store.state.scene.nowSelectObj as AtomModel).atomData.en_name) {
+          nowAtom = i;
+        }
+      })
+    },
+    sceneBackgroundVis = ref(false),
+    allSceneBackground = ref([]),
+    chooseSceneBackground = ref(""),
+    openSceneBackgroundChoose = async () => {
+      if (allSceneBackground.value.length == 0) {
+        allSceneBackground.value = (await SceneBackgroundRequest.allSceneBackground()).data;
+      }
+      chooseSceneBackground.value = ""
+      sceneBackgroundVis.value = true;
+    },
+    closeSceneBackground = () => {
+      sceneBackgroundVis.value = false;
+    },
+    affirmChooseSceneBackground = () => {
+
+      changeSceneBackground(chooseSceneBackground.value)
+      closeSceneBackground()
+    }
+
   type toolType = {
     image: string | Ref<string>;
     title: string | Ref<string>;
@@ -110,7 +139,7 @@ export default function rightToolModule(store: Store<RootState>) {
       title: `更换背景`,
       clickFunc: () => {
 
-
+        openSceneBackgroundChoose();
       }
     },
     {
@@ -127,13 +156,19 @@ export default function rightToolModule(store: Store<RootState>) {
       image: `<svg t="1625789015119" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3049" ><path d="M716.8 0l102.4 102.4-409.6 409.6 409.6 409.6-102.4 102.4-512-512z" p-id="3050" fill="#BFE9E9"></path></svg>`,
       title: `上一个`,
       clickFunc: async () => {
-        let nowELe = (store.state.scene.nowSelectObj as AtomModel).atomData.ele_number;
-        if (nowELe <= 1) {
+
+
+        if (nowAtom == -1) {
+          await initNowAtom()
+        }
+        await initAtomArray()
+        if (nowAtom <= 0) {
           ElMessage({ type: "info", message: "您不能上一个了" })
           return;
         }
+
         openLoadingWindow && openLoadingWindow();
-        let addAtomData = await (await AtomRequest.getAtomByEleNum(nowELe - 1)).data;
+        let addAtomData = atomArray.value[--nowAtom];
         window.history.pushState(null, addAtomData.ch_name + "元素", "/atomDetail?element_number=" + addAtomData.ele_number);
         if (addAtomData) {
           store?.commit(SCENE_MODULE_COMMIT_PREFIX + REMOVE_OBJECT,
@@ -152,15 +187,18 @@ export default function rightToolModule(store: Store<RootState>) {
       image: `<svg t="1625789079596" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4027" ><path d="M333.825 848.984L591.443 512 333.825 175.016c-24.123-31.554-15.866-75.12 18.442-97.306C365.057 69.439 380.31 65 395.945 65h16.093L768 512 412.038 959h-16.093c-41.94 0-75.939-31.27-75.939-69.844 0-14.38 4.826-28.409 13.82-40.172z" p-id="4028" fill="#BFE9E9"></path></svg>`,
       title: `下一个`,
       clickFunc: async () => {
-        let nowELe = (store.state.scene.nowSelectObj as AtomModel).atomData.ele_number;
-        openLoadingWindow && openLoadingWindow();
+
+        if (nowAtom == -1) {
+          await initNowAtom()
+        }
+
         await initAtomArray()
-        if (nowELe >= atomArray.value[atomArray.value.length - 1].ele_number) {
+        if (nowAtom >= atomArray.value.length - 1) {
           closeLoadingWindow && closeLoadingWindow();
           ElMessage({ type: "info", message: "您不能下一个了" })
           return;
         }
-        let addAtomData = (await AtomRequest.getAtomByEleNum(nowELe + 1)).data;
+        let addAtomData = atomArray.value[++nowAtom];
         window.history.pushState(null, addAtomData.ch_name + "元素", "/atomDetail?element_number=" + addAtomData.ele_number);
         if (addAtomData) {
           store?.commit(SCENE_MODULE_COMMIT_PREFIX + REMOVE_OBJECT,
@@ -184,6 +222,12 @@ export default function rightToolModule(store: Store<RootState>) {
     closeAtomChooseWindow,
     atomArray,
     chooseAtomEnName,
-    affirmChooseAtom
+    affirmChooseAtom,
+    sceneBackgroundVis,
+    allSceneBackground,
+    chooseSceneBackground,
+    openSceneBackgroundChoose,
+    closeSceneBackground,
+    affirmChooseSceneBackground
   }
 }

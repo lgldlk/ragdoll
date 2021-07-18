@@ -10,6 +10,7 @@
     "@types/dat.gui": "^0.7.6",
     "@types/three": "^0.127.1",
     "@vitejs/plugin-vue": "^1.2.3",
+    "aos": "^3.0.0-beta.6",
     "axios": "^0.21.1",
     "dat.gui": "^0.7.7",
     "element-plus": "^1.0.2-beta.45",

@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-07-05 13:49:55
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-08 10:43:48
+ * @LastEditTime: 2021-07-17 14:41:23
 -->
 <template>
   <div class="right_menu">
@@ -29,6 +29,31 @@
 
       </div>
     </div>
+    <popWindow v-if="sceneBackgroundVis"
+               windowTitle="更换背景"
+               @forkClick="closeSceneBackground">
+      <div>
+        <el-select v-model="chooseSceneBackground"
+                   placeholder="请选择要更换的背景">
+          <el-option v-for="item in allSceneBackground"
+                     :key="item.fileName"
+                     :label="item.name"
+                     :value="item.fileName">
+          </el-option>
+        </el-select>
+      </div>
+      <template #footer>
+        <span class="popWindow_footer">
+          <el-button size="mini"
+                     :round="true"
+                     @click="closeSceneBackground">取 消</el-button>
+          <el-button size="mini"
+                     type="primary"
+                     round="round"
+                     @click="affirmChooseSceneBackground">确 定</el-button>
+        </span>
+      </template>
+    </popWindow>
     <popWindow v-if="showAtomChooseWindow"
                windowTitle="原子选择"
                @forkClick="closeAtomChooseWindow">
@@ -54,7 +79,6 @@
         </span>
       </template>
     </popWindow>
-
   </div>
 </template>
 <script lang="ts">

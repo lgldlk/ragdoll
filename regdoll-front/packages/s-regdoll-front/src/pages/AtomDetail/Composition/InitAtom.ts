@@ -5,7 +5,7 @@ import { ADD_OBJECT, SET_LOCK_CHOICE } from './../../../store/Scene/mutation-typ
  * @Author: lgldlk
  * @Date: 2021-07-05 08:07:46
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-10 22:35:04
+ * @LastEditTime: 2021-07-11 20:04:51
  */
 
 import { RouteLocationNormalizedLoaded, Router } from 'vue-router';
@@ -14,7 +14,7 @@ import { RootState, SCENE_MODULE_COMMIT_PREFIX } from '/@/store';
 import AtomModel from '/@/threeScene/atomModule/AtomModule';
 import { AtomRequest } from "/@/api/AtomRequest"
 import { onMounted } from "vue"
-export default async function initAtom(store: Store<RootState>, route: RouteLocationNormalizedLoaded, router: Router) {
+export default async function initAtom(store: Store<RootState>, route: RouteLocationNormalizedLoaded) {
   let initAtomData
   if (route.query.element_number) {
     initAtomData = (await AtomRequest.getAtomByEleNum(Number(route.query.element_number))).data

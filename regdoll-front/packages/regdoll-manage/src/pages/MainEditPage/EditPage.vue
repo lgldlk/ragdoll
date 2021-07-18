@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-05-03 19:54:41
  * @Editors: lgldlk
- * @LastEditTime: 2021-06-07 21:58:41
+ * @LastEditTime: 2021-06-10 21:16:44
 -->
 <template>
   <div class="edit-page">
@@ -16,7 +16,7 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref, SetupContext } from "vue";
 import leafColumn from "./components/LeafColumn.vue";
-import rightColumn from "./components/RightColumn.vue";
+
 import centerScene from "./components/CenterScene.vue";
 import initDataGuiMod from "./data/DataGui";
 import { initScene } from "./data/mainScene";

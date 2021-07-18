@@ -27,7 +27,7 @@ export default function initScene(store: Store<RootState>, renderDom: HTMLElemen
 
   store.commit(SCENE_MODULE_COMMIT_PREFIX + INIT_REGDOLL_SCENE, {
     renderDom: renderDom,
-    showAxes: true,
+    showAxes: false,
     showGirdHelper: false,
     backgroundColor: new Color(0, 0, 0),
     gridColor: new Color("rgb(0,  82,  82)"),

@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-05-03 21:03:59
  * @Editors: lgldlk
- * @LastEditTime: 2021-06-10 19:49:55
+ * @LastEditTime: 2021-06-10 21:17:20
 -->
 <template>
   <div class="leafMenu">
@@ -50,6 +50,6 @@ export default defineComponent({
 <style>
 .icon {
   fill: #f9fafb;
-  width: 80%;
+  width: 70%;
 }
 </style>

@@ -3,13 +3,13 @@
  * @Author: lgldlk
  * @Date: 2021-07-12 08:56:28
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-16 14:21:25
+ * @LastEditTime: 2021-07-16 20:03:20
  */
 /*
 https://docs.nestjs.com/controllers#controllers
 */
 
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, Req } from '@nestjs/common';
 import { ConstituentAtoms } from 'src/database/entitys/ConstituentAtoms.entity';
 import { Molecule } from 'src/database/entitys/Molecule.entity';
 import { MoleculeService } from './molecule.service';
@@ -35,5 +35,9 @@ export class MoleculeController {
   @Post("updateMoleculeValence")
   async updateMoleculeValence(@Body("molecule") molecule: Molecule) {
     return await this.moleculeService.updateMoleculeValence(molecule)
+  }
+  @Get("getMoleculeById")
+  async getMoleculeById(@Query() req) {
+    return await this.moleculeService.getMoleculeById(req.id);
   }
 }

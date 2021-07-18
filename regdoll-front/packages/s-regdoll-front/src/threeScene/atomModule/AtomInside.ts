@@ -6,7 +6,7 @@ import { RegDollSceneObject3D } from '/@/threeScene/RegDollSceneObject3D';
  * @Author: lgldlk
  * @Date: 2021-07-11 20:01:57
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-12 08:03:05
+ * @LastEditTime: 2021-07-12 08:26:32
  */
 
 //@ts-ignore

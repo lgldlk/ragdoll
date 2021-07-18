@@ -5,13 +5,13 @@ import { Store, useStore } from "vuex";
  * @Author: lgldlk
  * @Date: 2021-05-04 21:19:22
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-02 22:25:08
+ * @LastEditTime: 2021-07-06 10:00:29
  */
 import { reactive, ref, provide, inject, readonly } from "vue";
 import { leafColumnModuleParts } from "../../data/PROVIDE_KEY";
 import { RootState } from '/@/store';
-import BoxModel from '/@/threeScene/BaseModel/BoxModel';
-import { DARG_KEY } from './CenterModule';
+// import BoxModel from '/@/threeScene/BaseModel/BoxModel';
+// import { DARG_KEY } from './CenterModule';
 
 let store: Store<RootState> | null;
 const menuBar = [{
@@ -62,7 +62,7 @@ const partsOption: Array<LeftMenuOption> = [
 
     },
     dragstart: (e: Event) => {
-      e.dataTransfer.setData('dargPart', DARG_KEY.boxModel)
+      // e.dataTransfer.setData('dargPart', DARG_KEY.boxModel)
     }
   },
   {
@@ -75,7 +75,7 @@ const partsOption: Array<LeftMenuOption> = [
 
     },
     dragstart: (e: Event) => {
-      e.dataTransfer.setData('dargPart', DARG_KEY.circleModel)
+      // e.dataTransfer.setData('dargPart', DARG_KEY.circleModel)
     }
   },
   {
@@ -86,7 +86,7 @@ const partsOption: Array<LeftMenuOption> = [
     }, dragstart: () => {
       console.log("dragStart");
 
-      return BoxModel
+      // return BoxModel
     }
   },
   {
@@ -99,7 +99,7 @@ const partsOption: Array<LeftMenuOption> = [
     }, dragstart: () => {
       console.log("dragStart");
 
-      return BoxModel
+      // return BoxModel
     }
   },
 ];

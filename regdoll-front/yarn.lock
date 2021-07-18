@@ -35,6 +35,21 @@
   resolved "https://registry.nlark.com/@babel/parser/download/@babel/parser-7.13.16.tgz?cache=0&sync_timestamp=1618917702146&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40babel%2Fparser%2Fdownload%2F%40babel%2Fparser-7.13.16.tgz#0f18179b0448e6939b1f3f5c4c355a3a9bcdfd37"
   integrity sha1-DxgXmwRI5pObHz9cTDVaOpvN/Tc=
 
+"@babel/runtime-corejs3@^7.11.2":
+  version "7.14.7"
+  resolved "https://registry.nlark.com/@babel/runtime-corejs3/download/@babel/runtime-corejs3-7.14.7.tgz?cache=0&sync_timestamp=1624314249591&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40babel%2Fruntime-corejs3%2Fdownload%2F%40babel%2Fruntime-corejs3-7.14.7.tgz#0ef292bbce40ca00f874c9724ef175a12476465c"
+  integrity sha1-DvKSu85AygD4dMlyTvF1oSR2Rlw=
+  dependencies:
+    core-js-pure "^3.15.0"
+    regenerator-runtime "^0.13.4"
+
+"@babel/runtime@^7.11.2":
+  version "7.14.6"
+  resolved "https://registry.nlark.com/@babel/runtime/download/@babel/runtime-7.14.6.tgz#535203bc0892efc7dec60bdc27b2ecf6e409062d"
+  integrity sha1-U1IDvAiS78fexgvcJ7Ls9uQJBi0=
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
 "@babel/types@^7.12.0", "@babel/types@^7.13.0":
   version "7.13.17"
   resolved "https://registry.nlark.com/@babel/types/download/@babel/types-7.13.17.tgz#48010a115c9fba7588b4437dd68c9469012b38b4"
@@ -1508,6 +1523,15 @@ anymatch@~3.1.1:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
+aos@^3.0.0-beta.6:
+  version "3.0.0-beta.6"
+  resolved "https://registry.npm.taobao.org/aos/download/aos-3.0.0-beta.6.tgz#75148e3be4bb1add53f5a1828623bf82b67691e9"
+  integrity sha1-dRSOO+S7Gt1T9aGChiO/grZ2kek=
+  dependencies:
+    classlist-polyfill "^1.2.0"
+    lodash.debounce "^4.0.8"
+    lodash.throttle "^4.1.1"
+
 aproba@^1.0.3, aproba@^1.1.1:
   version "1.2.0"
   resolved "https://registry.nlark.com/aproba/download/aproba-1.2.0.tgz#6802e6264efd18c790a1b0d517f0f2627bf2c94a"
@@ -2083,6 +2107,11 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
+classlist-polyfill@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.npm.taobao.org/classlist-polyfill/download/classlist-polyfill-1.2.0.tgz#935bc2dfd9458a876b279617514638bcaa964a2e"
+  integrity sha1-k1vC39lFiodrJ5YXUUY4vKqWSi4=
+
 clean-css@^4.2.3:
   version "4.2.3"
   resolved "https://registry.npm.taobao.org/clean-css/download/clean-css-4.2.3.tgz?cache=0&sync_timestamp=1616153569589&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fclean-css%2Fdownload%2Fclean-css-4.2.3.tgz#507b5de7d97b48ee53d84adb0160ff6216380f78"
@@ -2416,6 +2445,11 @@ copy-descriptor@^0.1.0:
   version "0.1.1"
   resolved "https://registry.npm.taobao.org/copy-descriptor/download/copy-descriptor-0.1.1.tgz#676f6eb3c39997c2ee1ac3a924fd6124748f578d"
   integrity sha1-Z29us8OZl8LuGsOpJP1hJHSPV40=
+
+core-js-pure@^3.15.0:
+  version "3.15.2"
+  resolved "https://registry.nlark.com/core-js-pure/download/core-js-pure-3.15.2.tgz#c8e0874822705f3385d3197af9348f7c9ae2e3ce"
+  integrity sha1-yOCHSCJwXzOF0xl6+TSPfJri484=
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
@@ -4837,6 +4871,11 @@ lodash.clonedeep@^4.5.0:
   resolved "https://registry.npm.taobao.org/lodash.clonedeep/download/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
   integrity sha1-4j8/nE+Pvd6HJSnBBxhXoIblzO8=
 
+lodash.debounce@^4.0.8:
+  version "4.0.8"
+  resolved "https://registry.nlark.com/lodash.debounce/download/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
+  integrity sha1-gteb/zCmfEAF/9XiUVMArZyk168=
+
 lodash.flatten@^4.4.0:
   version "4.4.0"
   resolved "https://registry.npm.taobao.org/lodash.flatten/download/lodash.flatten-4.4.0.tgz#f31c22225a9632d2bbf8e4addbef240aa765a61f"
@@ -4876,6 +4915,11 @@ lodash.templatesettings@^4.0.0:
   integrity sha1-5IExDwSdPPbUfpEq0JMTsVTw+zM=
   dependencies:
     lodash._reinterpolate "^3.0.0"
+
+lodash.throttle@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.npm.taobao.org/lodash.throttle/download/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
+  integrity sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=
 
 lodash.toarray@^4.4.0:
   version "4.4.0"
@@ -6555,6 +6599,11 @@ reduce-css-calc@^2.1.8:
     css-unit-converter "^1.1.1"
     postcss-value-parser "^3.3.0"
 
+regenerator-runtime@^0.13.4:
+  version "0.13.7"
+  resolved "https://registry.npm.taobao.org/regenerator-runtime/download/regenerator-runtime-0.13.7.tgz#cac2dacc8a1ea675feaabaeb8ae833898ae46f55"
+  integrity sha1-ysLazIoepnX+qrrriugziYrkb1U=
+
 regex-not@^1.0.0, regex-not@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npm.taobao.org/regex-not/download/regex-not-1.0.2.tgz#1f4ece27e00b0b65e0247a6810e6a85d83a5752c"
@@ -7643,6 +7692,11 @@ tslib@^2.0.3:
   resolved "https://registry.npm.taobao.org/tslib/download/tslib-2.2.0.tgz#fb2c475977e35e241311ede2693cee1ec6698f5c"
   integrity sha1-+yxHWXfjXiQTEe3iaTzuHsZpj1w=
 
+tslib@^2.1.0:
+  version "2.3.0"
+  resolved "https://registry.nlark.com/tslib/download/tslib-2.3.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.nlark.com%2Ftslib%2Fdownload%2Ftslib-2.3.0.tgz#803b8cdab3e12ba581a4ca41c8839bbb0dacb09e"
+  integrity sha1-gDuM2rPhK6WBpMpByIObuw2ssJ4=
+
 tsscmp@1.0.6:
   version "1.0.6"
   resolved "https://registry.npm.taobao.org/tsscmp/download/tsscmp-1.0.6.tgz#85b99583ac3589ec4bfef825b5000aa911d605eb"
@@ -7980,6 +8034,15 @@ vuex@^4.0.1:
   integrity sha1-6DxUHW8xFzlp76uyxdHEZbaCiH4=
   dependencies:
     "@vue/devtools-api" "^6.0.0-beta.11"
+
+wangeditor@^4.7.5:
+  version "4.7.5"
+  resolved "https://registry.nlark.com/wangeditor/download/wangeditor-4.7.5.tgz?cache=0&sync_timestamp=1625190725869&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fwangeditor%2Fdownload%2Fwangeditor-4.7.5.tgz#51de4d32a837f5b500c1bca7a317fd2600a39062"
+  integrity sha1-Ud5NMqg39bUAwbynoxf9JgCjkGI=
+  dependencies:
+    "@babel/runtime" "^7.11.2"
+    "@babel/runtime-corejs3" "^7.11.2"
+    tslib "^2.1.0"
 
 wcwidth@^1.0.0, wcwidth@^1.0.1:
   version "1.0.1"
