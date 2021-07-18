@@ -3,17 +3,18 @@
  * @Author: lgldlk
  * @Date: 2021-07-18 18:02:42
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-18 20:58:08
+ * @LastEditTime: 2021-07-18 22:35:42
  */
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, Generated } from 'typeorm';
 import { ConstituentAtoms } from './ConstituentAtoms.entity';
 
 @Entity("user")
 export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
-  @Column({ type: "varchar", comment: "用户名" })
-  username: string
+  @PrimaryGeneratedColumn({ comment: "用户账号" })
+  account: number
+  @Column({ type: "varchar", comment: "真实名" })
+  trueName: string
+
   @Column({ type: "varchar", comment: "密码" })
   password: string
   @Column({ type: "varchar", comment: "" })
@@ -23,6 +24,8 @@ export class User {
 
   @Column({ comment: "是否为管理员" })
   isAdmin: boolean
-  @Column({ type: "number", comment: "权限" })
+  @Column({ type: "int", comment: "权限" })
   authority: number
+  @CreateDateColumn({ comment: '创建时间' })  // 自动生成列
+  createdAt: string
 }

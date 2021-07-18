@@ -1,9 +1,12 @@
+import { UserService } from './system/User/user.service';
+import { UserController } from './system/User/user.controller';
+import { UserModule } from './system/User/user.module';
 /*
  * @Descripttion: 
  * @Author: lgldlk
  * @Date: 2021-04-18 22:36:37
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-17 09:03:26
+ * @LastEditTime: 2021-07-18 22:37:24
  */
 import { SceneBackgroundService } from './system/SceneBackroungd/scenebackground.service';
 import { SceneBackgroundController } from './system/SceneBackroungd/scenebackground.controller';
@@ -32,6 +35,7 @@ import { SwaggerConfigModule } from './config/config.module';
 
 @Module({
   imports: [
+    UserModule,
     SceneBackgroundModule,
     ImageModule,
     MoleculeModule, SystemModule, DatabaseModule, SwaggerConfigModule],
@@ -39,6 +43,7 @@ import { SwaggerConfigModule } from './config/config.module';
 
   ],
   providers: [
+
 
   ],
 })
