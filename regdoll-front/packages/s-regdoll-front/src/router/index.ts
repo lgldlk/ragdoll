@@ -4,7 +4,7 @@ import { USER_MODULE_COMMIT_PREFIX } from './../store/index';
  * @Author: lgldlk
  * @Date: 2021-05-03 18:14:01
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-19 08:46:08
+ * @LastEditTime: 2021-07-19 13:49:09
  */
 import { createRouter, createWebHistory } from 'vue-router';
 import routes from './routes';
