@@ -4,13 +4,14 @@
  * @Author: lgldlk
  * @Date: 2021-07-11 17:03:40
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-12 08:20:25
+ * @LastEditTime: 2021-07-19 13:51:26
  */
 import { Store } from 'vuex';
 import { RootState, SCENE_MODULE_COMMIT_PREFIX } from '/@/store';
 import { INIT_REGDOLL_SCENE, RENDER_SCENE, SET_BACKGROUND_TEXT_URE_CUBE, SET_RENDER_SCENE } from '/@/store/Scene/mutation-types';
 import { Vector3, Color } from "three";
 import { CubeTextureLoader } from 'three'
+import { changeSceneBackground } from '/@/util';
 
 
 function setAtomInsideOrbitControls(orbitControls: any) {
@@ -33,16 +34,8 @@ export default function initScene(store: Store<RootState>, renderDom: HTMLElemen
     gridColor: new Color("rgb(0,  82,  82)"),
     userSelect: false
   });
-  var imagePrefix = "textures/nebula/nebula-";
-  var directions = ["xpos", "xneg", "ypos", "yneg", "zpos", "zneg"];
-  var imageSuffix = ".png";
-  var imageURLs = [];
-  for (var i = 0; i < 6; i++)
-    imageURLs.push(imagePrefix + directions[i] + imageSuffix);
-  const textureCube = new CubeTextureLoader().load(imageURLs, () => {
-    store.commit(SCENE_MODULE_COMMIT_PREFIX + RENDER_SCENE);
-  });
-  store.commit(SCENE_MODULE_COMMIT_PREFIX + SET_BACKGROUND_TEXT_URE_CUBE, textureCube);
+  changeSceneBackground("nebula");
+  store.commit(SCENE_MODULE_COMMIT_PREFIX + SET_RENDER_SCENE, true)
   store.state.scene.mainScene?.camera.position.set(32.758683096996116, 8.729285947379905, 39.88103885762427);
   setAtomInsideOrbitControls(store.state.scene.mainScene?.orbitControls);
   // store.state.scene.mainScene?.camera.maxAzimuthAngle =

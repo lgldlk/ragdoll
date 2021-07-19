@@ -12,7 +12,7 @@ import { TWEEN } from "/@/assets/js/tween.module.min.js";
  * @Author: lgldlk
  * @Date: 2021-07-07 19:12:29
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-11 17:00:39
+ * @LastEditTime: 2021-07-19 14:00:15
  */
 
 
@@ -31,18 +31,30 @@ export default function rightChooseModule(store: Store<RootState>, router: Route
         const tweenFov = {
           fov: 45
         }
+        let continueTween = true;
+
         new TWEEN.Tween(tweenFov)
-          .to({ fov: 2 }, 2000)
-          // .easing(TWEEN.Easing.Quadratic.In)
+          .to({ fov: 10 }, 2000)
+          .easing(TWEEN.Easing.Quadratic.In)
           .onUpdate(() => {
-            store?.commit(
-              SCENE_MODULE_COMMIT_PREFIX + SET_LOCK_SCENE,
-              true
-            );
+            // store?.commit(
+            //   SCENE_MODULE_COMMIT_PREFIX + SET_LOCK_SCENE,
+            //   true
+            // );
             (store.state.scene.mainScene?.camera as any).fov = tweenFov.fov;
             store.state.scene.mainScene?.camera.updateProjectionMatrix();
             store.commit(SCENE_MODULE_COMMIT_PREFIX + RENDER_SCENE);
-            setTimeout(() => { TWEEN.update() }, 10)
+            if (continueTween) {
+              setTimeout(() => { TWEEN.update() }, 50)
+            } else {
+              router.push({
+                path: "atomInside",
+                query: {
+                  element_number: (store.state.scene.nowSelectObj as AtomModel).atomData.ele_number
+                }
+              });
+              (store.state.scene.mainScene?.camera as any).fov = 45;
+            }
             store.commit(SCENE_MODULE_COMMIT_PREFIX + RENDER_SCENE);
             //update
           }).onComplete(() => {
@@ -51,11 +63,13 @@ export default function rightChooseModule(store: Store<RootState>, router: Route
               query: {
                 element_number: (store.state.scene.nowSelectObj as AtomModel).atomData.ele_number
               }
-            })
+            });
           })
           .start()
         TWEEN.update();
-
+        setTimeout(() => {
+          continueTween = false;
+        }, 2060)
 
       }
     }
