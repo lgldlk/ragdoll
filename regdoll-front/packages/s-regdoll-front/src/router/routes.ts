@@ -3,13 +3,13 @@
  * @Author: lgldlk
  * @Date: 2021-05-03 19:00:44
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-18 17:07:59
+ * @LastEditTime: 2021-07-19 08:49:48
  */
 import { RouteRecordRaw } from "vue-router";
 import { ComponentOptionsBase } from "vue";
 
 const routes: RouteRecordRaw[] = [
-  { path: "/", redirect: "/showAtoms" },
+  { path: "/", redirect: "/home" },
   {
     path: "/editPage",
     name: "editPage",
@@ -43,6 +43,11 @@ const routes: RouteRecordRaw[] = [
     path: "/login",
     name: "login",
     component: () => import("/@/pages/Login/index.vue")
+  },
+  {
+    path: "/home",
+    name: "home",
+    component: () => import("/@/pages/Home/index.vue")
   }
 ];
 export default routes;
