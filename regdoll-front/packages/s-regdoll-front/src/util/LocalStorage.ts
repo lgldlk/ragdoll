@@ -3,12 +3,16 @@
  * @Author: lgldlk
  * @Date: 2021-05-25 22:02:16
  * @Editors: lgldlk
- * @LastEditTime: 2021-05-25 22:07:25
+ * @LastEditTime: 2021-07-19 08:45:44
  */
+
+import mainAxios from '/@/request/MainAxios';
+
+export default {}
 // 本地化存储
 
-export default class LocalStorage {
-  static setLocalStore = (name: string, content: string | Object) => {
+export namespace LocalStorage {
+  export const setLocalStore = (name: string, content: string | Object) => {
     if (!name) return;
     let saveContent;
     if (typeof content !== 'string') {
@@ -20,7 +24,7 @@ export default class LocalStorage {
   };
 
   // 本地化获取
-  static getLocalStore = (name: string) => {
+  export const getLocalStore = (name: string) => {
     if (!name) return;
     let result = window.localStorage.getItem(name);
     if (result && LocalStorage.isJsonString(result)) {
@@ -28,7 +32,7 @@ export default class LocalStorage {
     }
     return result;
   };
-  static isJsonString(str: string) {
+  export function isJsonString(str: string) {
     try {
       if (typeof JSON.parse(str) == 'object') {
         return true;
@@ -38,8 +42,29 @@ export default class LocalStorage {
   }
 
   // 本地化删除
-  static removeLocalStore = (name: string) => {
+  export const removeLocalStore = (name: string) => {
     if (!name) return;
     return window.localStorage.removeItem(name);
   };
+
+  export const setLocalStoreByBase64 = (name: string, content: string | Object) => {
+    if (!name) return;
+    let saveContent;
+    if (typeof content !== 'string') {
+      saveContent = window.escape(JSON.stringify(content));
+    } else {
+      saveContent = window.escape(content);
+    }
+    window.localStorage.setItem(name, saveContent);
+  }
+  export const getLocalStoreByBase64 = (name: string) => {
+    if (!name) return;
+    let result = unescape(window.localStorage.getItem(name) || "");
+    if (result && LocalStorage.isJsonString(result)) {
+      result = JSON.parse(result);
+    }
+    return result;
+  };
 }
+
+
