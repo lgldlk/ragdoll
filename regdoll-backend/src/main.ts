@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-04-18 22:36:37
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-13 07:57:54
+ * @LastEditTime: 2021-07-19 20:54:03
  */
 import * as serveStatic from 'serve-static';
 import { DtoValidationPipe } from './pipe/DtoValidation.pipe';
@@ -18,6 +18,8 @@ import { ServeOptions } from './config/serve.config';
 import * as csurf from 'csurf';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import path = require('path');
+import * as bodyParser from 'body-parser';
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     cors: true,
@@ -33,7 +35,10 @@ async function bootstrap() {
   // 防止跨站请求伪造
   // 设置 csrf 保存 csrfToken
   // app.use(csurf());
+  app.use(bodyParser.json({ limit: '50mb' }));
+  app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
   // 访问频率限制
+
   app.use(
     rateLimit({
       windowMs: 15 * 60 * 1000, // 15分钟
@@ -48,6 +53,7 @@ async function bootstrap() {
     maxAge: '1d',
     extensions: ['jpg', 'jpeg', 'png', 'gif'],
   }));
+
   const options = new DocumentBuilder()
     .setTitle(swaggerOptions.title)
     .setDescription(swaggerOptions.desc)
@@ -57,7 +63,6 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup(swaggerOptions.setupUrl, app, document);
   await app.listen(serveOptions.port);
-
   Logger.log(`http://localhost:${serveOptions.port}`, '服务启动成功');
   Logger.log(`http://localhost:${serveOptions.port}`, '服务启动成功');
 }
