@@ -3,17 +3,17 @@
  * @Author: lgldlk
  * @Date: 2021-07-03 20:27:56
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-10 21:25:05
+ * @LastEditTime: 2021-07-19 11:38:21
 -->
 <template>
   <div class="atom_show_page">
    
     <div id="container"></div>
     <div id="menu">
-      <button id="table">TABLE</button>
-      <button id="sphere">SPHERE</button>
-      <button id="helix">HELIX</button>
-      <button id="grid">GRID</button>
+      <button id="table">平面</button>
+      <button id="sphere">球形</button>
+      <button id="helix">常春藤</button>
+      <button id="grid">3维网格</button>
     </div>
   </div>
 </template>
