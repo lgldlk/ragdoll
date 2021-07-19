@@ -8,7 +8,14 @@ const mutations: MutationTree<UserState> = {
     if ((payload as any).password) {
       delete (payload as any).password
     }
-    state = payload
+    state.account = payload.account.toString()
+    state.authority = payload.authority
+    state.createdAt = payload.createdAt
+    state.imgUrl = payload.imgUrl
+    state.isAdmin = payload.isAdmin
+    state.signature = payload.signature
+    state.trueName = payload.trueName
+
   }
 }
 

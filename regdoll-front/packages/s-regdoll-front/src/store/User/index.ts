@@ -12,7 +12,7 @@ import state, { UserState } from './state'
 import { Module } from 'vuex'
 import { RootState } from '../index'
 
-const app: Module<UserState, RootState> = {
+const user: Module<UserState, RootState> = {
   namespaced: true,
   state,
   mutations,
@@ -20,4 +20,4 @@ const app: Module<UserState, RootState> = {
   getters
 }
 
-export default app
+export default user

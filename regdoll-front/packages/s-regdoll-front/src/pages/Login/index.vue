@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-07-18 16:36:53
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-19 08:11:17
+ * @LastEditTime: 2021-07-19 09:00:04
 -->
 <template>
   <div class="coverr">
@@ -58,14 +58,36 @@
 </template>
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "vue";
+// @ts-igrnore
 import AOS from 'aos';
 import {UserRequest} from '/@/api/UserRequest';
+import {LocalStorage} from '/@/util/LocalStorage' ;
 import { useStore } from "vuex";
 import { ElMessage } from 'element-plus';
+import { useRoute, useRouter } from "vue-router";
 export default defineComponent({
   name: "",
   setup() {
-    onMounted(() => {
+    const account = ref(""),
+      password = ref(""),
+       store = useStore(),
+        router = useRouter(),
+      submitForm=async ()=>{
+        let loginRes=await UserRequest.login(account.value,password.value)
+        console.log(loginRes)
+        if(loginRes.code=="200"&&loginRes.data.length>0){
+          ElMessage({type:"success",message:"登录成功"})
+          delete loginRes.data[0].password;
+          store.commit("user/set_user",loginRes.data[0]);
+          LocalStorage.setLocalStoreByBase64("token",loginRes.data[0])
+            router.push({
+          path:"home"
+        })
+        }else{
+          ElMessage({type:"error",message:"登录失败"})
+        }
+      }
+         onMounted(() => {
       //        const  coverrUpdate = function() {
       //   var coverrs = document.getElementsByClassName("coverr-video");
       //   for (var i = 0; i < coverrs.length; i++) { var coverr = coverrs[i], coverrWrapper = coverr.parentElement;
@@ -79,18 +101,14 @@ export default defineComponent({
       // window.addEventListener("load", coverrUpdate);
       // coverrUpdate()
       AOS.init();
-    });
-    const account = ref(""),
-      password = ref(""),
-       store = useStore(),
-      submitForm=async ()=>{
-        let loginRes=await UserRequest.login(account.value,password.value)
-        console.log(loginRes)
-        if(loginRes.code=="200"&&loginRes.data.length>0){
-          ElMessage({type:"success",message:"登录成功"})
-          store.commit("user/set_user",loginRes.data[0]);
-        }
+      console.log(store.getters["user/hasUser"]);
+      
+      if(store.getters["user/hasUser"]){
+        router.push({
+          path:"home"
+        })
       }
+    });
     return {
       account,
       password,
