@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-07-18 16:36:53
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-18 21:52:14
+ * @LastEditTime: 2021-07-19 08:11:17
 -->
 <template>
   <div class="coverr">
@@ -25,14 +25,14 @@
     <div class="ms-login"   data-aos="fade-up">
       <div class="ms-title">登录——小布偶</div>
       <el-form ref="login" label-width="0px" class="ms-content">
-        <el-form-item prop="username">
-          <el-input v-model="username" placeholder="用户名">
+        <el-form-item >
+          <el-input v-model="account" placeholder="用户名">
             <template #prefix>
               <i class="el-input__icon el-icon-user"></i>
             </template>
           </el-input>
         </el-form-item>
-        <el-form-item prop="password">
+        <el-form-item >
           <el-input
             type="password"
             placeholder="密码"
@@ -47,7 +47,9 @@
         <div class="login-btn">
           <el-button type="primary" @click="submitForm()">登录</el-button>
         </div>
-        <p class="login-tips"></p>
+        <div class="login-tips">
+            <el-link type="primary">找回密码>></el-link>
+        </div>
       </el-form>
     </div>
     <!-- The box content -->
@@ -57,6 +59,9 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "vue";
 import AOS from 'aos';
+import {UserRequest} from '/@/api/UserRequest';
+import { useStore } from "vuex";
+import { ElMessage } from 'element-plus';
 export default defineComponent({
   name: "",
   setup() {
@@ -75,13 +80,19 @@ export default defineComponent({
       // coverrUpdate()
       AOS.init();
     });
-    const username = ref(""),
+    const account = ref(""),
       password = ref(""),
-      submitForm=()=>{
-
+       store = useStore(),
+      submitForm=async ()=>{
+        let loginRes=await UserRequest.login(account.value,password.value)
+        console.log(loginRes)
+        if(loginRes.code=="200"&&loginRes.data.length>0){
+          ElMessage({type:"success",message:"登录成功"})
+          store.commit("user/set_user",loginRes.data[0]);
+        }
       }
     return {
-      username,
+      account,
       password,
       submitForm
     };
@@ -111,6 +122,11 @@ export default defineComponent({
   &:deep(input:-internal-autofill-selected ){
     background-color:rgb(0, 35, 35) !important;
   }
+}
+.login-tips{
+  margin-top:4px;
+  display:flex;
+    justify-content: flex-end;
 }
 .ms-content {
   padding: 30px 30px;
