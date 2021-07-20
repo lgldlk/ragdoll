@@ -1,0 +1,16 @@
+.scene_container {
+    @apply flex;
+    height: 100vh;
+    width: 100vw;
+    #moleculeMainScene {
+        @apply relative;
+        width: 80vw;
+        background-color: aqua;
+        overflow: hidden;
+        height: 100vh;
+    }
+    .moleculeRight {
+        @apply relative;
+        width: 20vw;
+    }
+}

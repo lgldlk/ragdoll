@@ -1,0 +1,81 @@
+.showMoleculeBody {
+    border-top: solid 1px #fff;
+    @apply pt-4;
+    font-size: 1.025rem;
+    .molecule-rough {
+        @apply relative;
+        >* {
+            @apply m-3;
+        }
+        #smallAtom {
+            @apply absolute;
+            right: 20px;
+            top: 10px;
+            background-color: white;
+            width: 30%;
+            height: 40%;
+        }
+        .atom_datas {
+            @apply flex;
+            @apply flex-row;
+            @apply flex-wrap;
+            .atom_data {
+                @apply flex;
+                @apply flex-row;
+                @apply mx-3;
+                @apply items-end;
+                .atom_name {
+                    @apply font-bold;
+                    @apply text-lg;
+                    @apply cursor-pointer;
+                }
+                .atom_valence {
+                    line-height: 1.75rem;
+                }
+            }
+        }
+        .molecule_knowledgePoint {
+            @apply mt-4;
+            * {
+                text-indent: 2em;
+            }
+        }
+    }
+}
+
+.choose_menu {
+    .choose_menu_container {
+        .container_header {
+            @apply flex;
+            @apply items-center;
+            @apply justify-between;
+            .atom_ch_name {
+                @apply text-lg;
+            }
+            .atom_en_name {
+                @apply text-lg;
+                color: rgb(0, 211, 211);
+            }
+        }
+    }
+    .container_body {
+        .atom_ele_number {}
+        .atom_quality {}
+        .describe_body {
+            div {
+                @apply mt-2;
+            }
+        }
+        .into_nucleus {
+            @apply mt-5;
+        }
+    }
+    &:deep(.el-card.box-card) {
+        @apply rounded-md;
+        border-left: none;
+        border-right: none;
+    }
+    &:deep(.el-button) {
+        @apply w-full;
+    }
+}
