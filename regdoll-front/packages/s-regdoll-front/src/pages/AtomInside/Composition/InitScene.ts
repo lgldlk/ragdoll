@@ -4,7 +4,7 @@
  * @Author: lgldlk
  * @Date: 2021-07-11 17:03:40
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-19 13:51:26
+ * @LastEditTime: 2021-07-19 14:36:44
  */
 import { Store } from 'vuex';
 import { RootState, SCENE_MODULE_COMMIT_PREFIX } from '/@/store';
@@ -23,9 +23,6 @@ function setAtomInsideOrbitControls(orbitControls: any) {
   orbitControls.maxPolarAngle = Math.PI / 2;
 }
 export default function initScene(store: Store<RootState>, renderDom: HTMLElement) {
-
-
-
   store.commit(SCENE_MODULE_COMMIT_PREFIX + INIT_REGDOLL_SCENE, {
     renderDom: renderDom,
     showAxes: false,
@@ -39,10 +36,7 @@ export default function initScene(store: Store<RootState>, renderDom: HTMLElemen
   store.state.scene.mainScene?.camera.position.set(32.758683096996116, 8.729285947379905, 39.88103885762427);
   setAtomInsideOrbitControls(store.state.scene.mainScene?.orbitControls);
   // store.state.scene.mainScene?.camera.maxAzimuthAngle =
-  (window as any).showCamera = () => {
-    console.log(store.state.scene.mainScene?.camera);
 
-  }
   store.state.scene.mainScene?.camera.lookAt(0, 0, 0);
   store.state.scene.mainScene?.camera.updateProjectionMatrix()
   store.commit(SCENE_MODULE_COMMIT_PREFIX + SET_RENDER_SCENE, true)

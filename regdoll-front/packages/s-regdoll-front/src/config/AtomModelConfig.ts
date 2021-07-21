@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-05-02 21:54:09
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-15 09:17:26
+ * @LastEditTime: 2021-07-20 11:00:54
  */
 
 import * as THREE from "three";
@@ -50,7 +50,7 @@ export namespace AtomModelConfig {
     },
     defaultEleConfig: DefaultEleConfigType = {
       ...defaultSphere,
-      color: new THREE.Color("rgb(0,224,198)"),
+      color: new THREE.Color(0xffff00),
       radius: 0.65,
     },
     defaultNucleusConfig: DefaultNucleusConfig = {

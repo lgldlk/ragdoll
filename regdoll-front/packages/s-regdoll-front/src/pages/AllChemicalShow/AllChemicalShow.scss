@@ -1,0 +1,66 @@
+.showChemicalBg {
+    min-height: calc(100vh - 61px);
+    @apply flex;
+    @apply items-center;
+    @apply flex-col;
+    @apply p-5;
+    @apply relative;
+    color: #00ffff;
+    z-index: 2;
+    .showChemicalBody {
+        // background: #002323;
+    }
+    .chemicals {
+        @apply text-2xl;
+        .aChemicals {
+            min-width: 30vw;
+            border: 1px solid #EBEEF5;
+            @apply duration-300;
+            @apply m-5;
+            @apply rounded-md;
+            @apply shadow-lg;
+            @apply justify-around;
+            @apply items-center;
+            @apply ring-4;
+            @apply ring-green-500;
+            @apply shadow-xl;
+            background: #002323;
+            @apply p-3;
+            @apply flex;
+            @apply cursor-pointer;
+            &:hover {
+                outline: none;
+                background-color: #003939;
+            }
+            .chemicalCenter {
+                @apply flex;
+                @apply flex-col;
+                @apply items-center;
+                .chemicalReactionCondition {
+                    @apply text-base;
+                }
+            }
+            .intoButton {
+                width: 2vw;
+                @apply text-4xl;
+            }
+            &:hover {
+                @apply transform;
+                @apply scale-125;
+            }
+        }
+    }
+}
+
+.coverr {
+    height: calc(100vh - 61px);
+    .coverr-video {
+        z-index: 1;
+        &::after {
+            @apply absolute;
+            @apply inset-0;
+            content: "";
+            background: hsla ( 0, 0, 100%, .5);
+        }
+    }
+}

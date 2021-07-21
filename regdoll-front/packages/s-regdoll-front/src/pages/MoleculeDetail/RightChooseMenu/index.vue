@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-07-19 17:11:25
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-20 08:34:30
+ * @LastEditTime: 2021-07-20 14:31:43
 -->
 <template>
   <div class="choose_menu">
@@ -49,8 +49,9 @@
       center
     >
       <div class="showMoleculeBody">
+            <div id="smallAtom"></div>
         <div class="molecule-rough">
-          <div id="smallAtom"></div>
+      
           <div v-show="selectObj?.moleculeModuleData?.expression">
             分子表达式：{{ selectObj?.moleculeModuleData?.expression }}
           </div>
@@ -73,7 +74,7 @@
           <div class="atom_datas" v-show="selectObj?.moleculeModuleData?.atomDatas">
             <div
               v-for="(item, i) in selectObj?.moleculeModuleData?.atomDatas"
-              :key="item.en_name"
+              :key="item.id"
               class="atom_data"
             >
               <div class="atom_name" @click="atomNameClick(item)"  title="展现原子">{{ item.en_name }}：</div>
@@ -83,11 +84,12 @@
             </div>
             <div></div>
           </div>
+        
+        </div>
           <div class="molecule_knowledgePoint">
             知识点 ：
             <div v-html="knowledgePoint"></div>
           </div>
-        </div>
       </div>
       <template #footer>
         <span class="dialog-footer"> </span>

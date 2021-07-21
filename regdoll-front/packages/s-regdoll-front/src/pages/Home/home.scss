@@ -26,6 +26,7 @@
             @apply flex-row;
             @apply flex-wrap;
             @apply cursor-pointer;
+            justify-content: space-around;
             z-index: 2;
             .regdoll-module {
                 @apply w-1/3;

@@ -21,6 +21,11 @@ body {
     }
 }
 
+.popWindow_footer {
+    @apply flex;
+    @apply justify-end;
+}
+
 .text_red {
     --tw-text-opacity: 1;
     color: rgba(239, 68, 68, var(--tw-text-opacity)) !important;

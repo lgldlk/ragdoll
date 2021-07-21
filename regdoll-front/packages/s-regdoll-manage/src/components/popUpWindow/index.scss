@@ -3,6 +3,7 @@
     @apply inset-0;
     @apply bg-gray-700;
     @apply bg-opacity-70;
+    z-index: 2002;
     @include useOpacityAni;
     .center-slot {
         @apply bg-white;

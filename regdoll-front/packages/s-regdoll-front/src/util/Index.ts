@@ -10,6 +10,7 @@ import { CubeTextureLoader } from 'three';
 import { SceneBackgroundUrl } from '../config/RequestConfig';
 import store, { SCENE_MODULE_COMMIT_PREFIX } from '../store';
 import { RENDER_SCENE, SET_BACKGROUND_TEXT_URE_CUBE } from '../store/Scene/mutation-types';
+import { LocalStorage } from '/@/util/LocalStorage'
 
 /**
  * 循环调用函数

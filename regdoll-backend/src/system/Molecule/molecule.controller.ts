@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-07-12 08:56:28
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-16 20:03:20
+ * @LastEditTime: 2021-07-20 11:52:13
  */
 /*
 https://docs.nestjs.com/controllers#controllers
@@ -39,5 +39,17 @@ export class MoleculeController {
   @Get("getMoleculeById")
   async getMoleculeById(@Query() req) {
     return await this.moleculeService.getMoleculeById(req.id);
+  }
+  @Get("getMoleculeKnowById")
+  async getMoleculeKnowById(@Query() req) {
+    return await this.moleculeService.getMoleculeKnowById(req.id);
+  }
+  @Get("allMoleculeExp")
+  async allMoleculeExp() {
+    return await this.moleculeService.allMoleculeExp()
+  }
+  @Get("moleculeNameAndId")
+  async moleculeNameAndId() {
+    return await this.moleculeService.moleculeNameAndId();
   }
 }

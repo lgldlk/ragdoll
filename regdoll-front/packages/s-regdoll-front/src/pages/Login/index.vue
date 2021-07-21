@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-07-18 16:36:53
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-19 09:00:04
+ * @LastEditTime: 2021-07-21 08:46:57
 -->
 <template>
   <div class="coverr">
@@ -21,7 +21,7 @@
         <!-- <source src="[WEBM URL]" type="video/webm"> -->
         <!-- Non-HTML5 browsers will just show the image, no need for a fallback text -->
       </video>
-    </div>
+    </div> 
     <div class="ms-login"   data-aos="fade-up">
       <div class="ms-title">登录——小布偶</div>
       <el-form ref="login" label-width="0px" class="ms-content">
@@ -162,6 +162,7 @@ export default defineComponent({
     line-height: 30px;
     color: #fff;
 } */
+
 .coverr {
   width: 100vw;
   min-height: 100vh;

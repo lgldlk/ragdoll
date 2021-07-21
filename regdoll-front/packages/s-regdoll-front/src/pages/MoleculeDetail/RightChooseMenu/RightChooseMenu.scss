@@ -2,18 +2,20 @@
     border-top: solid 1px #fff;
     @apply pt-4;
     font-size: 1.025rem;
+    @apply relative;
+    #smallAtom {
+        @apply absolute;
+        right: 20px;
+        top: 10px;
+        background-color: white;
+        width: 15vw;
+        height: 15vw;
+    }
     .molecule-rough {
         @apply relative;
+        max-width: 20vw;
         >* {
             @apply m-3;
-        }
-        #smallAtom {
-            @apply absolute;
-            right: 20px;
-            top: 10px;
-            background-color: white;
-            width: 30%;
-            height: 40%;
         }
         .atom_datas {
             @apply flex;

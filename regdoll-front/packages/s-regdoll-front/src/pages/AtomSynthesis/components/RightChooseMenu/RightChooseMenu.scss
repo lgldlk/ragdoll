@@ -8,14 +8,33 @@
                 @apply text-lg;
             }
             .atom_en_name {
-                @applytext-lg;
+                @apply text-lg;
                 color: rgb(0, 211, 211);
             }
             .container_body {
+                .describe_body {
+                    >* {
+                        @apply mt-2;
+                    }
+                }
                 .text {}
                 .item {}
             }
         }
+    }
+    .empty_state_div {
+        @apply flex;
+        @apply justify-center;
+        @apply items-center;
+    }
+    .empty_state {
+        @apply align-middle;
+        @apply items-center;
+        width: 8em;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        box-sizing: border-box;
     }
     &:deep(.el-card.box-card) {
         @apply rounded-md;

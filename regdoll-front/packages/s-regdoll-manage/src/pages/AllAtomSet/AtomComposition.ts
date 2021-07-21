@@ -8,6 +8,8 @@ import { ElMessage, ElMessageBox } from 'element-plus';
  */
 import { ref, onMounted, onBeforeMount } from "vue";
 import { AtomRequest } from '/@/api/AtomRequest'
+import E from 'wangeditor'
+
 const fresh = async () => {
   allAtomData.value = (await AtomRequest.reqAtomList()).data;
 },

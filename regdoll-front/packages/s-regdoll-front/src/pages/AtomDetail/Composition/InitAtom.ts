@@ -5,7 +5,7 @@ import { ADD_OBJECT, SET_LOCK_CHOICE } from './../../../store/Scene/mutation-typ
  * @Author: lgldlk
  * @Date: 2021-07-05 08:07:46
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-11 20:04:51
+ * @LastEditTime: 2021-07-20 08:25:02
  */
 
 import { RouteLocationNormalizedLoaded, Router } from 'vue-router';
@@ -24,7 +24,17 @@ export default async function initAtom(store: Store<RootState>, route: RouteLoca
       initAtomData = (await AtomRequest.getAtomByEleNum(1)).data
       window.history.pushState(null, initAtomData.ch_name + "元素", "/atomDetail?element_number=1");
     }
-  } else {
+  } else if (route.query.atom_id) {
+    initAtomData = (await AtomRequest.getAtomById(Number(route.query.atom_id))).data
+    if (initAtomData == undefined) {
+      ElMessage({ type: "error", message: "您好暂时不支持这种元素哦~" })
+
+      initAtomData = (await AtomRequest.getAtomByEleNum(1)).data
+      window.history.pushState(null, initAtomData.ch_name + "元素", "/atomDetail?element_number=1");
+    }
+  }
+
+  else {
     initAtomData = (await AtomRequest.getAtomByEleNum(1)).data
     window.history.pushState(null, initAtomData.ch_name + "元素", "/atomDetail?element_number=1");
   }

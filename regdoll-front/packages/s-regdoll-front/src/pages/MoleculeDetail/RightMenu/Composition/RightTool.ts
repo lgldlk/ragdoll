@@ -5,7 +5,7 @@ import { MoleculeRequest } from '/@/api/MoleculeRequest';
  * @Author: lgldlk
  * @Date: 2021-07-19 16:22:11
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-19 17:09:26
+ * @LastEditTime: 2021-07-20 14:09:22
  */
 import { ElMessage } from 'element-plus';
 import { REMOVE_OBJECT, RENDER_SCENE, SET_LOCK_CHOICE, SET_LOCK_SCENE } from '/@/store/Scene/mutation-types';

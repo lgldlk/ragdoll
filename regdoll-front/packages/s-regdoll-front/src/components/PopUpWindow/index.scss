@@ -1,7 +1,9 @@
-.pop-bg {
+. transform: translateY(-50%);
+pop-bg {
     @apply absolute;
     @apply inset-0;
     @apply bg-gray-700;
+    @apply z-50;
     @apply bg-opacity-70;
     @include useOpacityAni;
     .center-slot {
@@ -44,4 +46,8 @@
             margin-top: 1rem;
         }
     }
+}
+
+.tm {
+    transform: translateY(-50%);
 }

@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-07-13 14:29:02
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-16 15:35:14
+ * @LastEditTime: 2021-07-20 20:36:33
  */
 import mainAxios from '/@/request/MainAxios';
 
@@ -15,7 +15,7 @@ export namespace MoleculeRequest {
   export function addMolecule(molecule: any) {
     return mainAxios.request({
       url: moleculePrefix("addMolecule"),
-      params: {
+      data: {
         molecule
       },
       method: "POST"
@@ -31,17 +31,22 @@ export namespace MoleculeRequest {
     return mainAxios.request({
       url: moleculePrefix("deleteMolecule"),
       method: "POST",
-      params: {
+      data: {
         id
       }
     }
     )
   }
+  export function moleculeNameAndId() {
+    return mainAxios.request({
+      url: moleculePrefix("moleculeNameAndId")
+    })
+  }
   export function updateMoleculeValence(molecule: any) {
     return mainAxios.request({
       url: moleculePrefix("updateMoleculeValence"),
       method: "POST",
-      params: {
+      data: {
         molecule
       }
     })

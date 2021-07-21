@@ -1,3 +1,6 @@
+import { ChemicalReactionService } from './system/ChemicalReaction/chemicalreaction.service';
+import { ChemicalReactionController } from './system/ChemicalReaction/chemicalreaction.controller';
+import { ChemicalReactionModule } from './system/ChemicalReaction/chemicalreaction.module';
 import { UserService } from './system/User/user.service';
 import { UserController } from './system/User/user.controller';
 import { UserModule } from './system/User/user.module';
@@ -6,7 +9,7 @@ import { UserModule } from './system/User/user.module';
  * @Author: lgldlk
  * @Date: 2021-04-18 22:36:37
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-18 22:37:24
+ * @LastEditTime: 2021-07-20 14:57:04
  */
 import { SceneBackgroundService } from './system/SceneBackroungd/scenebackground.service';
 import { SceneBackgroundController } from './system/SceneBackroungd/scenebackground.controller';
@@ -35,14 +38,17 @@ import { SwaggerConfigModule } from './config/config.module';
 
 @Module({
   imports: [
+    ChemicalReactionModule,
     UserModule,
     SceneBackgroundModule,
     ImageModule,
     MoleculeModule, SystemModule, DatabaseModule, SwaggerConfigModule],
   controllers: [
 
+
   ],
   providers: [
+
 
 
   ],

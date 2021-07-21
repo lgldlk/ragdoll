@@ -77,3 +77,16 @@
     @apply flex;
     @apply justify-end;
 }
+
+#synResultDiv {
+    width: 15vw;
+    overflow: hidden;
+    border-radius: 32px;
+    height: 15vw;
+}
+
+.synResultName {
+    @apply m-2;
+    text-align: center;
+    @apply cursor-pointer;
+}

@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-04-30 15:04:15
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-15 16:50:17
+ * @LastEditTime: 2021-07-20 08:22:32
  */
 import { AtomDto } from './dto/atom.dto';
 import { Atom } from '../../database/entitys/Atom.entity';
@@ -14,6 +14,9 @@ import { ResponseData } from 'src/interfaces/result.interface';
 
 @Injectable()
 export class AtomService {
+  async getAtomById(atom_id: any) {
+    return { code: "200", data: await this.atomRepo.findOne({ where: { id: atom_id } }) }
+  }
 
 
   constructor(
@@ -22,8 +25,6 @@ export class AtomService {
   ) { }
 
   async deleteAtom(id: number) {
-    console.log(id);
-
     await this.atomRepo.delete({ id })
     return { code: "200", message: "删除成功" }
   }

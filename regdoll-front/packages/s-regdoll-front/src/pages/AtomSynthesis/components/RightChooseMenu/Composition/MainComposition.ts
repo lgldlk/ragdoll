@@ -7,12 +7,12 @@ import { RegDollSceneObject3D } from '/@/threeScene/RegDollSceneObject3D';
  * @Author: lgldlk
  * @Date: 2021-07-07 19:12:29
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-08 08:55:34
+ * @LastEditTime: 2021-07-20 13:11:18
  */
 
 
 export default function rightChooseModule(store: Store<RootState>) {
-  console.log(store);
+
   let selectObj = computed(() => {
     return store.state.scene.nowSelectObj;
   }

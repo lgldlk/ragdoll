@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-07-05 13:49:55
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-08 10:43:48
+ * @LastEditTime: 2021-07-20 13:49:50
 -->
 <template>
   <div class="right_menu">
@@ -29,6 +29,31 @@
 
       </div>
     </div>
+     <popWindow v-if="sceneBackgroundVis"
+               windowTitle="更换背景"
+               @forkClick="closeSceneBackground">
+      <div>
+        <el-select v-model="chooseSceneBackground"
+                   placeholder="请选择要更换的背景">
+          <el-option v-for="item in allSceneBackground"
+                     :key="item.fileName"
+                     :label="item.name"
+                     :value="item.fileName">
+          </el-option>
+        </el-select>
+      </div>
+      <template #footer>
+        <span class="popWindow_footer">
+          <el-button size="mini"
+                     :round="true"
+                     @click="closeSceneBackground">取 消</el-button>
+          <el-button size="mini"
+                     type="primary"
+                     round="round"
+                     @click="affirmChooseSceneBackground">确 定</el-button>
+        </span>
+      </template>
+    </popWindow>
     <popWindow v-if="showAtomChooseWindow"
                windowTitle="原子选择"
                @forkClick="closeAtomChooseWindow">
@@ -54,7 +79,27 @@
         </span>
       </template>
     </popWindow>
-
+<popWindow v-if="synResultVis"
+               windowTitle="原子选择"
+               @forkClick="closeAtomSynResultWindow">
+      <div>
+        <div>
+          <div id="synResultDiv"></div>
+          <div class="synResultName" @click="goToDetailMolecule">{{synMolecule?.name}}</div>
+        </div>
+      </div>
+      <template #footer>
+        <span class="popWindow_footer">
+          <el-button size="mini"
+                     :round="true"
+                     @click="closeAtomSynResultWindow">取 消</el-button>
+          <el-button size="mini"
+                     type="primary"
+                     round="round"
+                     @click="goToDetailMolecule">观看分子详情</el-button>
+        </span>
+      </template>
+    </popWindow>
   </div>
 </template>
 <script lang="ts">
@@ -63,13 +108,15 @@ import rightToolModule from "./Composition/RightTools";
 import { useStore } from "vuex";
 import popWindow from "/@/components/PopUpWindow/index.vue";
 
+import { useRoute, useRouter } from "vue-router";
 import chooseMenu from "../RightChooseMenu/index.vue";
 export default defineComponent({
 	name: "",
 	components: { popWindow, chooseMenu },
 	setup() {
 		const store = useStore(),
-			rightTool = rightToolModule(store);
+      router = useRouter(),
+			rightTool = rightToolModule(store,router);
 		return {
 			...rightTool,
 		};

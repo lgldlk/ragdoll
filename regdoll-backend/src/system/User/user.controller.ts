@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-07-18 22:36:47
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-18 22:41:33
+ * @LastEditTime: 2021-07-19 07:49:56
  */
 import { UserService } from './user.service';
 /*
@@ -18,6 +18,6 @@ export class UserController {
 
   @Post("login")
   async login(@Body("account") account: string, @Body("password") password: string) {
-    return await this.userService.login(account, password);
+    return { code: "200", data: await this.userService.login(account, password) }
   }
 }

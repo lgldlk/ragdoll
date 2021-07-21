@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-05-25 21:49:19
  * @Editors: lgldlk
- * @LastEditTime: 2021-05-25 21:49:19
+ * @LastEditTime: 2021-07-20 20:43:21
  */
 declare interface RequestParams {
   url: string;

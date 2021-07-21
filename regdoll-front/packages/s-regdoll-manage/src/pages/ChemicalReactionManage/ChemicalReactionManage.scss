@@ -1,0 +1,79 @@
+.chemicalAddWindow {
+    >* {
+        @apply m-3;
+    }
+    .chemicalAllBox {
+        @apply mt-4;
+        @apply flex;
+        @apply flex-row;
+        @apply w-full;
+        @apply items-center;
+        .leftChemical {
+            flex: 3.5;
+            @apply flex;
+            @apply flex-wrap;
+            @apply items-center;
+        }
+        .cetnerEqual {
+            flex: 1;
+            @apply flex;
+            @apply flex-col;
+            .equalSign {
+                @apply w-full;
+                @apply flex;
+                @apply items-center;
+                @apply justify-center;
+                @apply text-3xl;
+            }
+        }
+        .rightChemical {
+            @apply p-4;
+            flex: 3.5;
+            @apply flex;
+            @apply flex-wrap;
+            @apply items-center;
+        }
+        .aChemical {
+            background-color: antiquewhite;
+            border-radius: 20px;
+            @apply p-1;
+        }
+        .chemical_expression {
+            position: relative;
+            display: inline-block;
+            padding: 5px 6px;
+            text-decoration: none;
+            background-color: white;
+            font-weight: 500;
+            letter-spacing: 2px;
+            font-size: 18px;
+            border-radius: 10px;
+            box-shadow: -2px -2px 8px rgba(255, 255, 255, 1), -2px -2px 12px rgba(255, 255, 255, 0.5), inset 2px 2px 4px rgba(255, 255, 255, 0.1), 2px 2px 8px rgba(0, 0, 0, 0.15);
+        }
+        .addButton {
+            @apply m-3;
+        }
+        .remove_chemical {
+            text-align: center;
+            position: relative;
+            display: inline-block;
+            @apply ml-2;
+            background-color: white;
+            padding: 4px 4px;
+            text-decoration: none;
+            font-weight: 500;
+            letter-spacing: 2px;
+            height: 20px;
+            width: 20px;
+            font-size: 18px;
+            border-radius: 100%;
+            box-shadow: -2px -2px 8px rgba(255, 255, 255, 1), -2px -2px 12px rgba(255, 255, 255, 0.5), inset 2px 2px 4px rgba(255, 255, 255, 0.1), 2px 2px 8px rgba(0, 0, 0, 0.15);
+        }
+    }
+}
+
+.chemicalReactionPage {
+    &:deep(.el-overlay) {
+        z-index: 2000 !important;
+    }
+}

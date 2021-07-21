@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-04-30 21:55:38
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-15 08:59:02
+ * @LastEditTime: 2021-07-20 08:14:22
  */
 import { Atom } from './../../database/entitys/Atom.entity';
 import { AtomService } from './atom.service';
@@ -31,7 +31,10 @@ export class AtomController {
   async updateAtom(@Body("upAtom") atom: AtomDto) {
     return await this.atomService.updateAtom(atom);
   }
-
+  @Get("getAtomById")
+  async getAtomById(@Query('atom_id') atom_id) {
+    return await this.atomService.getAtomById(atom_id);
+  }
   @Post("deleteAtom")
   async deleteAtom(@Body() body: any) {
 
@@ -39,7 +42,7 @@ export class AtomController {
   }
 
   @Get('getAtomByEleNum')
-  async getAtomById(@Query('ele_number') ele_number): Promise<ResponseData> {
+  async getAtomByEleNum(@Query('ele_number') ele_number): Promise<ResponseData> {
     return await this.atomService.getAtomByEleNum(ele_number);
   }
 }

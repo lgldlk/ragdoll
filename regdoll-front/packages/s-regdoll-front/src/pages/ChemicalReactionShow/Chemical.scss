@@ -1,0 +1,89 @@
+.chemicalPage {
+    #chemicalShowScene {
+        height: 30vw;
+        width: 100vw;
+        position: relative;
+        &::after {
+            @apply inset-0;
+            content: "";
+            position: absolute;
+        }
+    }
+    .chemicalShowBody {
+        @apply bg-gray-100;
+        @apply relative;
+        min-height: calc( 100vh - 30vw - 63px);
+        .reactionBody {
+            @apply flex;
+            @apply items-center;
+            @apply justify-center;
+            min-height: calc( 100vh - 30vw - 63px);
+            @apply relative;
+            .reactionButton {
+                font-size: 1.5em;
+                font-family: 'Comfortaa', cursive;
+                font-weight: bold;
+                overflow: visible;
+                margin: auto;
+                padding: 10px;
+                color: #f8f1f1;
+                display: block;
+                height: 70px;
+                width: 250px;
+                cursor: pointer;
+                border-radius: 0;
+                background-color: #301b3f;
+                border: none;
+                @apply duration-200;
+                box-shadow: 0 14px 28px rgb(0 0 0 / 25%), 0 10px 10px rgb(0 0 0 / 22%);
+                &:hover {
+                    @apply transform;
+                    @apply scale-110;
+                }
+                &:active {
+                    background-color: #002323;
+                }
+            }
+        }
+        .reactionCon {
+            width: 20vw;
+            min-height: 30px;
+            @apply absolute;
+            top: 50%;
+            @apply font-bold;
+            color: #606060;
+            @apply text-xl;
+            left: 50%;
+            transform: translateX(-50%), translateY(-50%);
+            @apply p-5;
+            border-radius: 20px;
+            box-shadow: 18px 18px 30px #d1d9e6, -18px -18px 30px rgb(223, 223, 223);
+            @apply bg-white;
+            animation: bounceInLeft 1s 0s 1 alternate forwards;
+        }
+    }
+}
+
+@keyframes bounceInLeft {
+    0% {
+        opacity: 0;
+        transform: translate3d(-3000px, -50%, 0);
+    }
+    100% {
+        transform: translate3d(-50%, -50%, 0);
+    }
+}
+
+.reactionOver {
+    @apply relative;
+    @apply flex;
+    @apply justify-center;
+    .reactionOverBody {
+        width: 80vw;
+        .reactionPhenomena {}
+        .reactionContent {}
+        .body-title {
+            border-left: #002323 1px solid;
+        }
+    }
+}

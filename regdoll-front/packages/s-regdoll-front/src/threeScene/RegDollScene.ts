@@ -4,7 +4,7 @@
  * @Author: lgldlk
  * @Date: 2021-05-02 21:54:10
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-12 08:04:52
+ * @LastEditTime: 2021-07-21 07:53:49
  */
 import * as THREE from "three";
 import SceneConfig from "../config/SceneConfig";
@@ -29,7 +29,7 @@ import { SET_NOW_SELECT_OBJ } from '../store/Scene/mutation-types';
 export class regDollScene {
   scene!: THREE.Scene;
   public camera!: THREE.PerspectiveCamera;
-  objectArr: Array<RegDollSceneObject3D>;
+  public objectArr: Array<RegDollSceneObject3D>;
   axesHelper!: THREE.AxesHelper;
   renderer!: THREE.WebGLRenderer;
   renderWidth!: number;
@@ -100,12 +100,10 @@ export class regDollScene {
     this.orbitControls.addEventListener("change", this.orbitControlsChangeFunc);
   }
   orbitControlsChangeFunc = () => {
-
     if (!this.lockScene) {
       this.userSelect && this.transformControlDetach();
       this.render()
     }
-
   }
   setLockChoice(payload: Boolean) {
     this.lockChoice = payload;
@@ -168,13 +166,13 @@ export class regDollScene {
       }
     }
   };
-  transformControlDetach() {
+  transformControlDetach = () => {
     if (!this.lockChoice) {
       if (this.nowSelectObj) {
         store.commit(SCENE_MODULE_COMMIT_PREFIX + SET_NOW_SELECT_OBJ, undefined)
         this.nowSelectObj = undefined
       }
-      this.transformControl.detach()
+      this.transformControl.detach && this.transformControl.detach()
     }
   }
   transformControlAttach(attachObj: RegDollSceneObject3D | undefined) {
@@ -233,29 +231,6 @@ export class regDollScene {
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(this.renderWidth, this.renderHeight);
     this.renderDom.appendChild(this.renderer.domElement);
-    // var renderTargetParameters =
-    // {
-    //   minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter,
-    //   format: THREE.RGBFormat, stencilBuffer: false
-    // };
-    // const renderTarget = new THREE.WebGLRenderTarget(this.renderWidth, this.renderHeight, renderTargetParameters);
-
-    // this.composer2 = new EffectComposer(this.renderer, renderTarget);
-
-    // // prepare the secondary render's passes
-    // var render2Pass = new RenderPass(this.scene, this.camera);
-    // this.composer2.addPass(render2Pass);
-
-    // this.finalComposer = new EffectComposer(this.renderer, renderTarget);
-    // var renderModel = new RenderPass(this.scene, this.camera);
-    // this.finalComposer.addPass(renderModel);
-    // var effectBlend = new ShaderPass(AdditiveBlendShader, "tDiffuse1");
-    // effectBlend.renderToScreen = true;
-    // this.finalComposer.addPass(effectBlend);
-    // var effectBlend = new ShaderPass(AdditiveBlendShader, "tDiffuse1");
-    // effectBlend.uniforms['tDiffuse2'].value = this.composer2.renderTarget2;
-    // effectBlend.renderToScreen = true;
-    // this.finalComposer.addPass(effectBlend);
 
   }
   setBackgroundTextUreCube(textureCube: THREE.Texture) {
@@ -300,7 +275,7 @@ export class regDollScene {
       });
     }
     this.renderer.render(this.scene, this.camera);
-
+    // this.orbitControls.update()
     // this.finalComposer.render();
     // this.composer2.render();
     // this.transformControl.update();
@@ -327,9 +302,7 @@ export class regDollScene {
       this.mouserVector2.set((event.offsetX / this.renderWidth) * 2 - 1, - (event.offsetY / this.renderHeight) * 2 + 1);
       this.raycaster.setFromCamera(this.mouserVector2, this.camera);
       const intersect = this.raycaster.intersectObject(this.gridHelp);
-
       intersect.length > 0 && obj.position.copy(intersect[0]?.point).add(intersect[0]?.face?.normal || new THREE.Vector3())
-
     }
     this.objectArr.push(obj);
     this.scene.add(obj);
@@ -343,6 +316,7 @@ export class regDollScene {
   }
 
   removeObject(obj: RegDollSceneObject3D) {
+    this.userSelect && this.transformControlDetach();
     this.objectArr = this.objectArr.filter((item) => item != obj);
     this.scene.remove(obj);
     this.render()

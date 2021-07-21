@@ -17,7 +17,7 @@ import { MoleculeRequest } from '/@/api/MoleculeRequest';
  * @LastEditTime: 2021-07-19 22:05:07
  */
 export function chooseMoleculeModule(store: Store<RootState>, router: Router) {
-
+  let smallAtom
   const openLoadingWindow = inject<Function>(OPEN_LOADING_WINDOW),
     closeLoadingWindow = inject<Function>(CLOSE_LOADING_WINDOW)
   const selectObj = computed(() => {
@@ -32,32 +32,34 @@ export function chooseMoleculeModule(store: Store<RootState>, router: Router) {
         knowledgePoint.value = (await MoleculeRequest.getMoleculeKnowById((selectObj.value as MoleculeModule).moleculeModuleData.id)).data.knowledgePoint;
 
       }
-      let smallAtom = document.getElementById("smallAtom");
+      smallAtom = document.getElementById("smallAtom");
 
+      if (smallAtom) {
+        smallAtom.innerHTML = "";
+        let smallDollScene = new SmallScene(
+          smallAtom,
 
-      setTimeout(() => {
-        smallAtom = document.getElementById("smallAtom");
-        if (smallAtom) {
-          smallAtom.innerHTML = "";
-          let smallDollScene = new SmallScene(
-            smallAtom,
-            new THREE.Color("rgb(8, 5, 7)")
-          );
-          const light = new THREE.SpotLight(0xffffff, 1.5);
-          light.position.set(0, 200, 1500);
-          light.angle = Math.PI * 0.2;
-          light.castShadow = true;
-          light.shadow.camera.near = 200;
-          light.shadow.camera.far = 2000;
-          light.shadow.bias = -0.000222;
-          light.shadow.mapSize.width = 1024;
-          light.shadow.mapSize.height = 1024;
-          smallDollScene.addObject((light as any))
-          smallDollScene.addObject(new MoleculeModule((store.state.scene.nowSelectObj as any).moleculeModuleData))
-          closeLoadingWindow && closeLoadingWindow()
+        );
+
+        smallDollScene.addObject(new MoleculeModule((store.state.scene.nowSelectObj as any).moleculeModuleData))
+        closeLoadingWindow && closeLoadingWindow()
+      } else {
+
+        setTimeout(() => {
+          smallAtom = document.getElementById("smallAtom");
+          if (smallAtom) {
+            smallAtom.innerHTML = "";
+            let smallDollScene = new SmallScene(
+              smallAtom,
+
+            );
+
+            smallDollScene.addObject(new MoleculeModule((store.state.scene.nowSelectObj as any).moleculeModuleData))
+            closeLoadingWindow && closeLoadingWindow()
+          }
         }
+          , 1000)
       }
-        , 1000)
 
     },
     closeMoleculeWindow = () => {

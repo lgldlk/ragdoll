@@ -3,10 +3,10 @@
  * @Author: lgldlk
  * @Date: 2021-07-18 18:02:42
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-18 22:35:42
+ * @LastEditTime: 2021-07-19 08:06:04
  */
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, CreateDateColumn, Generated } from 'typeorm';
-import { ConstituentAtoms } from './ConstituentAtoms.entity';
+
 
 @Entity("user")
 export class User {
@@ -14,14 +14,12 @@ export class User {
   account: number
   @Column({ type: "varchar", comment: "真实名" })
   trueName: string
-
   @Column({ type: "varchar", comment: "密码" })
   password: string
-  @Column({ type: "varchar", comment: "" })
+  @Column({ type: "varchar", comment: "个性签名" })
   signature: string
   @Column({ type: "varchar", comment: "头像地址" })
   imgUrl: string
-
   @Column({ comment: "是否为管理员" })
   isAdmin: boolean
   @Column({ type: "int", comment: "权限" })

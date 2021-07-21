@@ -4,7 +4,7 @@
  * @Descripttion:
  * @Author: lgldlk
  * @Date: 2021-05-02 21:54:10
- * @LastEditTime: 2021-07-11 20:02:00
+ * @LastEditTime: 2021-07-20 11:57:16
  */
 import * as THREE from "three";
 import { AtomModelConfig } from "/@/config/AtomModelConfig";
@@ -93,14 +93,14 @@ export default class AtomModel extends RegDollSceneObject3D {
       shininess: AtomModelConfig.defaultEleConfig.shininess,
     });
 
-    // eleMaterial.map = this.getTextCanvas(
-    //   eleNumber.toString(),
-    //   AtomModelConfig.defaultEleConfig.color,
-    //   AtomModelConfig.defaultEleConfig.radius * 1000,
-    // );
+    eleMaterial.map = this.getTextCanvas(
+      "—",
+      AtomModelConfig.defaultEleConfig.color,
+      AtomModelConfig.defaultEleConfig.radius * 1000,
+    );
     const eleMesh = new THREE.Mesh(eleGeometry, eleMaterial);
 
-    // eleMesh.rotateZ(Math.PI / 2);
+    eleMesh.rotateZ(Math.PI / 2);
     eleMesh.position.set(0, 0, radius);
     // addShine(eleMesh)
     const eleOrbit = new THREE.Object3D();

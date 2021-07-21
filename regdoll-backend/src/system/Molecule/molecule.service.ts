@@ -3,7 +3,7 @@
  * @Author: lgldlk
  * @Date: 2021-07-12 08:56:44
  * @Editors: lgldlk
- * @LastEditTime: 2021-07-17 09:06:42
+ * @LastEditTime: 2021-07-20 18:12:50
  */
 import { Molecule } from 'src/database/entitys/Molecule.entity';
 /*
@@ -17,6 +17,27 @@ import { ConstituentAtoms } from 'src/database/entitys/ConstituentAtoms.entity';
 
 @Injectable()
 export class MoleculeService {
+  async moleculeNameAndId() {
+    return { code: "200", data: await this.moleculeRepo.find({ select: ["expression", "id"] }) }
+  }
+  async allMoleculeExp() {
+    return {
+      code: "200", data: (await this.moleculeRepo.find({
+        select: ["id", "expression"
+        ]
+      }))
+    }
+  }
+  async getMoleculeKnowById(id: any) {
+    const molecule = (await this.moleculeRepo.find({
+      select: ["id", "knowledgePoint"
+      ],
+      where: {
+        id
+      }
+    }))[0];
+    return { code: "200", data: molecule }
+  }
   constructor(@InjectRepository(Molecule)
   private readonly moleculeRepo: Repository<Molecule>,
 
@@ -54,9 +75,14 @@ export class MoleculeService {
   }
   async allMolecule() {
 
-    const allMolecules = await this.moleculeRepo.find();
+    const allMolecules = await this.moleculeRepo.find({
+      select: ["id", "expression", "density", "matterState", "meltingPoint"
+        , "name", "reactivity"
+      ]
+    });
     for (let molecule of allMolecules) {
-      molecule.atomDatas = await this.moleculeRepo.query("select c.*,a.en_name from constituent_atoms c,atom a where c.moleculeId=? and a.id = c.atomId", [molecule.id]);
+      // molecule.atomData=await this.moleculeRepo.query("")
+      molecule.atomDatas = await this.moleculeRepo.query("select c.*,a.en_name,a.radius ,a.color  from constituent_atoms c,atom a where c.moleculeId=? and a.id = c.atomId", [molecule.id]);
     }
     return {
       code: "200", data: allMolecules
